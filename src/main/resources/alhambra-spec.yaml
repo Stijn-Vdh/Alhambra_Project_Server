@@ -1,0 +1,711 @@
+openapi: 3.0.1
+info:
+  title: Alhambra
+  description: 'This is an Alhambra server.'
+  contact:
+    email: mattias.de.wael@howest.be
+  version: 0.0.1
+servers:
+  - url: 'http://172.21.22.52:48201/alhambra-api/'
+    description: 'Production implementation running @ HOWEST'
+  - url: 'http://localhost:8080/'
+    description: 'Local development implementation'
+
+tags:
+  - name: data
+    description: Game data that never changes
+  - name: setup
+    description: Start and join games
+  - name: game
+    description: Play and observe games
+  - name: game-details
+    description: observe games in detail
+
+components:
+  securitySchemes:
+    adminToken:
+      type: http
+      scheme: bearer
+    playerToken:
+      type: http
+      scheme: bearer
+  schemas:
+    gameId:
+      type: string
+      example: group01-000
+    playerName:
+      type: string
+      example: john
+    playerToken:
+      type: string
+      description: "The player token unique to this player for this game"
+      example: group01-000+john
+    currency:
+      type: string
+      enum:
+        - "blue"
+        - "green"
+        - "orange"
+        - "yellow"
+    coin:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/currency'
+        amount:
+          type: integer
+          minimum: 0
+      required:
+        - currency
+        - amount
+    location:
+      type: object
+      nullable: true
+      properties:
+        row:
+          type: integer
+        col:
+          type: integer
+      required:
+        - row
+        - col
+    buildingType:
+      type: string
+      enum:
+        - "pavilion"
+        - "seraglio"
+        - "arcades"
+        - "chambers"
+        - "garden"
+        - "tower"
+    building:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/buildingType'
+        cost:
+          type: integer
+          minimum: 0
+        walls:
+          type: object
+          properties:
+            north:
+              type: boolean
+            east:
+              type: boolean
+            south:
+              type: boolean
+            west:
+              type: boolean
+      required:
+        - type
+        - cost
+    player:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/playerName'
+        money:
+          type: array
+          items:
+            $ref: '#/components/schemas/coin'
+        reserve:
+          type: array
+          items:
+            $ref: '#/components/schemas/building'
+        city:
+          type: array
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/building'
+        score:
+          type: integer
+          description: The score awarded to this player.
+        virtual-score:
+          type: integer
+          description: The score that would be awarded to this player if the score would be recomputed now.
+    scoring:
+      type: object
+      properties:
+        blue:
+          type: array
+          items:
+            type: integer
+        orange:
+          type: array
+          items:
+            type: integer
+        brown:
+          type: array
+          items:
+            type: integer
+        white:
+          type: array
+          items:
+            type: integer
+        red:
+          type: array
+          items:
+            type: integer
+        purple:
+          type: array
+          items:
+            type: integer
+    game:
+      type: object
+      properties:
+        started:
+          type: boolean
+        ended:
+          type: boolean
+        currentPlayer:
+          $ref: '#/components/schemas/playerName'
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/player'
+        bank:
+          type: array
+          maxItems: 4
+          items:
+            $ref: '#/components/schemas/coin'
+        market:
+          type: object
+          properties:
+            blue:
+              $ref: '#/components/schemas/building'
+            green:
+              $ref: '#/components/schemas/building'
+            yellow:
+              $ref: '#/components/schemas/building'
+            brown:
+              $ref: '#/components/schemas/building'
+
+
+  responses:
+    successfulGameOperation:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/game'
+
+paths:
+  '/buildings':
+    get:
+      tags:
+        - data
+      summary: Get all buildings
+      operationId: getBuildings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/building'
+  '/buildings/types':
+    get:
+      tags:
+        - data
+      summary: Get all building types (names)
+      operationId: getBuildingTypes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/buildingType'
+  '/currencies':
+    get:
+      tags:
+        - data
+      summary: Get all currencies (names)
+      operationId: getCurrencies
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/currency'
+  '/scoring/{round}':
+    parameters:
+      - name: round
+        description: The round for which the scoring table is requested
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 3
+    get:
+      tags:
+        - data
+      summary: Get the scoring table for a given round
+      operationId: getScoringTable
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scoring'
+  '/games':
+    get:
+      tags:
+        - setup
+      summary: Get all games (ids). Parameter advise is to use details true by default and to use a prefix including your group number to seperate your game lobby
+      operationId: getGames
+      parameters:
+        - in: query
+          name: details
+          required: false
+          schema:
+            type: boolean
+          allowEmptyValue: true
+          description: Define whether only the game ids should be shown (true or absent) or whether the status details should be shown as well.
+        - in: query
+          name: prefix
+          required: false
+          schema:
+            type: string
+          allowEmptyValue: false
+          description: Specify (optional) a prefix for the game id's that you want to show. This parameter is used to seperate game lobbies per group
+          examples:
+            group00:
+              value: "group00"
+            group20:
+              value: "group20"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/gameId'
+    post:
+      tags:
+        - setup
+      summary: Create a new game
+      operationId: createGame
+      requestBody:
+        required: false
+        description: Optional prefix for the new game id. This parameter is used to seperate game lobbies per group. When omitting, ensure that the request body content-type is also not set to application.json. Submitting an empty String value is a valid alternative in case of empty value
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prefix:
+                  type: string
+              example:
+                prefix: "group00"
+              required:
+                - prefix
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gameId'
+    delete:
+      summary: Admin feature that removes ALL games and game lobbies from the server.
+      operationId: clearGames
+      security:
+        - adminToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gameId'
+
+  '/games/{gameId}/players':
+    parameters:
+      - name: gameId
+        description: Id of the game
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/gameId'
+    post:
+      tags:
+        - setup
+      summary: Join an existing game, returns the player token
+      operationId: joinGame
+      requestBody:
+        required: true
+        description: Name of the player that connects. Lowercase values only!
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                playerName:
+                  $ref: '#/components/schemas/playerName'
+              required:
+                - playerName
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/playerToken'
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist.
+
+  '/games/{gameId}/players/{playerName}':
+    parameters:
+      - name: gameId
+        description: Id of the game
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/gameId'
+      - name: playerName
+        description: Name of the player
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/playerName'
+    delete:
+      tags:
+        - setup
+      summary: Leave a game
+      operationId: leaveGame
+      security:
+        - playerToken: []
+      responses:
+        '200':
+          description: Player left the game
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist.
+
+  '/games/{gameId}/players/{playerName}/ready':
+    parameters:
+      - name: gameId
+        description: Id of the game
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/gameId'
+      - name: playerName
+        description: Name of the player
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/playerName'
+    put:
+      tags:
+        - setup
+      summary: Change player status to ready
+      operationId: setReady
+      security:
+        - playerToken: []
+      responses:
+        '200':
+          description: Player is ready to start
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist.
+
+    delete:
+      tags:
+        - setup
+      summary: Change player status to not ready
+      operationId: setNotReady
+      security:
+        - playerToken: []
+      responses:
+        '200':
+          description: Player is  not ready to start
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist.
+
+  '/games/{gameId}':
+    parameters:
+      - name: gameId
+        description: Id of the game
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/gameId'
+    get:
+      tags:
+        - game
+      summary: Get the state of a game
+      operationId: getGame
+      security:
+        - playerToken: []
+      responses:
+        '200':
+          $ref: '#/components/schemas/game'
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist.
+
+  '/games/{gameId}/players/{playerName}/money':
+    parameters:
+      - name: gameId
+        description: Id of the game
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/gameId'
+      - name: playerName
+        description: Name of the player
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/playerName'
+    post:
+      summary: Take some money
+      operationId: takeMoney
+      tags:
+        - game
+      security:
+        - playerToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/coin'
+      responses:
+        '200':
+          $ref: '#/components/responses/successfulGameOperation'
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist.
+  '/games/{gameId}/players/{playerName}/buildings-in-hand':
+    parameters:
+      - name: gameId
+        description: Id of the game
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/gameId'
+      - name: playerName
+        description: Name of the player
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/playerName'
+    post:
+      summary: Buy a building
+      operationId: buyBuilding
+      tags:
+        - game
+      security:
+        - playerToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency:
+                  $ref: '#/components/schemas/currency'
+                coins:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/coin'
+              required:
+                - currency
+                - coins
+      responses:
+        '200':
+          $ref: '#/components/responses/successfulGameOperation'
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist
+
+  '/games/{gameId}/players/{playerName}/city':
+    parameters:
+      - name: gameId
+        description: Id of the game
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/gameId'
+      - name: playerName
+        description: Name of the player
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/playerName'
+    post:
+      summary: Build a building
+      operationId: build
+      tags:
+        - game
+      security:
+        - playerToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                building:
+                  $ref: '#/components/schemas/building'
+                location:
+                  $ref: '#/components/schemas/location'
+              required:
+                - building
+                - location
+      responses:
+        '200':
+          $ref: '#/components/responses/successfulGameOperation'
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist
+    patch:
+      summary: Redesign
+      operationId: redesign
+      tags:
+        - game
+      security:
+        - playerToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                building:
+                  $ref: '#/components/schemas/building'
+                location:
+                  $ref: '#/components/schemas/location'
+              required:
+                - location
+      responses:
+        '200':
+          $ref: '#/components/responses/successfulGameOperation'
+        '401':
+          description: Absent or mallformed authentication
+        '403':
+          description: Forbidden because the player token does not grant access for this action.
+        '409':
+          description: Action not performed due to conflict with game rule.
+        '422':
+          description: Game or player does not exist
+
+  '/games/{gameId}/players/{playerName}/city/locations':
+    parameters:
+      - name: gameId
+        description: Id of the game
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/gameId'
+      - name: playerName
+        description: Name of the player
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/playerName'
+    get:
+      operationId: getAvailableBuildLocations
+      tags:
+        - game-details
+      parameters:
+        - name: north
+          in: query
+          required: false
+          schema:
+            type: boolean
+          allowEmptyValue: true
+          description: Only show locations where buildings with a north wall would fit.
+        - name: east
+          in: query
+          required: false
+          schema:
+            type: boolean
+          allowEmptyValue: true
+          description: Only show locations where buildings with a east wall would fit.
+        - name: south
+          in: query
+          required: false
+          schema:
+            type: boolean
+          allowEmptyValue: true
+          description: Only show locations where buildings with a south wall would fit.
+        - name: west
+          in: query
+          required: false
+          schema:
+            type: boolean
+          allowEmptyValue: true
+          description: Only show locations where buildings with a west wall would fit.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/location'

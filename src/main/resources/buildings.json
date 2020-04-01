@@ -1,0 +1,543 @@
+[
+  {
+    "type": "pavilion",
+    "cost": 2,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "pavilion",
+    "cost": 3,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "pavilion",
+    "cost": 4,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "pavilion",
+    "cost": 5,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "pavilion",
+    "cost": 6,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "pavilion",
+    "cost": 7,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "pavilion",
+    "cost": 8,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "seraglio",
+    "cost": 3,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "seraglio",
+    "cost": 4,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "seraglio",
+    "cost": 5,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "seraglio",
+    "cost": 6,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "seraglio",
+    "cost": 7,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "seraglio",
+    "cost": 8,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "seraglio",
+    "cost": 9,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 4,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 5,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 6,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 6,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 7,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 8,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 8,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 9,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "arcades",
+    "cost": 10,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 5,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 6,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 7,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 7,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 8,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 9,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 9,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 10,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "chambers",
+    "cost": 11,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 6,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 7,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 8,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 8,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 8,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": true
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 9,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 10,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 10,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 10,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 11,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "garden",
+    "cost": 12,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 7,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 8,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 9,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 9,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 9,
+    "walls": {
+      "north": true,
+      "east": true,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 10,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": true
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 11,
+    "walls": {
+      "north": true,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 11,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 11,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": true,
+      "west": false
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 12,
+    "walls": {
+      "north": false,
+      "east": false,
+      "south": false,
+      "west": false
+    }
+  },
+  {
+    "type": "tower",
+    "cost": 13,
+    "walls": {
+      "north": false,
+      "east": true,
+      "south": false,
+      "west": false
+    }
+  }
+
+]

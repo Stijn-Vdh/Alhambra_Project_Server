@@ -5,6 +5,8 @@ public class AlhambraController {
         return Currency.values();
     }
 
+    public BuildingType[] getBuildingTypes() {return  BuildingType.values();}
+
     public int getTotalAmount(Coin[] coins) {
         int totalAmount = 0;
         for(Coin coin: coins){

@@ -4,4 +4,12 @@ public class AlhambraController {
     public Currency[] getCurrencies() {
         return Currency.values();
     }
+
+    public int getTotalAmount(Coin[] coins) {
+        int totalAmount = 0;
+        for(Coin coin: coins){
+            totalAmount += coin.getAmount();
+        }
+        return totalAmount;
+    }
 }

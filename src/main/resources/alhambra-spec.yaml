@@ -13,7 +13,7 @@ servers:
 
 tags:
   - name: data
-    description: Game data that never changes
+    description: Lobby data that never changes
   - name: setup
     description: Start and join games
   - name: game
@@ -372,7 +372,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist.
+          description: Lobby or player does not exist.
 
   '/games/{gameId}/players/{playerName}':
     parameters:
@@ -405,7 +405,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist.
+          description: Lobby or player does not exist.
 
   '/games/{gameId}/players/{playerName}/ready':
     parameters:
@@ -438,7 +438,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist.
+          description: Lobby or player does not exist.
 
     delete:
       tags:
@@ -457,7 +457,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist.
+          description: Lobby or player does not exist.
 
   '/games/{gameId}':
     parameters:
@@ -484,7 +484,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist.
+          description: Lobby or player does not exist.
 
   '/games/{gameId}/players/{playerName}/money':
     parameters:
@@ -525,7 +525,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist.
+          description: Lobby or player does not exist.
   '/games/{gameId}/players/{playerName}/buildings-in-hand':
     parameters:
       - name: gameId
@@ -573,7 +573,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist
+          description: Lobby or player does not exist
 
   '/games/{gameId}/players/{playerName}/city':
     parameters:
@@ -620,7 +620,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist
+          description: Lobby or player does not exist
     patch:
       summary: Redesign
       operationId: redesign
@@ -651,7 +651,7 @@ paths:
         '409':
           description: Action not performed due to conflict with game rule.
         '422':
-          description: Game or player does not exist
+          description: Lobby or player does not exist
 
   '/games/{gameId}/players/{playerName}/city/locations':
     parameters:

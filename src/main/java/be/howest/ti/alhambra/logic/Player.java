@@ -18,7 +18,7 @@ public class Player {
         this.name = name;
     }
 
-    public Boolean getReady() {
+    public Boolean isReady() {
         return ready;
     }
 

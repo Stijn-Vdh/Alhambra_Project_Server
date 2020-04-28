@@ -27,4 +27,6 @@ class JsonTest {
         assertEquals(coin, Json.decodeValue(Json.encode(coin), Coin.class));
     }
 
+
+
 }

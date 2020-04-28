@@ -22,7 +22,7 @@ public class Building {
         return type;
     }
 
-    public int getAmount() {
+    public int getCost() {
         return cost;
     }
 

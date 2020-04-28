@@ -3,6 +3,8 @@ package be.howest.ti.alhambra.logic;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 public class Walls {
     private boolean north;
     private boolean east;
@@ -31,5 +33,21 @@ public class Walls {
 
     public boolean isWest() {
         return west;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Walls walls = (Walls) o;
+        return north == walls.north &&
+                east == walls.east &&
+                south == walls.south &&
+                west == walls.west;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(north, east, south, west);
     }
 }

@@ -48,35 +48,52 @@ class JsonTest {
 
     void Bank(){
 
-       Queue<Coin> coinsInBank = new LinkedList<>(allCoins());
-       Coin[] coins = new Coin[4];
-       Bank newBank = new Bank(coinsInBank);
+        Coin coin1 = new Coin(Currency.BLUE, 1);
+        Coin coin2 = new Coin(Currency.YELLOW, 2);
+        Coin coin3 = new Coin(Currency.BLUE, 1);
+        Coin coin4 = new Coin(Currency.GREEN, 8);
+        Coin coin5 = new Coin(Currency.BLUE, 1);
+        Coin coin6 = new Coin(Currency.BLUE, 3);
+        Coin coin7 = new Coin(Currency.BLUE, 5);
+        Coin coin8 = new Coin(Currency.GREEN, 6);
+        Coin coin9 = new Coin(Currency.YELLOW, 7);
+        Coin coin10 = new Coin(Currency.GREEN, 1);
+
+       Queue<Coin> coinsInBank = new LinkedList<>();
+        assertEquals(0, coinsInBank.size());
+
+       coinsInBank.add(coin1);
+       coinsInBank.add(coin2);
+       coinsInBank.add(coin3);
+       coinsInBank.add(coin4);
+       coinsInBank.add(coin5);
+       coinsInBank.add(coin6);
+       coinsInBank.add(coin7);
+       coinsInBank.add(coin8);
+       coinsInBank.add(coin9);
+       coinsInBank.add(coin10);
+
+       assertEquals(10, coinsInBank.size());
+
+       Bank bank = new Bank(coinsInBank);
+
+        assertEquals(6, coinsInBank.size());
+
        List<Coin> selectedCoins = new LinkedList<>();
 
-
-       Coin coin1 = new Coin(Currency.BLUE, 5);
-       Coin coin2 = new Coin(Currency.GREEN, 2);
-       Coin coin3 = new Coin(Currency.ORANGE, 10);
-       Coin coin4 = new Coin(Currency.YELLOW, 3);
-
-       assertEquals(0, newBank.totalValueCoins(selectedCoins));
+       assertEquals(0, bank.totalValueCoins(selectedCoins));
        selectedCoins.add(coin1);
        selectedCoins.add(coin2);
-       assertEquals(7, newBank.totalValueCoins(selectedCoins));
-
-       assertThrows(AlhambraGameRuleException.class, () -> newBank.takeCoins(selectedCoins));
-
-       selectedCoins.remove(coin1);
+       assertEquals(3, bank.totalValueCoins(selectedCoins));
        selectedCoins.add(coin4);
+        assertEquals(11, bank.totalValueCoins(selectedCoins));
+       assertThrows(AlhambraGameRuleException.class, () -> bank.takeCoins(selectedCoins));
+       selectedCoins.remove(coin4);
+        assertEquals(3, bank.totalValueCoins(selectedCoins));
+       bank.takeCoins(selectedCoins);
+       assertEquals(4, coinsInBank.size());
 
-       assertEquals(5, newBank.totalValueCoins(selectedCoins));
 
-       newBank.fillBoardWithInitialCoins(coinsInBank);
-       assertEquals(4, coins.length);
-
-       selectedCoins.add(coin3);
-       int totalValue = newBank.totalValueCoins(selectedCoins);
-       assertFalse(newBank.validTotalValue(totalValue));
 
 
     }

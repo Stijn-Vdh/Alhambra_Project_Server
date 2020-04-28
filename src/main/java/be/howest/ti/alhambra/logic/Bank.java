@@ -1,57 +1,72 @@
 package be.howest.ti.alhambra.logic;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class Bank {
 
     private Queue<Coin> coinsInBank;
-    private Coin[] coins = new Coin[4];
+    private List<Coin> coinsOnBoard = new LinkedList<>();
 
     public Bank(Queue<Coin> allCoins) {
         this.coinsInBank = allCoins;
-        fillBoardWithInitialCoins(allCoins);
+        fillBoardWithInitialCoins();
     }
 
-    public Queue<Coin> getCoinsInBank() {
-        return coinsInBank;
+    public List<Coin> getCoinsOnBoard() {
+        return coinsOnBoard;
     }
 
-    public Coin[] getCoins() {
-        return coins;
-    }
-
-    public void fillBoardWithInitialCoins(Queue<Coin> allCoins){
+    public void fillBoardWithInitialCoins(){
         for (int i = 0; i < 4; i++){
-            coins[i] = allCoins.poll();
+            coinsOnBoard.add(coinsInBank.poll());
         }
+
     }
 
-    public void refillBank(Coin[] coins, Queue<Coin> allCoins) {
+    public void refillBank() {
 
-        for (int i = 0; i < 4; i++){
-            if (coins[i] == null){
-                coins[i] = allCoins.poll();
-            }
+        while (coinsOnBoard.size() < 4){
+            coinsOnBoard.add(coinsInBank.poll());
         }
+
     }
 
 
-    public List<Coin> takeCoins(List<Coin> selectedCoins){
+    public void takeCoins(List<Coin> selectedCoins){
 
         int valueCoins = totalValueCoins((selectedCoins));
 
-        if (selectedCoins.size() == 1 && valueCoins >= 5){
-            return selectedCoins;
+        if (selectedCoins.size() == 1){
+            removeSelectedCoins(selectedCoins);
+            refillBank();
         }else {
             if (validTotalValue(valueCoins)){
-                return selectedCoins;
+                removeSelectedCoins(selectedCoins);
+                refillBank();
+            }else{
+                throw new AlhambraGameRuleException("Max amount is 5!");
             }
-            throw new AlhambraGameRuleException("Max amount is 5!");
+
         }
 
 
+    }
+
+    private void removeSelectedCoins(List<Coin> selectedCoins) {
+
+        for (Coin selectedCoin: selectedCoins){
+            for (Coin coinOnBoard: coinsOnBoard){
+                if (selectedCoin.equals(coinOnBoard)){
+                    coinsOnBoard.remove(selectedCoin);
+                    break;
+                }
+            }
+        }
+        refillBank();
     }
 
     public int totalValueCoins(List<Coin> selectedCoins){

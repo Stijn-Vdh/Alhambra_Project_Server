@@ -123,4 +123,5 @@ class JsonTest {
 
 >>>>>>> src/test/java/be/howest/ti/alhambra/logic/JsonTest.java
     }
+    
 }

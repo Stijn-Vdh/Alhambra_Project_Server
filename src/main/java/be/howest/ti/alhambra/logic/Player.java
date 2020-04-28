@@ -2,8 +2,8 @@ package be.howest.ti.alhambra.logic;
 
 public class Player {
 
-    String name;
-    Boolean ready;
+    private String name;
+    private Boolean ready;
 
     public Player(String name, Boolean ready) {
         this.name = name;

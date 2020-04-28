@@ -7,7 +7,7 @@ import java.util.Queue;
 public class Bank {
 
     private Queue<Coin> coinsInBank;
-    private Coin[] coins;
+    private Coin[] coins = new Coin[4];
 
     public Bank(Queue<Coin> allCoins) {
         this.coinsInBank = allCoins;
@@ -39,9 +39,10 @@ public class Bank {
 
 
     public List<Coin> takeCoins(List<Coin> selectedCoins){
+
         int valueCoins = totalValueCoins((selectedCoins));
 
-        if (selectedCoins.size() == 1){
+        if (selectedCoins.size() == 1 && valueCoins >= 5){
             return selectedCoins;
         }else {
             if (validTotalValue(valueCoins)){
@@ -49,6 +50,7 @@ public class Bank {
             }
             throw new AlhambraGameRuleException("Max amount is 5!");
         }
+
 
     }
 
@@ -61,9 +63,20 @@ public class Bank {
         return totalValue;
     }
 
-    private boolean validTotalValue(int totalValue){
+    public boolean validTotalValue(int totalValue){
         return totalValue <= 5 && totalValue > 0;
     }
+
+
+
+    public String coinsToString(Coin[] coins){
+        StringBuilder res = new StringBuilder();
+        for (int i = 0 ; i < 4; i++){
+            res.append(coins[i]);
+        }
+        return res.toString();
+    }
+
 
 
 }

@@ -1,21 +1,27 @@
 package be.howest.ti.alhambra.logic;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public class LobbyRepo {
+public class UsefulCode {
+/*    @JsonCreator
+    public UsefulCode(){
+        lobbies = new HashSet<>();
+    }
 
     private Set<Lobby> lobbies;
 
-
+    @JsonProperty("lobbies")
     public Set<Lobby> getLobbies() {
         return lobbies;
     }
 
-    public LobbyRepo(){
-        lobbies = new HashSet<>();
-    }
 
+
+    @JsonProperty("gameID")
     public String generateGameID(){
         String group = "group01-";
         int counter;
@@ -28,12 +34,10 @@ public class LobbyRepo {
         return group + counter;
     }
 
-    public void newLobby(){
-        Lobby lobby = new Lobby(generateGameID(), getPlayerName("stav"));
-        this.lobbies.add(lobby);
-    }
 
-    public void joinLobby(String gameID, Player player){
+
+    public void joinLobby(String gameID, String name){
+        Player player = new Player(name, false);
         for (Lobby lobby: lobbies
              ) {
             if (lobby.getGameID().equals(gameID)){
@@ -55,9 +59,11 @@ public class LobbyRepo {
         lobbies.remove(lobby);
     }
 
+    @JsonProperty("name")
     private String getPlayerName(String player) {
         // test code. String moet aangepast worden naar Player
         return player;
-    }
+    }*/
+
 
 }

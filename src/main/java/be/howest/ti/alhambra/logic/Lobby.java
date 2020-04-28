@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,9 +20,9 @@ public class Lobby {
         this.readyAmount = 0;
     }
 
-    public void addPlayer(){
-        //TODO change test code to actual code
-        Player player = new Player("john");
+    public void addPlayer(String name){
+        //TODO change to values from a player and not a name
+        Player player = new Player(name);
         players.add(player);
     }
 
@@ -29,6 +30,8 @@ public class Lobby {
         for (Player player: players) {
             if (player.getName().equals(name)){
                 players.remove(player);
+            } else {
+                throw new AlhambraEntityNotFoundException("name of player doesn't exist");
             }
         }
     }

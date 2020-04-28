@@ -27,6 +27,21 @@ class JsonTest {
         assertEquals(coin, Json.decodeValue(Json.encode(coin), Coin.class));
     }
 
+    @Test
+    void building() {
 
+        Walls walls = new Walls(true, false, true, false);
 
+        Building building = new Building(BuildingType.PAVILION, 1, walls);
+
+        JsonObject buildingAsJsonObject = JsonObject.mapFrom(building);
+
+        assertTrue(buildingAsJsonObject.containsKey("type"));
+        assertTrue(buildingAsJsonObject.containsKey("cost"));
+        assertTrue(buildingAsJsonObject.containsKey("walls"));
+
+        assertEquals(building, buildingAsJsonObject.mapTo(Building.class));
+
+        assertEquals(building, Json.decodeValue(Json.encode(building), Building.class));
+    }
 }

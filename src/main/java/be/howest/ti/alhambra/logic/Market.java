@@ -5,8 +5,8 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import java.util.*;
 
 public class Market {
-    private Queue<Building> buildings = new LinkedList<>();
-    private Map<Currency,Building> buildingsOnBoard = new HashMap<Currency, Building>();
+    private Queue<Building> buildings;
+    private Map<Currency,Building> buildingsOnBoard = new HashMap<>();
 
     public Market(Queue<Building> buildings) {
         this.buildings = buildings;
@@ -17,13 +17,10 @@ public class Market {
         return buildingsOnBoard;
     }
 
-    public Building takeBuilding(Building building){
-
-        player.hand += building;
-
-        return null;
-
+    public void takeBuilding(Currency currency){
+        buildingsOnBoard.remove(currency);
     }
+
     public void buyBuilding(Building building, List<Coin> coins){
         Currency currency = coins.get(0).getCurrency();
         int givenCoinAmount = 0;
@@ -39,6 +36,7 @@ public class Market {
             throw new AlhambraGameRuleException("This is against the rules");
         }
 
+        takeBuilding(currency);
 
     }
 

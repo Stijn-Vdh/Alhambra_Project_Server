@@ -4,14 +4,10 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import org.junit.jupiter.api.Test;
-
-<<<<<<< src/test/java/be/howest/ti/alhambra/logic/JsonTest.java
-import javax.xml.namespace.QName;
-=======
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
->>>>>>> src/test/java/be/howest/ti/alhambra/logic/JsonTest.java
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +51,6 @@ class JsonTest {
     }
 
     @Test
-<<<<<<< src/test/java/be/howest/ti/alhambra/logic/JsonTest.java
     void lobby() {
         String gameID;
         Lobby lobby = new Lobby("group01-1");
@@ -89,7 +84,7 @@ class JsonTest {
 
          assertEquals(lobby, Json.decodeValue(Json.encode(lobby), Lobby.class));
     }     
-=======
+
     void market()
     {
         List<Coin> coins = new LinkedList<>();
@@ -120,8 +115,6 @@ class JsonTest {
             coins.add(new Coin(Currency.GREEN, i));
         }
         assertThrows(AlhambraGameRuleException.class, ()-> market.buyBuilding(Currency.GREEN, coins2));
-
->>>>>>> src/test/java/be/howest/ti/alhambra/logic/JsonTest.java
     }
-    
+
 }

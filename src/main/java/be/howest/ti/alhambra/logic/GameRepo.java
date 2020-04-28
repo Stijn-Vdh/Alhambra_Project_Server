@@ -8,6 +8,10 @@ public class GameRepo {
     private Set<Game> games = new HashSet<>();
 
 
+    public Set<Game> getGames() {
+        return games;
+    }
+
     public GameRepo() {
         newGame();
     }

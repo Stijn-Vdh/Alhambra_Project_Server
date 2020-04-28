@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
+import be.howest.ti.alhambra.logic.BuildingRepo;
 import be.howest.ti.alhambra.logic.Coin;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
@@ -30,7 +31,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object getBuildings(RoutingContext ctx) {
         LOGGER.info("getBuildings");
-        return null;
+        return controller.getAllBuildings();
     }
 
     public Object getAvailableBuildLocations(RoutingContext ctx) {

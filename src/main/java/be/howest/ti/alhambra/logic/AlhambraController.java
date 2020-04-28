@@ -1,5 +1,8 @@
 package be.howest.ti.alhambra.logic;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class AlhambraController {
     public Currency[] getCurrencies() {
         return Currency.values();
@@ -13,5 +16,9 @@ public class AlhambraController {
             totalAmount += coin.getAmount();
         }
         return totalAmount;
+    }
+
+    public List<Building> getAllBuildings() {
+        return BuildingRepo.getAllBuildings();
     }
 }

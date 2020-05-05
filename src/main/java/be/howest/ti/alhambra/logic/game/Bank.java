@@ -1,6 +1,7 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import be.howest.ti.alhambra.logic.money.Coin;
 
 import java.util.LinkedList;
 import java.util.List;

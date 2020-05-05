@@ -1,11 +1,3 @@
-package be.howest.ti.alhambra.logic;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.HashSet;
-import java.util.Set;
-
 public class UsefulCode {
 /*    @JsonCreator
     public UsefulCode(){
@@ -20,7 +12,6 @@ public class UsefulCode {
     }
 
 
-
     @JsonProperty("gameID")
     public String generateGameID(){
         String group = "group01-";
@@ -33,7 +24,6 @@ public class UsefulCode {
 
         return group + counter;
     }
-
 
 
     public void joinLobby(String gameID, String name){
@@ -65,5 +55,13 @@ public class UsefulCode {
         return player;
     }*/
 
+    public void joinLobby(String gameID, Player player){
+        for (Lobby lobby: alhambra.getLobbies()
+        ) {
+            if (lobby.getGameID().equals(gameID)){
+                lobby.addPlayer(player);
+            }
+        }
+    }
 
 }

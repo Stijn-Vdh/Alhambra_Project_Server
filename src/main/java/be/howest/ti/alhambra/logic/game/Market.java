@@ -1,31 +1,34 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.game;
 
+import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
 
 import java.util.*;
 
 public class Market {
     private Queue<Building> buildings;
-    private Map<Currency,Building> buildingsOnBoard = new HashMap<>();
-    private Currency lastBoughtCurrency;
+    private Map<be.howest.ti.alhambra.logic.money.Currency,Building> buildingsOnBoard = new HashMap<>();
+    private be.howest.ti.alhambra.logic.money.Currency lastBoughtCurrency;
 
     public Market(Queue<Building> buildings) {
         this.buildings = buildings;
         fillBuildingToBoard();
     }
 
-    public Map<Currency, Building> getBuildingsOnBoard() {
+    public Map<be.howest.ti.alhambra.logic.money.Currency, Building> getBuildingsOnBoard() {
         return buildingsOnBoard;
     }
 
-    private void takeBuilding( Currency currency){
+    private void takeBuilding( be.howest.ti.alhambra.logic.money.Currency currency){
 
         buildingsOnBoard.remove(currency);
     }
 
     // verplaatsen naar player class???????????????
 
-    public void buyBuilding(Currency currency, List<Coin> coins){
+    public void buyBuilding(be.howest.ti.alhambra.logic.money.Currency currency, List<Coin> coins){
         int givenCoinAmount = 0;
 
         for(Coin coin : coins){
@@ -46,7 +49,7 @@ public class Market {
         if (buildingsOnBoard.size() == 3) {
             buildingsOnBoard.put(lastBoughtCurrency, buildings.poll());
         } else {
-            for (Currency currency : Currency.values()) {
+            for (be.howest.ti.alhambra.logic.money.Currency currency : Currency.values()) {
                 buildingsOnBoard.put(currency, buildings.poll());
             }
         }

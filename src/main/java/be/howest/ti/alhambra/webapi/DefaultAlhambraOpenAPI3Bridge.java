@@ -1,7 +1,7 @@
 package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
-import be.howest.ti.alhambra.logic.Coin;
+import be.howest.ti.alhambra.logic.money.Coin;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;

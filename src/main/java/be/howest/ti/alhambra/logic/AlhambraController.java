@@ -1,5 +1,12 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.BuildingRepo;
+import be.howest.ti.alhambra.logic.building.BuildingType;
+import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
+
 import java.util.*;
 
 public class AlhambraController {
@@ -15,7 +22,7 @@ public class AlhambraController {
 
     public Set<Game> getGames() { return games; }
 
-    public Currency[] getCurrencies() {
+    public be.howest.ti.alhambra.logic.money.Currency[] getCurrencies() {
         return Currency.values();
     }
 

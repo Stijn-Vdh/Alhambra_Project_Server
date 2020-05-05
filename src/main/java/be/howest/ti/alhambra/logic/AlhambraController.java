@@ -1,9 +1,20 @@
 package be.howest.ti.alhambra.logic;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class AlhambraController {
+
+    private static Set<Game> games = new HashSet<>();
+
+    public String createGame(){
+        int counter = games.size();
+        Game game = new Game(counter);
+        games.add(game);
+        return game.getGameID();
+    }
+
+    public Set<Game> getGames() { return games; }
+
     public Currency[] getCurrencies() {
         return Currency.values();
     }

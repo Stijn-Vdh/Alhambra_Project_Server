@@ -3,6 +3,8 @@ package be.howest.ti.alhambra.logic.game;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jdk.jshell.spi.ExecutionControl;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -63,7 +65,7 @@ public class Lobby {
     }
 
     public void startGame(){
-        //code for a new alhambra game
+       throw new NotImplementedException("Oe kunde dees nau vergete");
     }
 
     public void setPlayerReadyState(Player player) {

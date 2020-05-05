@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class Bank {
+    private int coinAmount = 4;
 
     private Queue<Coin> coinsInBank;
     private List<Coin> coinsOnBoard = new LinkedList<>();
@@ -22,20 +23,18 @@ public class Bank {
     }
 
     public void fillBoardWithInitialCoins(){
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < coinAmount; i++){
             coinsOnBoard.add(coinsInBank.poll());
         }
 
     }
 
     public void refillBank() {
-
-        while (coinsOnBoard.size() < 4){
+        while (coinsOnBoard.size() < coinAmount){
             coinsOnBoard.add(coinsInBank.poll());
         }
 
     }
-
 
     public void takeCoins(List<Coin> selectedCoins){
 
@@ -51,10 +50,7 @@ public class Bank {
             }else{
                 throw new AlhambraGameRuleException("Max amount is 5!");
             }
-
         }
-
-
     }
 
     private void removeSelectedCoins(List<Coin> selectedCoins) {
@@ -80,19 +76,16 @@ public class Bank {
     }
 
     public boolean validTotalValue(int totalValue){
-        return totalValue <= 5 && totalValue > 0;
+        int maxCoinValue = 5;
+        int minCoinValue = 0;
+        return totalValue <= maxCoinValue && totalValue > minCoinValue;
     }
-
-
 
     public String coinsToString(Coin[] coins){
         StringBuilder res = new StringBuilder();
-        for (int i = 0 ; i < 4; i++){
+        for (int i = 0 ; i < coinAmount; i++){
             res.append(coins[i]);
         }
         return res.toString();
     }
-
-
-
 }

@@ -149,8 +149,9 @@ class JsonTest {
          assertEquals(lobby, lobbyAsJsonObject.mapTo(Lobby.class));
 
          assertEquals(lobby, Json.decodeValue(Json.encode(lobby), Lobby.class));
-    }     
+    }
 
+    @Test
     void market()
     {
         List<Coin> coins = new LinkedList<>();

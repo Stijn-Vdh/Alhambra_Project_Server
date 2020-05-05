@@ -23,10 +23,8 @@ public class Market {
 
     private void takeBuilding( be.howest.ti.alhambra.logic.money.Currency currency){
 
-        buildingsOnBoard.remove(currency);
+        buildingsOnBoard.put(currency,null);
     }
-
-    // verplaatsen naar player class???????????????
 
     public void buyBuilding(be.howest.ti.alhambra.logic.money.Currency currency, List<Coin> coins){
         int givenCoinAmount = 0;
@@ -46,11 +44,16 @@ public class Market {
     }
 
     public void fillBuildingToBoard(){
-        if (buildingsOnBoard.size() == 3) {
-            buildingsOnBoard.put(lastBoughtCurrency, buildings.poll());
-        } else {
-            for (be.howest.ti.alhambra.logic.money.Currency currency : Currency.values()) {
+
+        if (buildingsOnBoard.isEmpty()) {
+            for (Currency currency : Currency.values()){
                 buildingsOnBoard.put(currency, buildings.poll());
+            }
+        }else{
+            for (Currency currency : buildingsOnBoard.keySet()){
+                if (buildingsOnBoard.get(currency) == null){
+                    buildingsOnBoard.put(currency, buildings.poll());
+                }
             }
         }
     }

@@ -13,8 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MarketTest {
     @Test
@@ -36,7 +35,7 @@ public class MarketTest {
         assertEquals(4,market.getBuildingsOnBoard().size());
 
         market.buyBuilding(Currency.GREEN, coins);
-        assertEquals(3,market.getBuildingsOnBoard().size());
+        assertNull(market.getBuildingsOnBoard().get(Currency.GREEN));
 
         market.fillBuildingToBoard();
         assertEquals(4,market.getBuildingsOnBoard().size());

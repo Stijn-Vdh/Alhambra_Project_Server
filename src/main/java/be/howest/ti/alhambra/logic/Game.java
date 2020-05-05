@@ -39,4 +39,9 @@ public class Game {
     public int hashCode() {
         return Objects.hash(gameID);
     }
+
+    @Override
+    public String toString() {
+        return '"' + gameID +  '"';
+    }
 }

@@ -182,4 +182,16 @@ class JsonTest {
         }
         assertThrows(AlhambraGameRuleException.class, ()-> market.buyBuilding(Currency.GREEN, coins2));
     }
+
+    @Test
+    void createGame(){
+
+        AlhambraController controller = new AlhambraController();
+        assertEquals("group01-1", controller.createGame());
+        assertEquals("group01-2", controller.createGame());
+
+    }
+
+
+
 }

@@ -9,24 +9,23 @@ import java.util.*;
 
 public class Market {
     private Queue<Building> buildings;
-    private Map<be.howest.ti.alhambra.logic.money.Currency,Building> buildingsOnBoard = new HashMap<>();
-    private be.howest.ti.alhambra.logic.money.Currency lastBoughtCurrency;
+    private Map<Currency,Building> buildingsOnBoard = new HashMap<>();
 
     public Market(Queue<Building> buildings) {
         this.buildings = buildings;
         fillBuildingToBoard();
     }
 
-    public Map<be.howest.ti.alhambra.logic.money.Currency, Building> getBuildingsOnBoard() {
+    public Map<Currency, Building> getBuildingsOnBoard() {
         return buildingsOnBoard;
     }
 
-    private void takeBuilding( be.howest.ti.alhambra.logic.money.Currency currency){
+    private void takeBuilding(Currency currency){
 
         buildingsOnBoard.put(currency,null);
     }
 
-    public void buyBuilding(be.howest.ti.alhambra.logic.money.Currency currency, List<Coin> coins){
+    public void buyBuilding(Currency currency, List<Coin> coins){
         int givenCoinAmount = 0;
 
         for(Coin coin : coins){
@@ -39,7 +38,6 @@ public class Market {
         if (givenCoinAmount < buildingsOnBoard.get(currency).getCost()){
             throw new AlhambraGameRuleException("This is against the rules");
         }
-        lastBoughtCurrency = currency;
         takeBuilding(currency);
     }
 

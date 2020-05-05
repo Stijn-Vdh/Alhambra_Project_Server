@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic.game;
+package be.howest.ti.alhambra.logic.player;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

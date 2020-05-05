@@ -1,9 +1,9 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.player.Player;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jdk.jshell.spi.ExecutionControl;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.HashSet;

@@ -9,8 +9,8 @@ public class GameTest {
     void createGame(){
 
         AlhambraController controller = new AlhambraController();
-        assertEquals("group01-1", controller.createGame());
-        assertEquals("group01-2", controller.createGame());
+        assertEquals("group01-1", controller.initializeGame());
+        assertEquals("group01-2", controller.initializeGame());
 
     }
 }

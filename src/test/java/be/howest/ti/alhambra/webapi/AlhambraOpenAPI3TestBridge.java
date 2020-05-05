@@ -7,8 +7,11 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class AlhambraOpenAPI3TestBridge implements AlhambraOpenAPI3Bridge {
 

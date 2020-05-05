@@ -30,7 +30,7 @@ class AlhambraOpenAPI3TestBridge implements AlhambraOpenAPI3Bridge {
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {
         LOGGER.info("verifyPlayerToken");
-        return token.equals(gameId + "+" + playerName);
+        return DEFAULT_PLAYER_TOKEN.equals(token);
     }
 
     public Object getBuildings(RoutingContext ctx) {
@@ -133,11 +133,5 @@ class AlhambraOpenAPI3TestBridge implements AlhambraOpenAPI3Bridge {
     public Object getGame(RoutingContext ctx) {
         LOGGER.info("getGame");
         return null;
-    }
-
-    @Test
-    public void playerTokenTest() {
-        String playerToken = DEFAULT_GAME_ID + "+" + THIEVE_PLAYER_NAME;
-        assertTrue(verifyPlayerToken(playerToken, DEFAULT_GAME_ID, THIEVE_PLAYER_NAME));
     }
 }

@@ -1,7 +1,7 @@
 package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
-import be.howest.ti.alhambra.logic.Coin;
+import be.howest.ti.alhambra.logic.money.Coin;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -58,11 +58,9 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         return controller.getGames();
     }
 
-
-
     public Object createGame(RoutingContext ctx) {
         LOGGER.info("createGame");
-        return controller.createGame();
+        return controller.initializeGame();
     }
 
     public Object clearGames(RoutingContext ctx) {

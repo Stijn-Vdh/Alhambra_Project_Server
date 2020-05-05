@@ -1,19 +1,33 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.BuildingRepo;
+import be.howest.ti.alhambra.logic.building.BuildingType;
+import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
+
 import java.util.*;
 
 public class AlhambraController {
 
-    private static Set<Game> games = new HashSet<>();
+    private static List<Game> games = new LinkedList<>();
 
-    public String createGame(){
+    public Game initializeGame(){
         int counter = games.size();
         Game game = new Game(counter);
         games.add(game);
-        return game.getGameID();
+        return game;
     }
 
-    public Set<Game> getGames() { return games; }
+    public List<String> getGames() {
+        List<String> tempList = new LinkedList<>();
+
+        for (Game game: games) {
+            tempList.add(game.toString());
+        }
+        return tempList;
+    }
 
     public Currency[] getCurrencies() {
         return Currency.values();

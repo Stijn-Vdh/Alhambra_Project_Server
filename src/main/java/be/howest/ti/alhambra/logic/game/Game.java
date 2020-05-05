@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.game;
 
 import java.util.Objects;
 
@@ -11,11 +11,11 @@ public class Game {
         gameID = generateGameID(counter);
     }
 
-    public String generateGameID(int counter){
+    public String generateGameID(int counter) {
         String prefix = "group01-";
-        if (counter == 0){
+        if (counter == 0) {
             counter = 1;
-        } else{
+        } else {
             counter++;
         }
 
@@ -42,6 +42,6 @@ public class Game {
 
     @Override
     public String toString() {
-        return '"' + gameID +  '"';
+        return gameID;
     }
 }

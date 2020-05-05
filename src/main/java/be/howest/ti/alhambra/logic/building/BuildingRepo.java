@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.building;
 
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.Json;

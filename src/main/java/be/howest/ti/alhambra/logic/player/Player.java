@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.player;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,16 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 public class Player {
-/*
-    public void joinLobby(String gameID, Player player){
-        for (Lobby lobby: alhambra.getLobbies()
-        ) {
-            if (lobby.getGameID().equals(gameID)){
-                lobby.addPlayer(player);
-            }
-        }
-    }
-*/
 
 private String name;
 private boolean isReady;

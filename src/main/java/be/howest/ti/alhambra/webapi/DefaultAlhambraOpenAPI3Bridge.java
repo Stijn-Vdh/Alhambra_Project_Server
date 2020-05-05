@@ -20,7 +20,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public boolean verifyAdminToken(String token) {
         LOGGER.info("verifyPlayerToken");
-        return true;
+        return token.contains("admin");
     }
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {

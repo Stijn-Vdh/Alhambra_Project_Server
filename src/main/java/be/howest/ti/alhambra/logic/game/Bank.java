@@ -8,32 +8,26 @@ import java.util.List;
 import java.util.Queue;
 
 public class Bank {
-    private int coinAmount = 4;
+    private static final int BANK_LIMIT = 4;
+    private static final int MAX_COIN_VALUE = 5;
+    private static final int MIN_COIN_VALUE = 0;
 
-    private Queue<Coin> coinsInBank;
+    private Queue<Coin> allCoins;
     private List<Coin> coinsOnBoard = new LinkedList<>();
 
     public Bank(Queue<Coin> allCoins) {
-        this.coinsInBank = allCoins;
-        fillBoardWithInitialCoins();
+        this.allCoins = allCoins;
+        refill();
     }
 
     public List<Coin> getCoinsOnBoard() {
         return coinsOnBoard;
     }
 
-    public void fillBoardWithInitialCoins() {
-        for (int i = 0; i < coinAmount; i++) {
-            coinsOnBoard.add(coinsInBank.poll());
+    public void refill() {
+        while (coinsOnBoard.size() < BANK_LIMIT) {
+            coinsOnBoard.add(allCoins.poll());
         }
-
-    }
-
-    public void refillBank() {
-        while (coinsOnBoard.size() < coinAmount) {
-            coinsOnBoard.add(coinsInBank.poll());
-        }
-
     }
 
     public void takeCoins(List<Coin> selectedCoins) {
@@ -42,7 +36,7 @@ public class Bank {
 
         if (validTotalValue(valueCoins)) {
             removeSelectedCoins(selectedCoins);
-            refillBank();
+            refill();
         } else {
             throw new AlhambraGameRuleException("Max amount is 5!");
         }
@@ -51,8 +45,8 @@ public class Bank {
 
     private void removeSelectedCoins(List<Coin> selectedCoins) {
 
-        for (int i = 0; i < selectedCoins.size(); i++) {
-            coinsOnBoard.remove(selectedCoins.get(i));
+        for (Coin selectedCoin : selectedCoins) {
+            coinsOnBoard.remove(selectedCoin);
         }
     }
 
@@ -66,14 +60,13 @@ public class Bank {
     }
 
     public boolean validTotalValue(int totalValue) {
-        int maxCoinValue = 5;
-        int minCoinValue = 0;
-        return totalValue <= maxCoinValue && totalValue > minCoinValue;
+
+        return totalValue <= MAX_COIN_VALUE && totalValue > MIN_COIN_VALUE;
     }
 
     public String coinsToString(Coin[] coins) {
         StringBuilder res = new StringBuilder();
-        for (int i = 0; i < coinAmount; i++) {
+        for (int i = 0; i < BANK_LIMIT; i++) {
             res.append(coins[i]);
         }
         return res.toString();

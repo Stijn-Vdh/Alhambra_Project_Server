@@ -14,14 +14,14 @@ public class AlhambraController {
 
     private static List<Game> games = new LinkedList<>();
 
-    public Game initializeGame() {
+    public String initializeGame() {
         int counter = games.size();
         Game game = new Game(counter);
         games.add(game);
-        return game;
+        return game.toString();
     }
 
-    public List<String> getGamesToString() {
+    public List<String> getGameIds() {
         List<String> tempList = new LinkedList<>();
 
         for (Game game : games) {
@@ -61,14 +61,15 @@ public class AlhambraController {
     public boolean setReadyState(String name) {
         Player player = searchPlayer(name);
 
-        assert player != null;
-        if (player.isReady()) {
-            player.setReady(false);
-        } else {
-            player.setReady(true);
-        }
-        return true;
-
+       if (player != null){
+           if (player.isReady()) {
+               player.setReady(false);
+           } else {
+               player.setReady(true);
+           }
+           return true;
+       }
+       return false;
     }
 
     private Player searchPlayer(String name) {

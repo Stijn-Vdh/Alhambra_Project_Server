@@ -10,6 +10,7 @@ public class PlayerTest {
     void setReadyState() {
         AlhambraController controller = new AlhambraController();
         controller.initializeLobby();
+        //can only join game 03 because of static implementation -> controller
         controller.joinGame("group01-3", "john");
 
         assertFalse(controller.getPlayers().get(0).isReady());

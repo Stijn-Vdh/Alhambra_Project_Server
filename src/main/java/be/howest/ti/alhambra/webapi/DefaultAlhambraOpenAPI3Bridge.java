@@ -82,7 +82,9 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object setReady(RoutingContext ctx) {
         LOGGER.info("setReady");
-        return null;
+        String name = ctx.request().getParam("playerName");
+        String gameID = ctx.request().getParam("gameID");
+        return controller.setReadyState(name, gameID);
     }
 
     public Object setNotReady(RoutingContext ctx) {

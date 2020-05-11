@@ -50,4 +50,10 @@ public class AlhambraController {
     public void clearAllGames(){
         games.clear();
     }
+
+    public boolean setReadyState(String name, String gameID){
+
+
+        return false;
+    }
 }

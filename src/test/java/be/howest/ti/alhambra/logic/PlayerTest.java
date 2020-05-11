@@ -10,7 +10,7 @@ public class PlayerTest {
     void setReadyState() {
         AlhambraController controller = new AlhambraController();
         controller.initializeLobby();
-        controller.joinGame("group01-0", "john");
+        controller.joinGame("group01-3", "john");
 
         assertFalse(controller.getPlayers().get(0).isReady());
 

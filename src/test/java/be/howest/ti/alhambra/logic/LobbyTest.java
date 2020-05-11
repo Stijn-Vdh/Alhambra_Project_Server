@@ -15,8 +15,8 @@ public class LobbyTest {
     @Test
     void createLobby(){
         assertEquals(0, controller.getLobbies().size());
-        assertEquals("group01-0", controller.initializeLobby());
         assertEquals("group01-1", controller.initializeLobby());
+        assertEquals("group01-2", controller.initializeLobby());
         assertEquals(2, controller.getLobbies().size());
     }
 

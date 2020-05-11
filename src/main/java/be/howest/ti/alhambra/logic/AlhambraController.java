@@ -17,12 +17,16 @@ public class AlhambraController {
     private List<Game> ongoingGames = new LinkedList<>();
     private List<Lobby> lobbies = new LinkedList<>();
     private List<Player> players = new LinkedList<>();
+    private static int gameIdCounter = 0;
 
     public String initializeLobby() {
-        int counter = lobbies.size();
-        Lobby lobby = new Lobby("group01-" + counter);
+        Lobby lobby = new Lobby("group01-" + gameIdCounter);
         lobbies.add(lobby);
+        incrID();
         return lobby.toString();
+    }
+    private static void incrID(){
+        gameIdCounter++;
     }
 
     public List<String> getGameIds() {

@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.NotImplementedException;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 
 public class Lobby {
@@ -86,5 +84,22 @@ public class Lobby {
     @Override
     public String toString() {
         return gameID;
+    }
+
+    public Object getState() {
+        Map<String, Object> state = new HashMap<>();
+        List<String> playerNames = new LinkedList<>();
+
+        for (Player player: players) {
+            playerNames.add(player.getName());
+        }
+
+
+        state.put("id", gameID);
+        state.put("players", playerNames);
+        state.put("started", started);
+        state.put("playerCount", players.size());
+        state.put("readyCount", getReadyAmount());
+        return state;
     }
 }

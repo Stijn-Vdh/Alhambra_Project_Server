@@ -15,13 +15,13 @@ import java.util.*;
 public class AlhambraController {
 
     private List<Game> ongoingGames = new LinkedList<>();
-    private List<Lobby> lobbies = new LinkedList<>();
+    private Map<String,Lobby> lobbies = new HashMap<>();
     private List<Player> players = new LinkedList<>();
     private int gameIdCounter = 0;
 
     public String initializeLobby() {
         Lobby lobby = new Lobby("group01-" + gameIdCounter);
-        lobbies.add(lobby);
+        lobbies.put(lobby.getGameID(),lobby);
         incrID();
         return lobby.toString();
     }
@@ -32,7 +32,7 @@ public class AlhambraController {
     public List<String> getGameIds() {
         List<String> tempList = new LinkedList<>();
 
-        for (Lobby lobby : lobbies) {
+        for (Lobby lobby : lobbies.values()) {
             tempList.add(lobby.toString());
         }
         return tempList;
@@ -42,7 +42,7 @@ public class AlhambraController {
         return ongoingGames;
     }
 
-    public List<Lobby> getLobbies() {
+    public Map<String, Lobby> getLobbies() {
         return lobbies;
     }
 
@@ -97,7 +97,7 @@ public class AlhambraController {
     public String joinGame(String gameID, String name) {
         Player player = new Player(name);
         players.add(player);
-        for (Lobby lobby : lobbies) {
+        for (Lobby lobby : lobbies.values()) {
             if (lobby.getGameID().equals(gameID)) {
                 lobby.addPlayer(player);
                 return gameID + '+' + name;
@@ -107,4 +107,11 @@ public class AlhambraController {
     }
 
 
+    public Object getGameState(String gameID) {
+
+        Lobby lobby = lobbies.get(gameID);
+
+
+        return lobby.getState();
+    }
 }

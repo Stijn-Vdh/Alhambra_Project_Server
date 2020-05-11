@@ -1,9 +1,7 @@
 package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
-import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.money.Coin;
-import be.howest.ti.alhambra.logic.player.Player;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -16,6 +14,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAlhambraOpenAPI3Bridge.class);
     private final AlhambraController controller;
     private String playerName = "playerName";
+    private String gameID = "gameId";
     public DefaultAlhambraOpenAPI3Bridge(){
         this.controller = new AlhambraController();
     }
@@ -62,22 +61,22 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object createGame(RoutingContext ctx) {
         LOGGER.info("createGame");
-        return controller.initializeGame();
+        return controller.initializeLobby();
     }
 
     public Object clearGames(RoutingContext ctx) {
         LOGGER.info("clearGames");
         controller.clearAllGames();
-        return controller.getGames();
+        return controller.getLobbies();
     }
 
     public Object joinGame(RoutingContext ctx) {
         LOGGER.info("joinGame");
-        String gameID = ctx.request().getParam("gameId");
+        String id = ctx.request().getParam(gameID);
         String body = ctx.getBodyAsString();
         JsonObject obj = new JsonObject(body);
         String name = obj.getString("playerName");
-        return controller.joinGame(gameID, name);
+        return controller.joinGame(id, name);
     }
 
 
@@ -101,7 +100,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     public Object takeMoney(RoutingContext ctx) {
         LOGGER.info("takeMoney");
 
-        String gameId = ctx.request().getParam("gameId");
+        String gameId = ctx.request().getParam(gameID);
         String name = ctx.request().getParam(playerName);
 
         String body = ctx.getBodyAsString();

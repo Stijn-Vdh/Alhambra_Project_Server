@@ -15,16 +15,16 @@ public class Lobby {
     private Set<Player> players = new HashSet<>();
     private int readyAmount;
     private String gameID;
+    private boolean started;
 
     @JsonCreator
-    public Lobby(@JsonProperty("gameID") String gameID) {
-        this.gameID = gameID;
+    public Lobby(@JsonProperty("gameID") String id) {
+        this.gameID = id;
         this.readyAmount = 0;
+        this.started = false;
     }
 
-    public void addPlayer(String name){
-        //TODO change to values from a player and not a name
-        Player player = new Player(name);
+    public void addPlayer(Player player){
         players.add(player);
     }
 
@@ -65,6 +65,7 @@ public class Lobby {
     }
 
     public void startGame(){
+        started = true;
        throw new NotImplementedException("Oe kunde dees nau vergete");
     }
 
@@ -80,5 +81,10 @@ public class Lobby {
     @Override
     public int hashCode() {
         return Objects.hash(getGameID(), getPlayers());
+    }
+
+    @Override
+    public String toString() {
+        return gameID;
     }
 }

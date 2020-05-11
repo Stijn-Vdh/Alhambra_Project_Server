@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walls;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 
 public class City {
 
@@ -21,6 +22,17 @@ public class City {
 
     public Building[][] getBoard() {
         return board;
+    }
+
+    public void placeBuiding(Building b, int row , int col){
+        if (board[row][col] == null)
+        {
+            board[row][col] = b;
+        }
+        else{
+            throw new AlhambraGameRuleException("Hier staat al een gebouw!");
+        }
+
     }
 
 }

@@ -35,10 +35,6 @@ public class Player {
         isReady = ready;
     }
 
-    public String joinGame(String gameID) {
-        return gameID + '+' + name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

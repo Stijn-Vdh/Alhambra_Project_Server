@@ -32,7 +32,7 @@ public class Player {
     }
 
     public void setReady(boolean ready) {
-        isReady = ready;
+        isReady = !ready;
     }
 
     @Override

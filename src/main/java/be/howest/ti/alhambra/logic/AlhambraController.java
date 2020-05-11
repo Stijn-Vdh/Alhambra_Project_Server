@@ -8,7 +8,6 @@ import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
-import io.vertx.codegen.doc.Tag;
 
 import java.util.*;
 
@@ -65,11 +64,7 @@ public class AlhambraController {
         Player player = searchPlayer(name);
 
        if (player != null){
-           if (player.isReady()) {
-               player.setReady(false);
-           } else {
-               player.setReady(true);
-           }
+               player.setReady(player.isReady());
            return true;
        }
        return false;

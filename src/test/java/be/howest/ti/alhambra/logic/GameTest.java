@@ -1,19 +1,24 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.game.Lobby;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GameTest {
+    AlhambraController controller = new AlhambraController();
+
     @Test
-    void createGame(){
+    void joinGame() {
+        controller.initializeLobby();
+        Lobby firstGame = controller.getLobbies().get("group01-0");
+        assertEquals(0, firstGame.getPlayers().size());
+        controller.joinGame("group01-0", "john");
+        assertEquals(1, firstGame.getPlayers().size());
 
-        AlhambraController controller = new AlhambraController();
-        Game game1 = new Game(0);
-        Game game2 = new Game(1);
-        assertEquals(game1.getGameID(), controller.initializeGame());
-        assertEquals(game2.getGameID(), controller.initializeGame());
-
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.joinGame("group01-5159", "john"));
     }
 }

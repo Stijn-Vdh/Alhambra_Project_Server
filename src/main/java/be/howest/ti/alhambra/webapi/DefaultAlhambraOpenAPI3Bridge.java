@@ -13,7 +13,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAlhambraOpenAPI3Bridge.class);
     private final AlhambraController controller;
-    private String playerName = "playerName";
+    private static final String PLAYER_NAME = "playerName";
+    private static final String GAME_ID = "gameId";
     public DefaultAlhambraOpenAPI3Bridge(){
         this.controller = new AlhambraController();
     }
@@ -25,6 +26,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {
         LOGGER.info("verifyPlayerToken");
+        int index = token.indexOf("+");
+        playerName = token.substring(index+1);
         return token.equals(gameId + "+" + playerName);
     }
 
@@ -60,18 +63,22 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object createGame(RoutingContext ctx) {
         LOGGER.info("createGame");
-        return controller.initializeGame();
+        return controller.initializeLobby();
     }
 
     public Object clearGames(RoutingContext ctx) {
         LOGGER.info("clearGames");
         controller.clearAllGames();
-        return controller.getGames();
+        return controller.getLobbies();
     }
 
     public Object joinGame(RoutingContext ctx) {
         LOGGER.info("joinGame");
-        return null;
+        String id = ctx.request().getParam(GAME_ID);
+        String body = ctx.getBodyAsString();
+        JsonObject obj = new JsonObject(body);
+        String name = obj.getString(PLAYER_NAME);
+        return controller.joinGame(id, name);
     }
 
 
@@ -82,21 +89,21 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object setReady(RoutingContext ctx) {
         LOGGER.info("setReady");
-        String name = ctx.request().getParam(playerName);
+        String name = ctx.request().getParam(PLAYER_NAME);
         return controller.setReadyState(name);
     }
 
     public Object setNotReady(RoutingContext ctx) {
         LOGGER.info("setNotReady");
-        String name = ctx.request().getParam(playerName);
+        String name = ctx.request().getParam(PLAYER_NAME);
         return controller.setReadyState(name);
     }
 
     public Object takeMoney(RoutingContext ctx) {
         LOGGER.info("takeMoney");
 
-        String gameId = ctx.request().getParam("gameId");
-        String name = ctx.request().getParam(playerName);
+        String gameId = ctx.request().getParam(GAME_ID);
+        String name = ctx.request().getParam(PLAYER_NAME);
 
         String body = ctx.getBodyAsString();
         Coin[] coins = Json.decodeValue(body, Coin[].class);
@@ -104,8 +111,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         int totalAmount = controller.getTotalAmount(coins);
 
         return new JsonObject()
-                .put("gameId", gameId)
-                .put(playerName, name)
+                .put(GAME_ID, gameId)
+                .put(PLAYER_NAME, name)
                 .put("total", totalAmount);
     }
 
@@ -127,7 +134,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object getGame(RoutingContext ctx) {
         LOGGER.info("getGame");
-        return null;
+        return controller.getGameState(ctx.request().getParam(GAME_ID));
     }
 
 }

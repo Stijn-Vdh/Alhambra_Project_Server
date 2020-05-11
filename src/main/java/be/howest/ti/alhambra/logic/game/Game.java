@@ -2,18 +2,22 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.player.Player;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class Game {
 
     private String gameID;
     private List<Player> players = new LinkedList<>();
+    private boolean started;
+    private boolean ended;
+    private Player currentPlayer;
 
     public Game(int counter) {
         gameID = generateGameID(counter);
+        started = true;
+        ended = false;
+        currentPlayer = players.get(new Random().nextInt(players.size()));
     }
 
     public String generateGameID(int counter) {
@@ -33,6 +37,24 @@ public class Game {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Object getState() {
+        Map<String, Object> state = new HashMap<>();
+        List<String> playerNames = new LinkedList<>();
+
+        for (Player player: players) {
+            playerNames.add(player.getName());
+        }
+
+        state.put("bank", gameID);
+        state.put("market", playerNames);
+        state.put("players", players);
+        state.put("started", started);
+        state.put("ended", ended);
+        state.put("currentPlayer", currentPlayer);
+
+        return state;
     }
 
     @Override

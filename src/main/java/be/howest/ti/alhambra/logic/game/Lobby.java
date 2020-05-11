@@ -6,25 +6,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.NotImplementedException;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 
 public class Lobby {
     private Set<Player> players = new HashSet<>();
     private int readyAmount;
     private String gameID;
+    private boolean started;
 
     @JsonCreator
-    public Lobby(@JsonProperty("gameID") String gameID) {
-        this.gameID = gameID;
+    public Lobby(@JsonProperty("gameID") String id) {
+        this.gameID = id;
         this.readyAmount = 0;
+        this.started = false;
     }
 
-    public void addPlayer(String name){
-        //TODO change to values from a player and not a name
-        Player player = new Player(name);
+    public void addPlayer(Player player){
         players.add(player);
     }
 
@@ -65,19 +63,9 @@ public class Lobby {
     }
 
     public void startGame(){
+        started = true;
        throw new NotImplementedException("Oe kunde dees nau vergete");
     }
-
-    public void setPlayerReadyState(Player player) {
-        boolean readyState = player.isReady();
-        if (readyState){
-            player.setReady(false);
-        }else {
-            player.setReady(true);
-        }
-    }
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -91,5 +79,27 @@ public class Lobby {
     @Override
     public int hashCode() {
         return Objects.hash(getGameID(), getPlayers());
+    }
+
+    @Override
+    public String toString() {
+        return gameID;
+    }
+
+    public Map<String, Object> getState() {
+        Map<String, Object> state = new HashMap<>();
+        List<String> playerNames = new LinkedList<>();
+
+        for (Player player: players) {
+            playerNames.add(player.getName());
+        }
+
+
+        state.put("id", gameID);
+        state.put("players", playerNames);
+        state.put("started", started);
+        state.put("playerCount", players.size());
+        state.put("readyCount", getReadyAmount());
+        return state;
     }
 }

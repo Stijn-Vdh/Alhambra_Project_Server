@@ -3,7 +3,9 @@ package be.howest.ti.alhambra.logic;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.building.BuildingType;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.game.Lobby;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
@@ -12,26 +14,36 @@ import java.util.*;
 
 public class AlhambraController {
 
-    private static List<Game> games = new LinkedList<>();
+    private Map<String,Game> ongoingGames = new HashMap<>();
+    private Map<String,Lobby> lobbies = new HashMap<>();
+    private List<Player> players = new LinkedList<>();
+    private int gameIdCounter = 0;
 
-    public String initializeGame() {
-        int counter = games.size();
-        Game game = new Game(counter);
-        games.add(game);
-        return game.toString();
+    public String initializeLobby() {
+        Lobby lobby = new Lobby("group01-" + gameIdCounter);
+        lobbies.put(lobby.getGameID(),lobby);
+        incrID();
+        return lobby.toString();
+    }
+    private void incrID(){
+        gameIdCounter++;
     }
 
     public List<String> getGameIds() {
         List<String> tempList = new LinkedList<>();
 
-        for (Game game : games) {
-            tempList.add(game.toString());
+        for (Lobby lobby : lobbies.values()) {
+            tempList.add(lobby.toString());
         }
         return tempList;
     }
 
-    public List<Game> getGames() {
-        return games;
+    public Map<String, Game> getOngoingGames() {
+        return ongoingGames;
+    }
+
+    public Map<String, Lobby> getLobbies() {
+        return lobbies;
     }
 
     public Currency[] getCurrencies() {
@@ -54,33 +66,57 @@ public class AlhambraController {
         return BuildingRepo.getAllBuildings();
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     public void clearAllGames() {
-        games.clear();
+        ongoingGames.clear();
+        lobbies.clear();
     }
 
     public boolean setReadyState(String name) {
         Player player = searchPlayer(name);
 
        if (player != null){
-           if (player.isReady()) {
-               player.setReady(false);
-           } else {
-               player.setReady(true);
-           }
+               player.setReady(player.isReady());
            return true;
        }
        return false;
     }
 
     private Player searchPlayer(String name) {
-        for (int i = 0; i < getGames().size(); i++) {
-            Game game = getGames().get(i);
-            for (int j = 0; j < game.getPlayers().size(); j++) {
-                if (game.getPlayers().get(i).getName().equals(name)) {
-                    return game.getPlayers().get(i);
+            for (Player player : players) {
+                if (player.getName().equals(name)) {
+                    return player;
                 }
-            }
         }
         return null;
+    }
+
+    public String joinGame(String gameID, String name) {
+        Player player = new Player(name);
+        players.add(player);
+        for (Lobby lobby : lobbies.values()) {
+            if (lobby.getGameID().equals(gameID)) {
+                lobby.addPlayer(player);
+                return gameID + '+' + name;
+            }
+        }
+        throw new AlhambraEntityNotFoundException("This game does not exist.");
+    }
+
+
+    public Object getGameState(String gameID) {
+
+        Lobby lobby = lobbies.get(gameID);
+        Game game = ongoingGames.get(gameID);
+
+        if (lobby == null){
+            return game.getState();
+        }else{
+            return lobby.getState();
+        }
+
     }
 }

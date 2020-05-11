@@ -12,8 +12,8 @@ public class GameTest {
         AlhambraController controller = new AlhambraController();
         Game game1 = new Game(0);
         Game game2 = new Game(1);
-        assertEquals(game1, controller.initializeGame());
-        assertEquals(game2, controller.initializeGame());
+        assertEquals(game1.getGameID(), controller.initializeGame());
+        assertEquals(game2.getGameID(), controller.initializeGame());
 
     }
 }

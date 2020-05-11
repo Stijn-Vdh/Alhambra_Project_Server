@@ -1,11 +1,16 @@
 package be.howest.ti.alhambra.logic.game;
 
+import be.howest.ti.alhambra.logic.player.Player;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 
 public class Game {
 
     private String gameID;
+    private List<Player> players = new LinkedList<>();
 
     public Game(int counter) {
         gameID = generateGameID(counter);
@@ -26,6 +31,9 @@ public class Game {
         return gameID;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
 
     @Override
     public boolean equals(Object o) {

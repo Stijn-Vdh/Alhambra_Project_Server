@@ -58,18 +58,16 @@ public class AlhambraController {
         games.clear();
     }
 
-    public boolean setReadyState(String name, String gameID) {
+    public boolean setReadyState(String name) {
         Player player = searchPlayer(name);
 
-
+        assert player != null;
         if (player.isReady()) {
             player.setReady(false);
-            return true;
         } else {
             player.setReady(true);
-            return true;
         }
-
+        return true;
 
     }
 

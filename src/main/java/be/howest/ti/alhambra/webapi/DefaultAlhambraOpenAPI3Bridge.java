@@ -26,6 +26,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {
         LOGGER.info("verifyPlayerToken");
+        int index = token.indexOf("+");
+        playerName = token.substring(index+1);
         return token.equals(gameId + "+" + playerName);
     }
 

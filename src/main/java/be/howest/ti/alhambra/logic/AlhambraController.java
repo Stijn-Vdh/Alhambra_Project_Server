@@ -3,6 +3,7 @@ package be.howest.ti.alhambra.logic;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.building.BuildingType;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
@@ -49,5 +50,11 @@ public class AlhambraController {
 
     public void clearAllGames(){
         games.clear();
+    }
+
+    public String joinGame(String gameID, String name) {
+        if (!this.getGameIds.contains(gameID)) {
+            throw new AlhambraEntityNotFoundException("this game does not exist.");
+        }
     }
 }

@@ -75,3 +75,22 @@ public class UsefulCode {
         }
 
     }*/
+
+   public Set<Location> getNeighbours(int row , int col){
+
+           Set<Location> locations = new HashSet<>();
+           if (board[row+1][col] != null){
+               locations.add(new Location(row+1,col));
+           }
+           if (board[row-1][col] != null){
+               locations.add(new Location(row-1,col));
+           }
+           if (board[row][col+1] != null){
+               locations.add(new Location(row,col+1));
+           }
+           if (board[row][col-1] != null){
+               locations.add(new Location(row,col+1));
+           }
+
+           return locations;
+       }

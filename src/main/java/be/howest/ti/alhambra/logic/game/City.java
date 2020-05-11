@@ -2,21 +2,22 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walls;
-
-import java.util.HashSet;
-import java.util.Set;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 
 public class City {
 
-    Building[][] board = new Building[6][6];
+    static final int SIZE =6;
+
+    Building[][] board = new Building[SIZE][SIZE];
 
     public City(){
          initializeCity();
     }
     public void initializeCity(){
-        board[0][0] = new Building(null,0, new Walls(false,false,false,false));
+        int center = SIZE/2;
+        board[center][center] = new Building(null,0, new Walls(false,false,false,false));
         for(int r = 1; r< board.length; r++){
-            for(int c = 1; c< board[r].length; c++){
+            for(int c = 1; c < board[r].length; c++){
                  board[r][c] = null;
             }
         }
@@ -26,23 +27,35 @@ public class City {
         return board;
     }
 
+    public void placeBuiding(Building b, Location location){
 
-    public Set<Location> getNeighbours(int row , int col){
+        int row = location.getRow();
+        int col = location.getCol();
 
-        Set<Location> locations = new HashSet<>();
+        if (board[row][col] == null) {
+            if (hasNeighbours(row,col)){
+                board[row][col] = b;
+            } else {
+                throw new AlhambraGameRuleException("Deze plaats heeft geen aanliggende gebouwen!");
+            }
+        }
+        else{
+            throw new AlhambraGameRuleException("Hier staat al een gebouw!");
+        }
+
+    }
+
+
+    public boolean hasNeighbours(int row , int col){
         if (board[row+1][col] != null){
-             locations.add(new Location(row+1,col));
+             return true;
         }
-        if (board[row-1][col] != null){
-            locations.add(new Location(row-1,col));
+        else if (board[row-1][col] != null){
+            return true;
         }
-        if (board[row][col+1] != null){
-            locations.add(new Location(row,col+1));
+        else if (board[row][col+1] != null){
+            return true;
         }
-        if (board[row][col-1] != null){
-            locations.add(new Location(row,col+1));
-        }
-
-        return locations;
+        else return board[row][col - 1] != null;
     }
 }

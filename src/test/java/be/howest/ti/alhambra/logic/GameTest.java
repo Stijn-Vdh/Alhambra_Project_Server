@@ -14,7 +14,7 @@ public class GameTest {
     @Test
     void joinGame() {
         controller.initializeLobby();
-        Lobby firstGame = controller.getLobbies().get(0);
+        Lobby firstGame = controller.getLobbies().get("group01-0");
         assertEquals(0, firstGame.getPlayers().size());
         controller.joinGame("group01-0", "john");
         assertEquals(1, firstGame.getPlayers().size());

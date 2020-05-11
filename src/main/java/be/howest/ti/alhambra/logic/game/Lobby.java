@@ -86,7 +86,7 @@ public class Lobby {
         return gameID;
     }
 
-    public Object getState() {
+    public Map<String, Object> getState() {
         Map<String, Object> state = new HashMap<>();
         List<String> playerNames = new LinkedList<>();
 

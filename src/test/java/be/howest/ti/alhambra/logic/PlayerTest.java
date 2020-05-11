@@ -5,13 +5,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
-
+    //test failed als alle testen na elkaar worden uit gevoerd
     @Test
     void setReadyState() {
         AlhambraController controller = new AlhambraController();
         controller.initializeLobby();
-        //can only join game 03 because of static implementation -> controller
-        controller.joinGame("group01-3", "john");
+        controller.joinGame("group01-0", "john");
 
         assertFalse(controller.getPlayers().get(0).isReady());
 

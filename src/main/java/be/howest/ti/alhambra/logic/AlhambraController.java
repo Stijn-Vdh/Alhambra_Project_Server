@@ -17,7 +17,7 @@ public class AlhambraController {
     private List<Game> ongoingGames = new LinkedList<>();
     private List<Lobby> lobbies = new LinkedList<>();
     private List<Player> players = new LinkedList<>();
-    private static int gameIdCounter = 0;
+    private int gameIdCounter = 0;
 
     public String initializeLobby() {
         Lobby lobby = new Lobby("group01-" + gameIdCounter);
@@ -25,7 +25,7 @@ public class AlhambraController {
         incrID();
         return lobby.toString();
     }
-    private static void incrID(){
+    private void incrID(){
         gameIdCounter++;
     }
 

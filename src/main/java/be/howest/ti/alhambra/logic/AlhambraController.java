@@ -14,7 +14,7 @@ import java.util.*;
 
 public class AlhambraController {
 
-    private List<Game> ongoingGames = new LinkedList<>();
+    private Map<String,Game> ongoingGames = new HashMap<>();
     private Map<String,Lobby> lobbies = new HashMap<>();
     private List<Player> players = new LinkedList<>();
     private int gameIdCounter = 0;
@@ -38,7 +38,7 @@ public class AlhambraController {
         return tempList;
     }
 
-    public List<Game> getOngoingGames() {
+    public Map<String, Game> getOngoingGames() {
         return ongoingGames;
     }
 
@@ -110,8 +110,13 @@ public class AlhambraController {
     public Object getGameState(String gameID) {
 
         Lobby lobby = lobbies.get(gameID);
+        Game game = ongoingGames.get(gameID);
 
+        if (lobby == null){
+            return game.getState();
+        }else{
+            return lobby.getState();
+        }
 
-        return lobby.getState();
     }
 }

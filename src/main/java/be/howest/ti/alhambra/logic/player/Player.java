@@ -1,5 +1,7 @@
 package be.howest.ti.alhambra.logic.player;
 
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.game.City;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,6 +11,11 @@ public class Player {
 
     private String name;
     private boolean isReady;
+    private Building[] reserve;
+    private Building[] buildingsInHand;
+    private City[] city;
+    private int virtualScore = 0;
+    private int Score = 0;
 
     @JsonCreator
     public Player(@JsonProperty("name") String name) {

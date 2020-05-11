@@ -4,6 +4,8 @@ import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 
+import java.util.Arrays;
+
 public class City {
 
     static final int SIZE =6;
@@ -15,19 +17,17 @@ public class City {
     }
     public void initializeCity(){
         int center = SIZE/2;
-        board[center][center] = new Building(null,0, new Walls(false,false,false,false));
-        for(int r = 1; r< board.length; r++){
-            for(int c = 1; c < board[r].length; c++){
-                 board[r][c] = null;
-            }
+        for (Building[] buildings : board) {
+            Arrays.fill(buildings, null);
         }
+        board[center][center] = new Building(null,0, new Walls(false,false,false,false));
     }
 
     public Building[][] getBoard() {
         return board;
     }
 
-    public void placeBuiding(Building b, Location location){
+    public void placeBuilding(Building b, Location location){
 
         int row = location.getRow();
         int col = location.getCol();
@@ -47,15 +47,15 @@ public class City {
 
 
     public boolean hasNeighbours(int row , int col){
-        if (board[row+1][col] != null){
+        if (row+1<SIZE && board[row+1][col] != null){
              return true;
         }
-        else if (board[row-1][col] != null){
+        else if (row-1<SIZE && board[row-1][col] != null){
             return true;
         }
-        else if (board[row][col+1] != null){
+        else if (col+1<SIZE && board[row][col+1] != null){
             return true;
         }
-        else return board[row][col - 1] != null;
+        else return col-1<SIZE && board[row][col - 1] != null;
     }
 }

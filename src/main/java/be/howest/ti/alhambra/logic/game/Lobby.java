@@ -68,17 +68,6 @@ public class Lobby {
        throw new NotImplementedException("Oe kunde dees nau vergete");
     }
 
-    public void setPlayerReadyState(Player player) {
-        boolean readyState = player.isReady();
-        if (readyState){
-            player.setReady(false);
-        }else {
-            player.setReady(true);
-        }
-    }
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

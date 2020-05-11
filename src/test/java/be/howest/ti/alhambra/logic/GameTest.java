@@ -12,8 +12,8 @@ public class GameTest {
 
     @Test
     void createGame(){
-        Game game1 = new Game(0);
-        Game game2 = new Game(1);
+        Game game1 = new Game(1);
+        Game game2 = new Game(2);
         assertEquals(game1.getGameID(), controller.initializeGame());
         assertEquals(game2.getGameID(), controller.initializeGame());
 

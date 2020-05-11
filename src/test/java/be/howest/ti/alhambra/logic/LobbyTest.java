@@ -23,9 +23,6 @@ public class LobbyTest {
         assertEquals(0, lobby.getReadyAmount());
         // add a player to the lobby
         lobby.addPlayer("john");
-        //Assert checkReadyAmount
-        lobby.setPlayerReadyState(lobby.getPlayers().stream().findFirst().get());
-        assertEquals(1, lobby.getReadyAmount());
         //Assert checkReadyState to start the alhambra
         assertEquals("waiting for players to ready up", lobby.checkReadyStateForStartGame() );
 

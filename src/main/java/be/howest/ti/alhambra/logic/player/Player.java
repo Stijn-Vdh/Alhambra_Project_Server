@@ -1,5 +1,7 @@
 package be.howest.ti.alhambra.logic.player;
 
+import be.howest.ti.alhambra.logic.AlhambraController;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,8 +9,8 @@ import java.util.Objects;
 
 public class Player {
 
-private String name;
-private boolean isReady;
+    private String name;
+    private boolean isReady;
 
     @JsonCreator
     public Player(@JsonProperty("name") String name) {

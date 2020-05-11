@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.money.Coin;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
@@ -71,6 +72,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object joinGame(RoutingContext ctx) {
         LOGGER.info("joinGame");
+        String gameID = ctx.request().getParam("gameId");
         return null;
     }
 

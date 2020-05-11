@@ -5,22 +5,29 @@ import be.howest.ti.alhambra.logic.game.City;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.*;
 import java.util.Objects;
 
 public class Player {
 
     private String name;
     private boolean isReady;
-    private Building[] reserve;
-    private Building[] buildingsInHand;
-    private City[] city;
-    private int virtualScore = 0;
-    private int Score = 0;
+    private List<Building> reserve;
+    private List<Building> buildingsInHand;
+    private List<City> city;
+    private int virtualScore;
+    private int score;
 
     @JsonCreator
     public Player(@JsonProperty("name") String name) {
         this.name = name;
         this.isReady = false;
+        this.reserve = new LinkedList<>();
+        this.buildingsInHand = new LinkedList<>();
+        this.city = new LinkedList<>();
+        this.virtualScore = 0;
+        this.score = 0;
+
     }
 
 

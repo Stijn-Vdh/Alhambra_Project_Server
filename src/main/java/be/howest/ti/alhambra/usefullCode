@@ -65,3 +65,13 @@ public class UsefulCode {
     }
 
 }
+
+/*public void placeBuiding(Building b, int row , int col){
+        if (board[row][col] == null)
+        {
+        }
+        else{
+            throw new AlhambraGameRuleException("Hier staat al een gebouw!");
+        }
+
+    }*/

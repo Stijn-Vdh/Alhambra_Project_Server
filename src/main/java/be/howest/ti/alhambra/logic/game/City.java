@@ -2,7 +2,9 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walls;
-import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class City {
 
@@ -24,27 +26,23 @@ public class City {
         return board;
     }
 
-    public void placeBuiding(Building b, int row , int col){
-        if (board[row][col] == null)
-        {
-            board[row][col] = b;
-        }
-        else{
-            throw new AlhambraGameRuleException("Hier staat al een gebouw!");
-        }
 
-    }
+    public Set<Location> getNeighbours(int row , int col){
 
-    public boolean hasNeighbours(int row , int col){
+        Set<Location> locations = new HashSet<>();
         if (board[row+1][col] != null){
-             return true;
+             locations.add(new Location(row+1,col));
         }
-        else if (board[row-1][col] != null){
-            return true;
+        if (board[row-1][col] != null){
+            locations.add(new Location(row-1,col));
         }
-        else if (board[row][col+1] != null){
-            return true;
+        if (board[row][col+1] != null){
+            locations.add(new Location(row,col+1));
         }
-        else return board[row][col - 1] != null;
+        if (board[row][col-1] != null){
+            locations.add(new Location(row,col+1));
+        }
+
+        return locations;
     }
 }

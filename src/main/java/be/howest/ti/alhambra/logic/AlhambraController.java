@@ -46,4 +46,8 @@ public class AlhambraController {
     public List<Building> getAllBuildings() {
         return BuildingRepo.getAllBuildings();
     }
+
+    public void clearAllGames(){
+        games.clear();
+    }
 }

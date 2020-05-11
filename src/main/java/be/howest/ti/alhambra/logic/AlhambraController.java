@@ -84,4 +84,15 @@ public class AlhambraController {
         }
         return null;
     }
+
+    public String joinGame(String gameID, String name) {
+        Player player = searchPlayer(name);
+        for (Game game : games) {
+            if (game.getGameID().equals(gameID)) {
+                game.getPlayers().add(player);
+                return gameID + '+' + name;
+            }
+        }
+        throw new AlhambraEntityNotFoundException("This game does not exist.");
+    }
 }

@@ -12,9 +12,20 @@ public class CoinBag {
     private List<Coin> coins = new ArrayList<>();
     private List<Coin> selectedCoins = new ArrayList<>();
 
+    public List<Coin> getCoins() {
+        return coins;
+    }
+
+    public List<Coin> getSelectedCoins() {
+        return selectedCoins;
+    }
 
     public void addCoin(Coin coin){
         coins.add(coin);
+    }
+
+    public void removeCoin(Coin coin){
+        coins.remove(coin);
     }
 
     public void addSelectedCoin(Coin coin){
@@ -45,7 +56,7 @@ public class CoinBag {
         Currency color = selectedCoins.get(0).getCurrency();
         int selectedCoinsValue = 0;
 
-        for (Coin coin: coins){
+        for (Coin coin: selectedCoins){
             if (!(coin.getCurrency().equals(color))){
                 throw new AlhambraGameRuleException("Different currencies are not allowed");
             }else{

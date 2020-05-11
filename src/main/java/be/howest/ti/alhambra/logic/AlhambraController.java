@@ -5,6 +5,7 @@ import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.building.BuildingType;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.game.Lobby;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
@@ -13,27 +14,36 @@ import java.util.*;
 
 public class AlhambraController {
 
-    private static List<Game> games = new LinkedList<>();
-    private static List<Player> players = new LinkedList<>();
+    private List<Game> ongoingGames = new LinkedList<>();
+    private List<Lobby> lobbies = new LinkedList<>();
+    private List<Player> players = new LinkedList<>();
+    private int gameIdCounter = 0;
 
-    public String initializeGame() {
-        int counter = games.size();
-        Game game = new Game(counter);
-        games.add(game);
-        return game.toString();
+    public String initializeLobby() {
+        Lobby lobby = new Lobby("group01-" + gameIdCounter);
+        lobbies.add(lobby);
+        incrID();
+        return lobby.toString();
+    }
+    private void incrID(){
+        gameIdCounter++;
     }
 
     public List<String> getGameIds() {
         List<String> tempList = new LinkedList<>();
 
-        for (Game game : games) {
-            tempList.add(game.toString());
+        for (Lobby lobby : lobbies) {
+            tempList.add(lobby.toString());
         }
         return tempList;
     }
 
-    public List<Game> getGames() {
-        return games;
+    public List<Game> getOngoingGames() {
+        return ongoingGames;
+    }
+
+    public List<Lobby> getLobbies() {
+        return lobbies;
     }
 
     public Currency[] getCurrencies() {
@@ -61,7 +71,8 @@ public class AlhambraController {
     }
 
     public void clearAllGames() {
-        games.clear();
+        ongoingGames.clear();
+        lobbies.clear();
     }
 
     public boolean setReadyState(String name) {
@@ -86,12 +97,14 @@ public class AlhambraController {
     public String joinGame(String gameID, String name) {
         Player player = new Player(name);
         players.add(player);
-        for (Game game : games) {
-            if (game.getGameID().equals(gameID)) {
-                game.getPlayers().add(player);
+        for (Lobby lobby : lobbies) {
+            if (lobby.getGameID().equals(gameID)) {
+                lobby.addPlayer(player);
                 return gameID + '+' + name;
             }
         }
         throw new AlhambraEntityNotFoundException("This game does not exist.");
     }
+
+
 }

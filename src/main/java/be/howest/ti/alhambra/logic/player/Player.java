@@ -7,8 +7,8 @@ import java.util.Objects;
 
 public class Player {
 
-private String name;
-private boolean isReady;
+    private String name;
+    private boolean isReady;
 
     @JsonCreator
     public Player(@JsonProperty("name") String name) {
@@ -30,7 +30,7 @@ private boolean isReady;
     }
 
     public void setReady(boolean ready) {
-        isReady = ready;
+        isReady = !ready;
     }
 
     @Override

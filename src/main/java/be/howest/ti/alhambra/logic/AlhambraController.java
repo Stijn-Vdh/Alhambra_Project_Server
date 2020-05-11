@@ -8,12 +8,14 @@ import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
+import io.vertx.codegen.doc.Tag;
 
 import java.util.*;
 
 public class AlhambraController {
 
     private static List<Game> games = new LinkedList<>();
+    private static List<Player> players = new LinkedList<>();
 
     public String initializeGame() {
         int counter = games.size();
@@ -74,19 +76,17 @@ public class AlhambraController {
     }
 
     private Player searchPlayer(String name) {
-        for (int i = 0; i < getGames().size(); i++) {
-            Game game = getGames().get(i);
-            for (int j = 0; j < game.getPlayers().size(); j++) {
-                if (game.getPlayers().get(i).getName().equals(name)) {
-                    return game.getPlayers().get(i);
+            for (Player player : players) {
+                if (player.getName().equals(name)) {
+                    return player;
                 }
-            }
         }
         return null;
     }
 
     public String joinGame(String gameID, String name) {
-        Player player = searchPlayer(name);
+        Player player = new Player(name);
+        players.add(player);
         for (Game game : games) {
             if (game.getGameID().equals(gameID)) {
                 game.getPlayers().add(player);

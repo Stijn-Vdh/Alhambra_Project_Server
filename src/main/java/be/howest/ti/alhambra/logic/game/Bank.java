@@ -3,6 +3,7 @@ package be.howest.ti.alhambra.logic.game;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.money.Coin;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -12,12 +13,17 @@ public class Bank {
     private static final int MAX_COIN_VALUE = 5;
     private static final int MIN_COIN_VALUE = 0;
 
+
+
     private Queue<Coin> allCoins;
     private List<Coin> coinsOnBoard = new LinkedList<>();
 
     public Bank(Queue<Coin> allCoins) {
         this.allCoins = allCoins;
-        refill();
+    }
+
+    public Queue<Coin> getAllCoins() {
+        return allCoins;
     }
 
     public List<Coin> getCoinsOnBoard() {
@@ -71,4 +77,15 @@ public class Bank {
         }
         return res.toString();
     }
+
+    public List<Coin> dealStartingCoins(){
+        List<Coin> startingCoins = new ArrayList<>();
+
+        while (totalValueCoins(startingCoins) < 20){
+            startingCoins.add(allCoins.poll());
+        }
+
+        return startingCoins;
+    }
+
 }

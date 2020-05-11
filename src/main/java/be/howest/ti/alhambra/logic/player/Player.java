@@ -17,6 +17,7 @@ public class Player {
     private List<City> city;
     private int virtualScore;
     private int score;
+    private CoinBag bag;
 
     @JsonCreator
     public Player(@JsonProperty("name") String name) {
@@ -27,8 +28,14 @@ public class Player {
         this.city = new LinkedList<>();
         this.virtualScore = 0;
         this.score = 0;
+        this.bag = new CoinBag();
 
     }
+
+    public CoinBag getBag() {
+        return bag;
+    }
+
 
 
     public String getName() {

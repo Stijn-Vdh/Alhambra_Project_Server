@@ -17,6 +17,7 @@ public class Game {
         gameID = generateGameID(counter);
         started = true;
         ended = false;
+        currentPlayer = players.get(new Random().nextInt(players.size()));
     }
 
     public String generateGameID(int counter) {

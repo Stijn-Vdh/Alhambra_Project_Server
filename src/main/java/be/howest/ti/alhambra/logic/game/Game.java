@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.player.Player;
+import be.howest.ti.alhambra.logic.money.Currency;
 
 import java.util.*;
 
@@ -29,6 +30,14 @@ public class Game {
         }
         bank.refill();
         market = new Market();
+    }
+
+    public void buyBuilding(String name, Currency currency, Coin[] coins){
+        for (Player player : players){
+            if (player.getName().equals(name)){
+                market.buyBuilding(player, currency, Arrays.asList(coins));
+            }
+        }
     }
 
 

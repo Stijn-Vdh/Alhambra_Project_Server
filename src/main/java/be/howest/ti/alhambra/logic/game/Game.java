@@ -15,13 +15,15 @@ public class Game {
     private Player currentPlayer;
     private Bank bank;
     private Market market;
+    private int turnCounter = 0;
+
 
     public Game(List<Player> players, String gameID) {
         this.gameID = gameID;
         this.players = players;
         this.started = true;
         this.ended = false;
-        this.currentPlayer = players.get(new Random().nextInt(players.size()));
+        changeCurrentPlayer();
         bank = new Bank();
         for (Player player: players){
             List<Coin> startingCoins = bank.dealStartingCoins();
@@ -31,6 +33,14 @@ public class Game {
         market = new Market();
     }
 
+    public void changeCurrentPlayer(){
+        if (turnCounter == players.size()){
+            turnCounter = 0;
+        }
+        this.currentPlayer = players.get(turnCounter);
+
+        turnCounter++;
+    }
 
     public String getGameID() {
         return gameID;
@@ -53,6 +63,9 @@ public class Game {
         return state;
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,6 +78,8 @@ public class Game {
     public int hashCode() {
         return Objects.hash(gameID);
     }
+
+
 
     @Override
     public String toString() {

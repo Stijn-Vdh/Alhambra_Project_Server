@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic.player;
 
 import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.City;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -66,6 +67,13 @@ public class Player {
 
     public boolean isReady() {
         return isReady;
+    }
+
+    public void putBuildingInHand(Building b){
+        if (buildingsInHand.isEmpty()){
+            buildingsInHand.add(b);
+        }else throw new AlhambraGameRuleException("Hand already contains a building!");
+
     }
 
     public void setReady(boolean ready) {

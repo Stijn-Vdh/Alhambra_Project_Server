@@ -30,13 +30,19 @@ public class GameTest {
         // test when player is still in lobby
         controller.initializeLobby();
         Lobby firstGame = controller.getLobbies().get("group01-0");
-        assertEquals(0, firstGame.getPlayers().size());
         controller.joinGame("group01-0", "john");
-        assertEquals(1, firstGame.getPlayers().size());
         controller.leaveGame("group01-0", "john");
         assertEquals(0, firstGame.getPlayers().size());
+        // test when player is in game
+        controller.joinGame("group01-0", "john");
+        controller.joinGame("group01-0", "danny");
+        controller.setReadyState("john","group01-0");
+        controller.setReadyState("danny","group01-0");
 
-        
+        System.out.println(controller.getGameState("group01-0"));
+        controller.leaveGame("group01-0", "danny");
+        assertEquals(1, controller.getOngoingGames().get("group01-0").getPlayers().size());
+
     }
 
     @Test

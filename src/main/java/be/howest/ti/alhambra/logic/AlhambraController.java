@@ -122,13 +122,13 @@ public class AlhambraController {
     }
 
     public boolean leaveGame(String gameID, String name) {
-        players.removeIf(player -> player.getName().equals(name));
 
         if (!ongoingGames.containsKey(gameID)) {
             lobbies.get(gameID).removePlayer(name);
         } else {
-            ongoingGames.remove(gameID);
+            ongoingGames.get(gameID).getPlayers().remove(searchPlayer(name));
         }
+        players.removeIf(player -> player.getName().equals(name));
         return true;
 
     }

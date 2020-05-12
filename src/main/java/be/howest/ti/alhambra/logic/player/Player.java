@@ -73,7 +73,7 @@ public class Player {
         if (buildingsInHand.isEmpty()){
             buildingsInHand.add(b);
         }else throw new AlhambraGameRuleException("Hand already contains a building!");
-        
+
     }
 
     public void setReady(boolean ready) {

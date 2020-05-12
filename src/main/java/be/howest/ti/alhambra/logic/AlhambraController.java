@@ -93,6 +93,11 @@ public class AlhambraController {
         return false;
     }
 
+    public void buyBuilding(String gameId, String name, Currency currency, Coin[] coins){
+        Game game = ongoingGames.get(gameId);
+        game.buyBuilding(name, currency, coins);
+    }
+
     private void startGame(List<Player> players, String gameID) {
         Game game = new Game(players, gameID);
         ongoingGames.put(gameID, game);

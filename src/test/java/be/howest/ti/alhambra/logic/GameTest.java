@@ -21,4 +21,20 @@ public class GameTest {
 
         assertThrows(AlhambraEntityNotFoundException.class, () -> controller.joinGame("group01-5159", "john"));
     }
+
+    @Test
+    void startGame(){
+        controller.initializeLobby();
+
+        controller.joinGame("group01-0", "john");
+        controller.joinGame("group01-0", "danny");
+
+        controller.setReadyState("john","group01-0");
+        assertEquals(1, controller.getLobbies().size());
+
+        controller.setReadyState("danny","group01-0");
+
+        assertEquals(0, controller.getLobbies().size());
+        assertEquals(1, controller.getOngoingGames().size());
+    }
 }

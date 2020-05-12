@@ -8,28 +8,24 @@ import java.util.*;
 public class Game {
 
     private String gameID;
-    private List<Player> players = new LinkedList<>();
+    private List<Player> players;
     private boolean started;
     private boolean ended;
     private Player currentPlayer;
+    private Bank bank;
+    private Market market;
 
-    public Game(int counter) {
-        gameID = generateGameID(counter);
-        started = true;
-        ended = false;
-        currentPlayer = players.get(new Random().nextInt(players.size()));
+    public Game(List<Player> players, String gameID) {
+        this.gameID = gameID;
+        this.players = players;
+        this.started = true;
+        this.ended = false;
+        this.currentPlayer = players.get(new Random().nextInt(players.size()));
+        bank = new Bank();
+        bank.refill();
+        market = new Market();
     }
 
-    public String generateGameID(int counter) {
-        String prefix = "group01-";
-        if (counter == 0) {
-            counter = 1;
-        } else {
-            counter++;
-        }
-
-        return prefix + counter;
-    }
 
     public String getGameID() {
         return gameID;
@@ -41,18 +37,13 @@ public class Game {
 
     public Object getState() {
         Map<String, Object> state = new HashMap<>();
-        List<String> playerNames = new LinkedList<>();
 
-        for (Player player: players) {
-            playerNames.add(player.getName());
-        }
-
-        state.put("bank", gameID);
-        state.put("market", playerNames);
+        state.put("bank", bank);
+        state.put("market", market);
         state.put("players", players);
         state.put("started", started);
         state.put("ended", ended);
-        state.put("currentPlayer", currentPlayer);
+        state.put("currentPlayer", currentPlayer.getName());
 
         return state;
     }

@@ -102,7 +102,6 @@ public class BankTest {
 
         Bank bank = new Bank(allCoins);
 
-        System.out.println(bank.getAllCoins());
 
 
         Player p1 = new Player("daniel");

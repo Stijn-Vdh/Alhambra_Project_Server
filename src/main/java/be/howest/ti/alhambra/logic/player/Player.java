@@ -36,7 +36,25 @@ public class Player {
         return bag;
     }
 
+    public List<Building> getReserve() {
+        return reserve;
+    }
 
+    public List<Building> getBuildingsInHand() {
+        return buildingsInHand;
+    }
+
+    public List<City> getCity() {
+        return city;
+    }
+
+    public int getVirtualScore() {
+        return virtualScore;
+    }
+
+    public int getScore() {
+        return score;
+    }
 
     public String getName() {
         return name;

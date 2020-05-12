@@ -44,4 +44,6 @@ public class Building {
     public int hashCode() {
         return Objects.hash(type, cost, walls);
     }
+
+
 }

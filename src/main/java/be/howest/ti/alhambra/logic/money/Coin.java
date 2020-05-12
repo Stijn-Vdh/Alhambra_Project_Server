@@ -18,13 +18,6 @@ public class Coin {
         this.amount = amount;
     }
 
-    static List<Coin> allCoins() {
-        return Stream.of(Currency.values())
-                .flatMap(currency -> IntStream.rangeClosed(1, 9).mapToObj(value -> new Coin(currency, value)))
-                .flatMap(coin -> Stream.of(coin, coin, coin))
-                .collect(Collectors.toList());
-    }
-
     public Currency getCurrency() {
         return currency;
     }

@@ -6,8 +6,7 @@ import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LobbyTest {
     AlhambraController controller = new AlhambraController();
@@ -35,7 +34,7 @@ public class LobbyTest {
         // add a player to the lobby
         lobby.addPlayer(new Player("john"));
         //Assert checkReadyState to start the alhambra
-        assertEquals("waiting for players to ready up", lobby.checkReadyStateForStartGame() );
+        assertFalse(lobby.checkReadyStateForStartGame());
 
     }
 

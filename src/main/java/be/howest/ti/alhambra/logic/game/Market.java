@@ -68,8 +68,5 @@ public class Market {
         return buildings.size();
     }
 
-    @Override
-    public String toString() {
-        return null;
-    }
+
 }

@@ -50,4 +50,6 @@ public class Walls {
     public int hashCode() {
         return Objects.hash(north, east, south, west);
     }
+
+
 }

@@ -22,6 +22,7 @@ public class Game {
         this.ended = false;
         this.currentPlayer = players.get(new Random().nextInt(players.size()));
         bank = new Bank();
+        bank.refill();
         market = new Market();
     }
 
@@ -47,7 +48,7 @@ public class Game {
         state.put("players", players);
         state.put("started", started);
         state.put("ended", ended);
-        state.put("currentPlayer", currentPlayer);
+        state.put("currentPlayer", currentPlayer.getName());
 
         return state;
     }

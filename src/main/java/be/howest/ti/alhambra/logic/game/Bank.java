@@ -37,10 +37,6 @@ public class Bank {
                 .collect(Collectors.toList());
     }
 
-    public Queue<Coin> getAllCoins() {
-        return allCoins;
-    }
-
     public List<Coin> getCoinsOnBoard() {
         return coinsOnBoard;
     }
@@ -102,5 +98,6 @@ public class Bank {
 
         return startingCoins;
     }
+
 
 }

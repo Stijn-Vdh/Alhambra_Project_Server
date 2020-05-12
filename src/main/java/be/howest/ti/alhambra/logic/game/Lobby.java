@@ -83,15 +83,9 @@ public class Lobby {
 
     public Map<String, Object> getState() {
         Map<String, Object> state = new HashMap<>();
-        List<String> playerNames = new LinkedList<>();
-
-        for (Player player : players) {
-            playerNames.add(player.getName());
-        }
-
 
         state.put("id", gameID);
-        state.put("players", playerNames);
+        state.put("players", players);
         state.put("started", started);
         state.put("playerCount", players.size());
         state.put("readyCount", getReadyAmount());

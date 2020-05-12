@@ -8,7 +8,7 @@ import java.util.*;
 public class Game {
 
     private String gameID;
-    private List<Player> players = new LinkedList<>();
+    private List<Player> players;
     private boolean started;
     private boolean ended;
     private Player currentPlayer;
@@ -37,11 +37,6 @@ public class Game {
 
     public Object getState() {
         Map<String, Object> state = new HashMap<>();
-        List<String> playerNames = new LinkedList<>();
-
-        for (Player player: players) {
-            playerNames.add(player.getName());
-        }
 
         state.put("bank", bank);
         state.put("market", market);

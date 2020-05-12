@@ -23,7 +23,7 @@ public class MarketTest {
         List<Coin> coins = new LinkedList<>();
         Queue<Building> buildings = new LinkedList<>();
         Walls walls = new Walls(true, false, true, false);
-        Player player = new Player("stav");
+        Player player = new Player("john");
 
         for (int i = 0; i < 6; i++){
             buildings.add(new Building(BuildingType.PAVILION, i, walls));
@@ -38,6 +38,7 @@ public class MarketTest {
 
         market.buyBuilding(player,Currency.GREEN, coins);
         assertNull(market.getBuildingsOnBoard().get(Currency.GREEN));
+        assertFalse(player.getBuildingsInHand().isEmpty());
 
         market.fillBuildingToBoard();
         assertEquals(4,market.getBuildingsOnBoard().size());

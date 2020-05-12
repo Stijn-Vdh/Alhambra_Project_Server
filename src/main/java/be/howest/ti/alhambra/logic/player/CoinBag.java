@@ -24,6 +24,8 @@ public class CoinBag {
         coins.add(coin);
     }
 
+    public void addCoins(List<Coin> coins){ this.coins.addAll(coins);}
+
     public void removeCoin(Coin coin){
         coins.remove(coin);
     }

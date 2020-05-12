@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic.game;
 
+import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.player.Player;
 
 import java.util.*;
@@ -22,6 +23,10 @@ public class Game {
         this.ended = false;
         this.currentPlayer = players.get(new Random().nextInt(players.size()));
         bank = new Bank();
+        for (Player player: players){
+            List<Coin> startingCoins = bank.dealStartingCoins();
+            player.getBag().addCoins(startingCoins);
+        }
         bank.refill();
         market = new Market();
     }

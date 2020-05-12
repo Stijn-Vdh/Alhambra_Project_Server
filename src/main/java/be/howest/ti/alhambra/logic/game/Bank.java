@@ -64,7 +64,7 @@ public class Bank {
 
         int valueCoins = totalValueCoins((selectedCoins));
 
-        if (validTotalValue(valueCoins)) {
+        if (selectedCoins.size() == 1 || validTotalValue(valueCoins)) {
             removeSelectedCoins(selectedCoins);
             refill();
         } else {

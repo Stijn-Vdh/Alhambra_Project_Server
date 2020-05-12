@@ -62,6 +62,7 @@ public class AlhambraController {
         if (currentGame.getCurrentPlayer().getName().equals(name)){
             currentGame.getBank().takeCoins(coins);
             currentGame.getCurrentPlayer().getBag().addCoins(coins);
+            currentGame.changeCurrentPlayer();
             return true;
         }else{
             throw new AlhambraGameRuleException("It's not your turn!");

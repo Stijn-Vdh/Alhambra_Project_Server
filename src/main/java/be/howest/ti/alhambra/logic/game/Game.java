@@ -17,6 +17,7 @@ public class Game {
 
     public Game(List<Player> players, String gameID) {
         this.gameID = gameID;
+        this.players = players;
         this.started = true;
         this.ended = false;
         this.currentPlayer = players.get(new Random().nextInt(players.size()));

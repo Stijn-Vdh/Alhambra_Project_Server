@@ -14,19 +14,19 @@ import java.util.*;
 
 public class AlhambraController {
 
-    private Map<String,Game> ongoingGames = new HashMap<>();
-    private Map<String,Lobby> lobbies = new HashMap<>();
+    private Map<String, Game> ongoingGames = new HashMap<>();
+    private Map<String, Lobby> lobbies = new HashMap<>();
     private List<Player> players = new LinkedList<>();
     private int gameIdCounter = 0;
 
     public String initializeLobby() {
         Lobby lobby = new Lobby("group01-" + gameIdCounter);
-        lobbies.put(lobby.getGameID(),lobby);
+        lobbies.put(lobby.getGameID(), lobby);
         incrID();
         return lobby.toString();
     }
 
-    private void incrID(){
+    private void incrID() {
         gameIdCounter++;
     }
 
@@ -79,29 +79,32 @@ public class AlhambraController {
 
     public boolean setReadyState(String name, String gameID) {
         Player player = searchPlayer(name);
+        Lobby currentLobby = lobbies.get(gameID);
+        if (player != null) {
+            player.setReady(player.isReady());
 
-       if (player != null){
-               player.setReady(player.isReady());
-           return true;
-       }
-       if (lobbies.get(gameID).checkReadyStateForStartGame()){
-           startGame(lobbies.get(gameID).getPlayers(),gameID);
-       }
-       return false;
+            if (currentLobby.getPlayers().size() > 1 && currentLobby.checkReadyStateForStartGame()) {
+                startGame(lobbies.get(gameID).getPlayers(), gameID);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
-    private void startGame(List<Player> players,String gameID){
-        Game game = new Game(players,gameID);
-        ongoingGames.put(gameID,game);
+    private void startGame(List<Player> players, String gameID) {
+        Game game = new Game(players, gameID);
+        ongoingGames.put(gameID, game);
         lobbies.remove(gameID);
     }
 
 
     private Player searchPlayer(String name) {
-            for (Player player : players) {
-                if (player.getName().equals(name)) {
-                    return player;
-                }
+        for (Player player : players) {
+            if (player.getName().equals(name)) {
+                return player;
+            }
         }
         return null;
     }
@@ -124,9 +127,9 @@ public class AlhambraController {
         Lobby lobby = lobbies.get(gameID);
         Game game = ongoingGames.get(gameID);
 
-        if (lobby == null){
+        if (lobby == null) {
             return game.getState();
-        }else{
+        } else {
             return lobby.getState();
         }
 

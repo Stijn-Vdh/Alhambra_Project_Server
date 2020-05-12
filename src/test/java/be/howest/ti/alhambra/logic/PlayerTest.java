@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
-    //test failed als alle testen na elkaar worden uit gevoerd
+
     @Test
     void setReadyState() {
         AlhambraController controller = new AlhambraController();

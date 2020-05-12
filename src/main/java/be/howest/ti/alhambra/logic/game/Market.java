@@ -19,6 +19,11 @@ public class Market {
         this.buildings.addAll(buildingsToShuffle);
         fillBuildingToBoard();
     }
+    // for testing
+    public Market(Queue<Building> buildings){
+        this.buildings = buildings;
+        fillBuildingToBoard();
+    }
 
     public Map<Currency, Building> getBuildingsOnBoard() {
         return buildingsOnBoard;

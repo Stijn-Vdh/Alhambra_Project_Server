@@ -13,14 +13,20 @@ public class Bank {
     private static final int BANK_LIMIT = 4;
     private static final int MAX_COIN_VALUE = 5;
     private static final int MIN_COIN_VALUE = 0;
-    private Queue<Coin> allCoins;
+    private Queue<Coin> allCoins= new LinkedList<>();
     private List<Coin> coinsOnBoard = new LinkedList<>();
 
     public Bank() {
-        assert false;
+
         List<Coin> coinsToShuffle = generateAllCoins();
         Collections.shuffle(coinsToShuffle);
+
         this.allCoins.addAll(coinsToShuffle);
+
+    }
+    // for testing
+    public Bank(Queue<Coin> allcoins){
+        this.allCoins = allcoins;
     }
 
     public static List<Coin> generateAllCoins() {

@@ -14,11 +14,11 @@ public class PlayerTest {
 
         assertFalse(controller.getPlayers().get(0).isReady());
 
-        controller.setReadyState("john");
+        controller.setReadyState("john","group01-0");
 
         assertTrue(controller.getPlayers().get(0).isReady());
 
-        controller.setReadyState("john");
+        controller.setReadyState("john","group01-0");
 
         assertFalse(controller.getPlayers().get(0).isReady());
     }

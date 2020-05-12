@@ -26,6 +26,26 @@ public class GameTest {
     }
 
     @Test
+    void leaveGame() {
+        // test when player is still in lobby
+        controller.initializeLobby();
+        Lobby firstGame = controller.getLobbies().get("group01-0");
+        controller.joinGame("group01-0", "john");
+        controller.leaveGame("group01-0", "john");
+        assertEquals(0, firstGame.getPlayers().size());
+        // test when player is in game
+        controller.joinGame("group01-0", "john");
+        controller.joinGame("group01-0", "danny");
+        controller.setReadyState("john","group01-0");
+        controller.setReadyState("danny","group01-0");
+
+        System.out.println(controller.getGameState("group01-0"));
+        controller.leaveGame("group01-0", "danny");
+        assertEquals(1, controller.getOngoingGames().get("group01-0").getPlayers().size());
+
+    }
+
+    @Test
     void startGame(){
         controller.initializeLobby();
 
@@ -61,4 +81,22 @@ public class GameTest {
         assertFalse(denEddy.getBag().computeTotalCoinsValue() > 28);
     }
 
+    @Test
+    void changeCurrentPlayer(){
+        controller.initializeLobby();
+
+        controller.joinGame("group01-0", "john");
+        controller.joinGame("group01-0", "danny");
+
+        controller.setReadyState("john","group01-0");
+        controller.setReadyState("danny","group01-0");
+
+        Game firstGame = controller.getOngoingGames().get("group01-0");
+
+        assertEquals("john", firstGame.getCurrentPlayer().getName());
+        firstGame.changeCurrentPlayer();
+        assertEquals("danny", firstGame.getCurrentPlayer().getName());
+        firstGame.changeCurrentPlayer();
+        assertEquals("john", firstGame.getCurrentPlayer().getName());
+    }
 }

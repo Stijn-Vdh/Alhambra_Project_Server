@@ -126,6 +126,17 @@ public class AlhambraController {
         throw new AlhambraEntityNotFoundException("This game does not exist.");
     }
 
+    public boolean leaveGame(String gameID, String name) {
+
+        if (!ongoingGames.containsKey(gameID)) {
+            lobbies.get(gameID).removePlayer(name);
+        } else {
+            ongoingGames.get(gameID).getPlayers().remove(searchPlayer(name));
+        }
+        players.removeIf(player -> player.getName().equals(name));
+        return true;
+
+    }
 
     public Object getGameState(String gameID) {
 

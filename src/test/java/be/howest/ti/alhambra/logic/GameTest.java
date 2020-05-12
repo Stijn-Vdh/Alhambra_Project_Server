@@ -3,10 +3,13 @@ package be.howest.ti.alhambra.logic;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Lobby;
+import be.howest.ti.alhambra.logic.player.Player;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
     AlhambraController controller = new AlhambraController();
@@ -37,4 +40,25 @@ public class GameTest {
         assertEquals(0, controller.getLobbies().size());
         assertEquals(1, controller.getOngoingGames().size());
     }
+
+    @Test
+    void receiveStartingMoneyOnGameStart(){
+        List<Player> players = new ArrayList<>();
+        Player denJohn = new Player("John");
+        Player denEddy = new Player("Eddy");
+        
+        players.add(denJohn);
+        players.add(denEddy);
+
+        Game game = new Game(players, "group01-0");
+
+        assertNotNull(denJohn.getBag());
+        assertFalse(denJohn.getBag().computeTotalCoinsValue() < 20);
+        assertFalse(denJohn.getBag().computeTotalCoinsValue() > 28);
+
+        assertNotNull(denEddy.getBag());
+        assertFalse(denEddy.getBag().computeTotalCoinsValue() < 20);
+        assertFalse(denEddy.getBag().computeTotalCoinsValue() > 28);
+    }
+
 }

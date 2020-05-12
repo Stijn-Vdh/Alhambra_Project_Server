@@ -2,24 +2,33 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Bank {
     private static final int BANK_LIMIT = 4;
     private static final int MAX_COIN_VALUE = 5;
     private static final int MIN_COIN_VALUE = 0;
-
-
-
     private Queue<Coin> allCoins;
     private List<Coin> coinsOnBoard = new LinkedList<>();
 
-    public Bank(Queue<Coin> allCoins) {
-        this.allCoins = allCoins;
+    public Bank() {
+        assert false;
+        List<Coin> coinsToShuffle = generateAllCoins();
+        Collections.shuffle(coinsToShuffle);
+        this.allCoins.addAll(coinsToShuffle);
+    }
+
+    public static List<Coin> generateAllCoins() {
+
+        return Stream.of(Currency.values())
+                .flatMap(currency -> IntStream.rangeClosed(1, 9).mapToObj(value -> new Coin(currency, value)))
+                .flatMap(coin -> Stream.of(coin, coin, coin))
+                .collect(Collectors.toList());
     }
 
     public Queue<Coin> getAllCoins() {

@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
@@ -11,8 +12,11 @@ public class Market {
     private Queue<Building> buildings;
     private Map<Currency,Building> buildingsOnBoard = new HashMap<>();
 
-    public Market(Queue<Building> buildings) {
-        this.buildings = buildings;
+    public Market() {
+        List<Building> buildingsToShuffle = new ArrayList<>(BuildingRepo.getAllBuildings());
+        Collections.shuffle(buildingsToShuffle);
+        assert false;
+        this.buildings.addAll(buildingsToShuffle);
         fillBuildingToBoard();
     }
 

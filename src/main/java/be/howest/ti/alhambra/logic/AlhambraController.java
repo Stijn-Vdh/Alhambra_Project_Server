@@ -25,6 +25,7 @@ public class AlhambraController {
         incrID();
         return lobby.toString();
     }
+
     private void incrID(){
         gameIdCounter++;
     }
@@ -63,6 +64,7 @@ public class AlhambraController {
     }
 
     public List<Building> getAllBuildings() {
+
         return BuildingRepo.getAllBuildings();
     }
 
@@ -75,15 +77,25 @@ public class AlhambraController {
         lobbies.clear();
     }
 
-    public boolean setReadyState(String name) {
+    public boolean setReadyState(String name, String gameID) {
         Player player = searchPlayer(name);
 
        if (player != null){
                player.setReady(player.isReady());
            return true;
        }
+       if (lobbies.get(gameID).checkReadyStateForStartGame()){
+           startGame(lobbies.get(gameID).getPlayers(),gameID);
+       }
        return false;
     }
+
+    private void startGame(List<Player> players,String gameID){
+        Game game = new Game(players,gameID);
+        ongoingGames.put(gameID,game);
+        lobbies.remove(gameID);
+    }
+
 
     private Player searchPlayer(String name) {
             for (Player player : players) {

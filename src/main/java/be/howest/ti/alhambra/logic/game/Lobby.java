@@ -10,7 +10,7 @@ import java.util.*;
 
 
 public class Lobby {
-    private Set<Player> players = new HashSet<>();
+    private List<Player> players = new LinkedList<>();
     private int readyAmount;
     private String gameID;
     private boolean started;
@@ -22,13 +22,15 @@ public class Lobby {
         this.started = false;
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
+    public void addPlayer(Player player) {
+        if (!players.contains(player)){
+            players.add(player);
+        }
     }
 
-    public void removePlayer(String name){
-        for (Player player: players) {
-            if (player.getName().equals(name)){
+    public void removePlayer(String name) {
+        for (Player player : players) {
+            if (player.getName().equals(name)) {
                 players.remove(player);
             } else {
                 throw new AlhambraEntityNotFoundException("name of player doesn't exist");
@@ -36,14 +38,18 @@ public class Lobby {
         }
     }
 
-    public Set<Player> getPlayers() {return players;}
+    public List<Player> getPlayers() {
+        return players;
+    }
 
-    public String getGameID() {return gameID;}
+    public String getGameID() {
+        return gameID;
+    }
 
     public int getReadyAmount() {
         int counter = 0;
-        for (Player player: players) {
-            if (player.isReady()){
+        for (Player player : players) {
+            if (player.isReady()) {
                 counter++;
             }
         }
@@ -51,20 +57,9 @@ public class Lobby {
         return readyAmount;
     }
 
-    public String checkReadyStateForStartGame(){
+    public boolean checkReadyStateForStartGame() {
         int playerCount = players.size();
-        if (getReadyAmount() == playerCount){
-            startGame();
-            return "alhambra started";
-        }
-        else {
-            return "waiting for players to ready up";
-        }
-    }
-
-    public void startGame(){
-        started = true;
-       throw new NotImplementedException("Oe kunde dees nau vergete");
+        return getReadyAmount() == playerCount;
     }
 
     @Override
@@ -90,7 +85,7 @@ public class Lobby {
         Map<String, Object> state = new HashMap<>();
         List<String> playerNames = new LinkedList<>();
 
-        for (Player player: players) {
+        for (Player player : players) {
             playerNames.add(player.getName());
         }
 

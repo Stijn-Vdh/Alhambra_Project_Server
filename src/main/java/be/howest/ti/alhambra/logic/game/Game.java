@@ -12,24 +12,18 @@ public class Game {
     private boolean started;
     private boolean ended;
     private Player currentPlayer;
+    private Bank bank;
+    private Market market;
 
-    public Game(int counter) {
-        gameID = generateGameID(counter);
-        started = true;
-        ended = false;
-        currentPlayer = players.get(new Random().nextInt(players.size()));
+    public Game(List<Player> players, String gameID) {
+        this.gameID = gameID;
+        this.started = true;
+        this.ended = false;
+        this.currentPlayer = players.get(new Random().nextInt(players.size()));
+        bank = new Bank();
+        market = new Market();
     }
 
-    public String generateGameID(int counter) {
-        String prefix = "group01-";
-        if (counter == 0) {
-            counter = 1;
-        } else {
-            counter++;
-        }
-
-        return prefix + counter;
-    }
 
     public String getGameID() {
         return gameID;
@@ -47,8 +41,8 @@ public class Game {
             playerNames.add(player.getName());
         }
 
-        state.put("bank", gameID);
-        state.put("market", playerNames);
+        state.put("bank", bank);
+        state.put("market", market);
         state.put("players", players);
         state.put("started", started);
         state.put("ended", ended);

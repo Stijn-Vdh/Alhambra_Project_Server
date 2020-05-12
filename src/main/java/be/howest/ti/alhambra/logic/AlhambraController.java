@@ -121,6 +121,11 @@ public class AlhambraController {
         throw new AlhambraEntityNotFoundException("This game does not exist.");
     }
 
+    public void buyBuilding(String gameId, String name, Currency currency, Coin[] coins){
+        Game game = ongoingGames.get(gameId);
+        game.buyBuilding(name, currency, coins);
+    }
+
 
     public Object getGameState(String gameID) {
 

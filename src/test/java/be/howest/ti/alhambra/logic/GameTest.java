@@ -1,8 +1,11 @@
 package be.howest.ti.alhambra.logic;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Lobby;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
 import org.junit.jupiter.api.Test;
 
@@ -79,4 +82,35 @@ public class GameTest {
         firstGame.changeCurrentPlayer();
         assertEquals("john", firstGame.getCurrentPlayer().getName());
     }
+
+    @Test
+    void takeMoneyTest(){
+
+        List<Coin> coins = new ArrayList<>();
+
+        controller.initializeLobby();
+
+        controller.joinGame("group01-0", "john");
+        controller.joinGame("group01-0", "danny");
+        controller.setReadyState("john","group01-0");
+        controller.setReadyState("danny","group01-0");
+
+        Game game = controller.getOngoingGames().get("group01-0");
+        Coin firstCoin = game.getBank().getCoinsOnBoard().get(0);
+
+        coins.add(firstCoin);
+        int sizeBag = game.getCurrentPlayer().getBag().getCoins().size();
+        controller.takeMoney("john", "group01-0", coins);
+        assertEquals(sizeBag+1 , game.getCurrentPlayer().getBag().getCoins().size());
+
+        Coin fakeCoin = new Coin(Currency.YELLOW, 99);
+        coins.add(fakeCoin);
+
+        assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("danny", "group01-0", coins));
+        assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("John", "group01-0", coins));
+
+
+    }
+
+
 }

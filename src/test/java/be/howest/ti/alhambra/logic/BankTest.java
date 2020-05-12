@@ -98,11 +98,7 @@ public class BankTest {
         allCoins.add(coin9);
         allCoins.add(coin10);
 
-        System.out.println(allCoins);
-
         Bank bank = new Bank(allCoins);
-
-
 
         Player p1 = new Player("daniel");
         Player p2 = new Player("stijn");
@@ -113,7 +109,7 @@ public class BankTest {
         for (Coin coin: startingCoinsP1){
             p1.getBag().addCoin(coin);
         }
-        System.out.println(p1.getBag().getCoins());
+
         assertEquals(5, p1.getBag().getCoins().size());
         assertEquals(5, allCoins.size());
 

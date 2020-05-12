@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
 import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -26,7 +27,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {
         LOGGER.info("verifyPlayerToken");
-        int index = token.indexOf("+");
+        int index = token.indexOf('+');
         playerName = token.substring(index+1);
         return token.equals(gameId + "+" + playerName);
     }
@@ -120,6 +121,13 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object buyBuilding(RoutingContext ctx) {
         LOGGER.info("buyBuilding");
+        String gameId = ctx.request().getParam(GAME_ID);
+        String name = ctx.request().getParam(PLAYER_NAME);
+
+        String body = ctx.getBodyAsString();
+        Currency currency = Json.decodeValue(body, Currency.class);
+        Coin[] coins = Json.decodeValue(body, Coin[].class);
+        controller.buyBuilding(gameId, name, currency, coins);
         return null;
     }
 

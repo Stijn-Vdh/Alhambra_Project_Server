@@ -18,6 +18,8 @@ public class Game {
     private int turnCounter = 0;
 
 
+
+
     public Game(List<Player> players, String gameID) {
         this.gameID = gameID;
         this.players = players;
@@ -48,6 +50,10 @@ public class Game {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Bank getBank() {
+        return bank;
     }
 
     public Object getState() {

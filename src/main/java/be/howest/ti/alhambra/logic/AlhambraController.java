@@ -4,6 +4,7 @@ import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.building.BuildingType;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Lobby;
 import be.howest.ti.alhambra.logic.money.Coin;
@@ -55,12 +56,17 @@ public class AlhambraController {
         return BuildingType.values();
     }
 
-    public int getTotalAmount(Coin[] coins) {
-        int totalAmount = 0;
-        for (Coin coin : coins) {
-            totalAmount += coin.getAmount();
+    public boolean takeMoney(String name, String gameID, List<Coin> coins){
+        Game currentGame = ongoingGames.get(gameID);
+
+        if (currentGame.getCurrentPlayer().getName().equals(name)){
+            currentGame.getBank().takeCoins(coins);
+            currentGame.getCurrentPlayer().getBag().addCoins(coins);
+            return true;
+        }else{
+            throw new AlhambraGameRuleException("It's not your turn!");
         }
-        return totalAmount;
+
     }
 
     public List<Building> getAllBuildings() {

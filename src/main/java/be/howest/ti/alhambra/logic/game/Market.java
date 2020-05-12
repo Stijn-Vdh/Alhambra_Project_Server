@@ -5,6 +5,7 @@ import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
+import be.howest.ti.alhambra.logic.player.Player;
 
 import java.util.*;
 
@@ -30,11 +31,10 @@ public class Market {
     }
 
     private void takeBuilding(Currency currency){
-
         buildingsOnBoard.put(currency,null);
     }
 
-    public void buyBuilding(Currency currency, List<Coin> coins){
+    public void buyBuilding(Player player, Currency currency, List<Coin> coins){
         int givenCoinAmount = 0;
 
         for(Coin coin : coins){
@@ -47,6 +47,7 @@ public class Market {
         if (givenCoinAmount < buildingsOnBoard.get(currency).getCost()){
             throw new AlhambraGameRuleException("This is against the rules");
         }
+        player.putBuildingInHand(buildingsOnBoard.get(currency));
         takeBuilding(currency);
     }
 
@@ -59,7 +60,6 @@ public class Market {
         }else{
             for (Currency currency : buildingsOnBoard.keySet()){
                 buildingsOnBoard.computeIfAbsent(currency, k -> buildings.poll());
-
             }
         }
     }

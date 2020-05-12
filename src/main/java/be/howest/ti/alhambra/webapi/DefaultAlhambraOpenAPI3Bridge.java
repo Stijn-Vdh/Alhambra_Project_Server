@@ -9,6 +9,10 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
 
@@ -112,13 +116,10 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
         String body = ctx.getBodyAsString();
         Coin[] coins = Json.decodeValue(body, Coin[].class);
+        List<Coin> selectedCoins = new ArrayList<>(Arrays.asList(coins));
 
-        int totalAmount = controller.getTotalAmount(coins);
 
-        return new JsonObject()
-                .put(GAME_ID, gameId)
-                .put(PLAYER_NAME, name)
-                .put("total", totalAmount);
+        return controller.takeMoney(name, gameId, selectedCoins);
     }
 
     public Object buyBuilding(RoutingContext ctx) {

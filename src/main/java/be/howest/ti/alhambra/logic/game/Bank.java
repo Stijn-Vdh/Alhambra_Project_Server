@@ -47,11 +47,24 @@ public class Bank {
         }
     }
 
+    private boolean areValidCoins(List<Coin> selectedCoins){
+        for (Coin coin: selectedCoins){
+            if (!coinsOnBoard.contains(coin)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void takeCoins(List<Coin> selectedCoins) {
+
+        if (!areValidCoins(selectedCoins)){
+            throw new AlhambraGameRuleException("These coins are not on board!");
+        }
 
         int valueCoins = totalValueCoins((selectedCoins));
 
-        if (validTotalValue(valueCoins)) {
+        if (selectedCoins.size() == 1 || validTotalValue(valueCoins)) {
             removeSelectedCoins(selectedCoins);
             refill();
         } else {

@@ -48,7 +48,7 @@ public class BankTest {
 
         assertEquals(10, allCoins.size());
 
-        Bank bank = new Bank();
+        Bank bank = new Bank(allCoins);
         bank.refill();
         assertEquals(6, allCoins.size());
 

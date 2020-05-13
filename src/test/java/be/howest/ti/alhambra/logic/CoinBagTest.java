@@ -16,7 +16,7 @@ public class CoinBagTest {
         List<Coin> coins = new LinkedList<>();
         Coin coin1 = new Coin(Currency.YELLOW, 5);
         Coin coin2 = new Coin(Currency.ORANGE, 8);
-        Coin coin3 = new Coin(Currency.BLUE, 7);
+        Coin coin3 = new Coin(Currency.YELLOW, 5);
         Coin coin4 = new Coin(Currency.YELLOW, 10);
         CoinBag bag = new CoinBag();
 

@@ -84,19 +84,27 @@ public class AlhambraController {
         lobbies.clear();
     }
 
-    public boolean setReadyState(String name, String gameID) {
+    public boolean setReady(String name, String gameID) {
         Player player = searchPlayer(name);
         Lobby currentLobby = lobbies.get(gameID);
         if (player != null) {
-            player.setReady(player.isReady());
+            player.setReady(true);
 
             if (currentLobby.getPlayers().size() > 1 && currentLobby.checkReadyStateForStartGame()) {
                 startGame(lobbies.get(gameID).getPlayers(), gameID);
             }
-
             return true;
         }
+        return false;
+    }
 
+    public boolean setNotReady(String name) {
+        Player player = searchPlayer(name);
+
+        if (player != null) {
+            player.setReady(false);
+            return true;
+        }
         return false;
     }
 

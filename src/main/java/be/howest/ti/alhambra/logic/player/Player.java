@@ -76,8 +76,8 @@ public class Player {
 
     }
 
-    public void setReady(boolean ready) {
-        isReady = !ready;
+    public void setReady(boolean readyState) {
+        isReady = readyState;
     }
 
     @Override

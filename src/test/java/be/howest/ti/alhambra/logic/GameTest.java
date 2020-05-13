@@ -39,8 +39,8 @@ public class GameTest {
         // test when player is in game
         controller.joinLobby("group01-0", "john");
         controller.joinLobby("group01-0", "danny");
-        controller.setReadyState("john","group01-0");
-        controller.setReadyState("danny","group01-0");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
 
         System.out.println(controller.getGameState("group01-0"));
         controller.leaveGame("group01-0", "danny");
@@ -55,10 +55,10 @@ public class GameTest {
         controller.joinLobby("group01-0", "john");
         controller.joinLobby("group01-0", "danny");
 
-        controller.setReadyState("john","group01-0");
+        controller.setReady("john","group01-0");
         assertEquals(1, controller.getLobbies().size());
 
-        controller.setReadyState("danny","group01-0");
+        controller.setReady("danny","group01-0");
 
         assertEquals(0, controller.getLobbies().size());
         assertEquals(1, controller.getOngoingGames().size());
@@ -91,8 +91,8 @@ public class GameTest {
         controller.joinLobby("group01-0", "john");
         controller.joinLobby("group01-0", "danny");
 
-        controller.setReadyState("john","group01-0");
-        controller.setReadyState("danny","group01-0");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
 
         Game firstGame = controller.getOngoingGames().get("group01-0");
 
@@ -112,8 +112,8 @@ public class GameTest {
 
         controller.joinLobby("group01-0", "john");
         controller.joinLobby("group01-0", "danny");
-        controller.setReadyState("john","group01-0");
-        controller.setReadyState("danny","group01-0");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
 
         Game game = controller.getOngoingGames().get("group01-0");
         Coin firstCoin = game.getBank().getCoinsOnBoard().get(0);

@@ -73,8 +73,7 @@ public class Player {
         if (buildingsInHand.isEmpty()){
             buildingsInHand.add(b);
         }else throw new AlhambraGameRuleException("Hand already contains a building!");
-
-    }
+    } //TODO add possibility to add more then 1 building in hand
 
     public void setReady(boolean readyState) {
         isReady = readyState;

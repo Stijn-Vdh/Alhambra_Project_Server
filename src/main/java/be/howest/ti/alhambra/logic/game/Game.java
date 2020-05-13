@@ -18,8 +18,9 @@ public class Game {
     private Market market;
     private int turnCounter = 0;
 
-
-
+    public Market getMarket() {
+        return market;
+    }
 
     public Game(List<Player> players, String gameID) {
         this.gameID = gameID;
@@ -34,14 +35,6 @@ public class Game {
         }
         bank.refill();
         market = new Market();
-    }
-
-    public void buyBuilding(String name, Currency currency, Coin[] coins){
-        for (Player player : players){
-            if (player.getName().equals(name)){
-                market.buyBuilding(player, currency, Arrays.asList(coins));
-            }
-        }
     }
 
     public void changeCurrentPlayer(){
@@ -93,8 +86,6 @@ public class Game {
     public int hashCode() {
         return Objects.hash(gameID);
     }
-
-
 
     @Override
     public String toString() {

@@ -9,6 +9,7 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -120,7 +121,6 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         Coin[] coins = Json.decodeValue(body, Coin[].class);
         List<Coin> selectedCoins = new ArrayList<>(Arrays.asList(coins));
 
-
         return controller.takeMoney(name, gameId, selectedCoins);
     }
 
@@ -132,8 +132,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         String body = ctx.getBodyAsString();
         Currency currency = Json.decodeValue(body, Currency.class);
         Coin[] coins = Json.decodeValue(body, Coin[].class);
-        controller.buyBuilding(gameId, name, currency, coins);
-        return null;
+        List<Coin> selectedCoins = new ArrayList<>(Arrays.asList(coins));
+        return controller.buyBuilding(gameId, name, currency, selectedCoins);
     }
 
 

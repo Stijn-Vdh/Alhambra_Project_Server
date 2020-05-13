@@ -34,6 +34,10 @@ public class CoinBag {
         selectedCoins.add(coin);
     }
 
+    public void addSelectedCoins(List<Coin> coins) {
+        selectedCoins.addAll(coins);
+    }
+
     public void removeSelectedCoin(Coin coin){
         selectedCoins.remove(coin);
     }

@@ -30,25 +30,22 @@ public class Market {
         return buildingsOnBoard;
     }
 
-    private void takeBuilding(Currency currency){
+    private void removeBuildingFromBoard(Currency currency){
         buildingsOnBoard.put(currency,null);
     }
 
     public void buyBuilding(Player player, Currency currency, List<Coin> coins){
-        int givenCoinAmount = 0;
-
-        for(Coin coin : coins){
-            if (coin.getCurrency() != currency){
-                throw new AlhambraGameRuleException("This is against the rules");
-            }
-            givenCoinAmount += coin.getAmount();
-        }
+        player.getBag().addSelectedCoins(coins);
+        int givenCoinAmount = player.getBag().computeSelectedCoinsValue();
 
         if (givenCoinAmount < buildingsOnBoard.get(currency).getCost()){
-            throw new AlhambraGameRuleException("This is against the rules");
+            throw new AlhambraGameRuleException("Not enough coins!");
         }
+
+        //TODO implement else if for paying with the exact amount
+
         player.putBuildingInHand(buildingsOnBoard.get(currency));
-        takeBuilding(currency);
+        removeBuildingFromBoard(currency);
     }
 
     public void fillBuildingToBoard(){

@@ -108,9 +108,11 @@ public class AlhambraController {
         return false;
     }
 
-    public void buyBuilding(String gameId, String name, Currency currency, Coin[] coins){
-        Game game = ongoingGames.get(gameId);
-        game.buyBuilding(name, currency, coins);
+    public boolean buyBuilding(String gameId, String name, Currency currency, List<Coin> coins){
+        Game currentGame = ongoingGames.get(gameId);
+        currentGame.getMarket().buyBuilding(searchPlayer(name), currency, coins);
+
+        return true;
     }
 
     private void startGame(List<Player> players, String gameID) {
@@ -118,7 +120,6 @@ public class AlhambraController {
         ongoingGames.put(gameID, game);
         lobbies.remove(gameID);
     }
-
 
     private Player searchPlayer(String name) {
         for (Player player : players) {

@@ -121,7 +121,7 @@ public class AlhambraController {
         return null;
     }
 
-    public String joinGame(String gameID, String name) {
+    public String joinLobby(String gameID, String name) {
         Player player = new Player(name);
         players.add(player);
         for (Lobby lobby : lobbies.values()) {

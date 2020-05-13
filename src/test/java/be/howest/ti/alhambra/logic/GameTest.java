@@ -22,10 +22,10 @@ public class GameTest {
         controller.initializeLobby();
         Lobby firstGame = controller.getLobbies().get("group01-0");
         assertEquals(0, firstGame.getPlayers().size());
-        controller.joinGame("group01-0", "john");
+        controller.joinLobby("group01-0", "john");
         assertEquals(1, firstGame.getPlayers().size());
 
-        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.joinGame("group01-5159", "john"));
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.joinLobby("group01-5159", "john"));
     }
 
     @Test
@@ -33,12 +33,12 @@ public class GameTest {
         // test when player is still in lobby
         controller.initializeLobby();
         Lobby firstGame = controller.getLobbies().get("group01-0");
-        controller.joinGame("group01-0", "john");
+        controller.joinLobby("group01-0", "john");
         controller.leaveGame("group01-0", "john");
         assertEquals(0, firstGame.getPlayers().size());
         // test when player is in game
-        controller.joinGame("group01-0", "john");
-        controller.joinGame("group01-0", "danny");
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
         controller.setReadyState("john","group01-0");
         controller.setReadyState("danny","group01-0");
 
@@ -52,8 +52,8 @@ public class GameTest {
     void startGame(){
         controller.initializeLobby();
 
-        controller.joinGame("group01-0", "john");
-        controller.joinGame("group01-0", "danny");
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
 
         controller.setReadyState("john","group01-0");
         assertEquals(1, controller.getLobbies().size());
@@ -88,8 +88,8 @@ public class GameTest {
     void changeCurrentPlayer(){
         controller.initializeLobby();
 
-        controller.joinGame("group01-0", "john");
-        controller.joinGame("group01-0", "danny");
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
 
         controller.setReadyState("john","group01-0");
         controller.setReadyState("danny","group01-0");
@@ -110,8 +110,8 @@ public class GameTest {
 
         controller.initializeLobby();
 
-        controller.joinGame("group01-0", "john");
-        controller.joinGame("group01-0", "danny");
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
         controller.setReadyState("john","group01-0");
         controller.setReadyState("danny","group01-0");
 

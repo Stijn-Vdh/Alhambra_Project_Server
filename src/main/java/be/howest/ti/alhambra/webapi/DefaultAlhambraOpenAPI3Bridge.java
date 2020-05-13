@@ -86,7 +86,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         String body = ctx.getBodyAsString();
         JsonObject obj = new JsonObject(body);
         String name = obj.getString(PLAYER_NAME);
-        return controller.joinGame(id, name);
+        return controller.joinLobby(id, name);
     }
 
 

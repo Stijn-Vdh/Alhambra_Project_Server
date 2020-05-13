@@ -3,11 +3,6 @@ package be.howest.ti.alhambra.logic.money;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 public class Coin {
     private final Currency currency;
     private final int amount;

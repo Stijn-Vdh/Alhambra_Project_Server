@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BankTest {
 
     @Test
-    void Bank(){
+    void Bank() {
 
         Coin coin1 = new Coin(Currency.BLUE, 1);
         Coin coin2 = new Coin(Currency.YELLOW, 2);
@@ -106,17 +106,13 @@ public class BankTest {
         assertEquals(0, p2.getBag().getCoins().size());
 
         List<Coin> startingCoinsP1 = bank.dealStartingCoins();
-        for (Coin coin: startingCoinsP1){
-            p1.getBag().addCoin(coin);
-        }
+        p1.getBag().addCoins(startingCoinsP1);
 
         assertEquals(5, p1.getBag().getCoins().size());
         assertEquals(5, allCoins.size());
 
         List<Coin> startingCoinsP2 = bank.dealStartingCoins();
-        for (Coin coin: startingCoinsP2){
-            p2.getBag().addCoin(coin);
-        }
+        p2.getBag().addCoins(startingCoinsP2);
         assertEquals(3, p2.getBag().getCoins().size());
         assertEquals(2, allCoins.size());
 

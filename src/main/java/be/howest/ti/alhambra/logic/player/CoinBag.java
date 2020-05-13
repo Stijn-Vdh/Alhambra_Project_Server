@@ -20,18 +20,10 @@ public class CoinBag {
         return selectedCoins;
     }
 
-    public void addCoin(Coin coin){
-        coins.add(coin);
-    }
-
     public void addCoins(List<Coin> coins){ this.coins.addAll(coins);}
 
     public void removeCoin(Coin coin){
         coins.remove(coin);
-    }
-
-    public void addSelectedCoin(Coin coin){
-        selectedCoins.add(coin);
     }
 
     public void addSelectedCoins(List<Coin> coins) {

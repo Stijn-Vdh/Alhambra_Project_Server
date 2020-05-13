@@ -20,17 +20,6 @@ public class AlhambraController {
     private List<Player> players = new LinkedList<>();
     private int gameIdCounter = 0;
 
-    public String initializeLobby() {
-        Lobby lobby = new Lobby("group01-" + gameIdCounter);
-        lobbies.put(lobby.getGameID(), lobby);
-        incrID();
-        return lobby.getGameID();
-    }
-
-    private void incrID() {
-        gameIdCounter++;
-    }
-
     public List<String> getGameIds() {
         List<String> tempList = new LinkedList<>();
 
@@ -56,20 +45,6 @@ public class AlhambraController {
         return BuildingType.values();
     }
 
-    public boolean takeMoney(String name, String gameID, List<Coin> coins){
-        Game currentGame = ongoingGames.get(gameID);
-
-        if (currentGame.getCurrentPlayer().getName().equals(name)){
-            currentGame.getBank().takeCoins(coins);
-            currentGame.getCurrentPlayer().getBag().addCoins(coins);
-            currentGame.changeCurrentPlayer();
-            return true;
-        }else{
-            throw new AlhambraGameRuleException("It's not your turn!");
-        }
-
-    }
-
     public List<Building> getAllBuildings() {
 
         return BuildingRepo.getAllBuildings();
@@ -79,10 +54,20 @@ public class AlhambraController {
         return players;
     }
 
-    public void clearAllGames() {
-        ongoingGames.clear();
-        lobbies.clear();
+    public Object getGameState(String gameID) {
+
+        Lobby lobby = lobbies.get(gameID);
+        Game game = ongoingGames.get(gameID);
+
+        if (lobby == null) {
+            return game.getState();
+        } else {
+            return lobby.getState();
+        }
+
     }
+
+
 
     public boolean setReady(String name, String gameID) {
         Player player = searchPlayer(name);
@@ -108,11 +93,69 @@ public class AlhambraController {
         return false;
     }
 
+
+
+    public String initializeLobby() {
+        Lobby lobby = new Lobby("group01-" + gameIdCounter);
+        lobbies.put(lobby.getGameID(), lobby);
+        incrID();
+        return lobby.getGameID();
+    }
+
+    public String joinLobby(String gameID, String name) {
+        Player player = new Player(name);
+        players.add(player);
+        for (Lobby lobby : lobbies.values()) {
+            if (lobby.getGameID().equals(gameID)) {
+                lobby.addPlayer(player);
+                return gameID + '+' + name;
+            }
+        }
+        throw new AlhambraEntityNotFoundException("This game does not exist.");
+    }
+
+    public boolean takeMoney(String name, String gameID, List<Coin> coins){
+        Game currentGame = ongoingGames.get(gameID);
+
+        if (currentGame.getCurrentPlayer().getName().equals(name)){
+            currentGame.getBank().takeCoins(coins);
+            currentGame.getCurrentPlayer().getBag().addCoins(coins);
+            currentGame.changeCurrentPlayer();
+            return true;
+        }else{
+            throw new AlhambraGameRuleException("It's not your turn!");
+        }
+
+    }
+
     public boolean buyBuilding(String gameId, String name, Currency currency, List<Coin> coins){
         Game currentGame = ongoingGames.get(gameId);
-        currentGame.getMarket().buyBuilding(searchPlayer(name), currency, coins);
+        currentGame.getMarket().buyBuilding(Objects.requireNonNull(searchPlayer(name)), currency, coins);
 
         return true;
+    }
+    //TODO -> when no players are in game / lobby -> remove game / lobby
+    public boolean leaveGame(String gameID, String name) {
+
+        if (!ongoingGames.containsKey(gameID)) {
+            lobbies.get(gameID).removePlayer(name);
+        } else {
+            ongoingGames.get(gameID).getPlayers().remove(searchPlayer(name));
+        }
+        players.removeIf(player -> player.getName().equals(name));
+        return true;
+
+    }
+
+    public void clearAllGames() {
+        ongoingGames.clear();
+        lobbies.clear();
+    }
+
+    
+
+    private void incrID() {
+        gameIdCounter++;
     }
 
     private void startGame(List<Player> players, String gameID) {
@@ -128,42 +171,5 @@ public class AlhambraController {
             }
         }
         return null;
-    }
-
-    public String joinLobby(String gameID, String name) {
-        Player player = new Player(name);
-        players.add(player);
-        for (Lobby lobby : lobbies.values()) {
-            if (lobby.getGameID().equals(gameID)) {
-                lobby.addPlayer(player);
-                return gameID + '+' + name;
-            }
-        }
-        throw new AlhambraEntityNotFoundException("This game does not exist.");
-    }
-
-    public boolean leaveGame(String gameID, String name) {
-
-        if (!ongoingGames.containsKey(gameID)) {
-            lobbies.get(gameID).removePlayer(name);
-        } else {
-            ongoingGames.get(gameID).getPlayers().remove(searchPlayer(name));
-        }
-        players.removeIf(player -> player.getName().equals(name));
-        return true;
-
-    }
-
-    public Object getGameState(String gameID) {
-
-        Lobby lobby = lobbies.get(gameID);
-        Game game = ongoingGames.get(gameID);
-
-        if (lobby == null) {
-            return game.getState();
-        } else {
-            return lobby.getState();
-        }
-
     }
 }

@@ -24,7 +24,7 @@ public class AlhambraController {
         Lobby lobby = new Lobby("group01-" + gameIdCounter);
         lobbies.put(lobby.getGameID(), lobby);
         incrID();
-        return lobby.toString();
+        return lobby.getGameID();
     }
 
     private void incrID() {

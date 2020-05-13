@@ -9,45 +9,35 @@ import java.util.List;
 
 public class CoinBag {
 
-    private List<Coin> coins = new ArrayList<>();
+    private List<Coin> coinsInBag = new ArrayList<>();
     private List<Coin> selectedCoins = new ArrayList<>();
 
-    public List<Coin> getCoins() {
-        return coins;
+    public List<Coin> getCoinsInBag() {
+        return coinsInBag;
     }
 
     public List<Coin> getSelectedCoins() {
         return selectedCoins;
     }
 
-    public void addCoins(List<Coin> coins){ this.coins.addAll(coins);}
+    public void addCoins(List<Coin> coins){ this.coinsInBag.addAll(coins);}
 
     public void removeCoin(Coin coin){
-        coins.remove(coin);
+        coinsInBag.remove(coin);
     }
 
     public void addSelectedCoins(List<Coin> coins) {
         selectedCoins.addAll(coins);
     }
-
+    //for testing purposes
     public void removeSelectedCoin(Coin coin){
         selectedCoins.remove(coin);
     }
 
     public void removeSelectedCoinsFromBag(){
         for (Coin coin: selectedCoins){
-            coins.remove(coin);
+            coinsInBag.remove(coin);
         }
-    }
-
-    public int computeTotalCoinsValue(){
-        int totalValue = 0;
-
-        for (Coin coin: coins){
-            totalValue += coin.getAmount();
-        }
-
-        return totalValue;
     }
 
     public int computeSelectedCoinsValue(){

@@ -62,7 +62,7 @@ public class Bank {
             throw new AlhambraGameRuleException("These coins are not on board!");
         }
 
-        int valueCoins = totalValueSelectedCoins((selectedCoins));
+        int valueCoins = totalValueCoins((selectedCoins));
 
         if (selectedCoins.size() == 1 || isValidTotalValue(valueCoins)) {
             removeSelectedCoins(selectedCoins);
@@ -80,10 +80,10 @@ public class Bank {
         }
     }
 
-    public int totalValueSelectedCoins(List<Coin> selectedCoins) {
+    public int totalValueCoins(List<Coin> coins) {
 
         int totalValue = 0;
-        for (Coin coin : selectedCoins) {
+        for (Coin coin : coins) {
             totalValue += coin.getAmount();
         }
         return totalValue;
@@ -97,7 +97,7 @@ public class Bank {
     public List<Coin> dealStartingCoins(){
         List<Coin> startingCoins = new ArrayList<>();
 
-        while (totalValueSelectedCoins(startingCoins) < 20){
+        while (totalValueCoins(startingCoins) < 20){
             startingCoins.add(allCoins.poll());
         }
 

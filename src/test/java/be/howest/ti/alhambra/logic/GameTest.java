@@ -121,9 +121,9 @@ public class GameTest {
         coins.add(firstCoin);
         Player firstPlayer = game.getPlayers().get(0);
 
-        int bagSize = firstPlayer.getBag().getCoins().size(); 
+        int bagSize = firstPlayer.getBag().getCoinsInBag().size();
         controller.takeMoney(firstPlayer.getName(), "group01-0", coins);
-        assertEquals(bagSize+1 , firstPlayer.getBag().getCoins().size());
+        assertEquals(bagSize+1 , firstPlayer.getBag().getCoinsInBag().size());
 
         Coin fakeCoin = new Coin(Currency.YELLOW, 99);
         coins.add(fakeCoin);

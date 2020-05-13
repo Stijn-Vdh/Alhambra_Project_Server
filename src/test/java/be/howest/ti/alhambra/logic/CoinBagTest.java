@@ -68,9 +68,9 @@ public class CoinBagTest {
     void validateBagSize(){
         List<Coin> selectedCoins = new LinkedList<>();
 
-        assertEquals(0, bag.getCoins().size());
+        assertEquals(0, bag.getCoinsInBag().size());
         init();
-        assertEquals(4, bag.getCoins().size());
+        assertEquals(4, bag.getCoinsInBag().size());
 
         selectedCoins.add(coin1);
         selectedCoins.add(coin4);
@@ -78,7 +78,7 @@ public class CoinBagTest {
         assertEquals(2, bag.getSelectedCoins().size());
 
         bag.removeSelectedCoinsFromBag();
-        assertEquals(2, bag.getCoins().size());
+        assertEquals(2, bag.getCoinsInBag().size());
 
    }
 

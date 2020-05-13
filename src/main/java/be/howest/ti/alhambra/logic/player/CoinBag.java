@@ -40,28 +40,21 @@ public class CoinBag {
         }
     }
 
+    private boolean isValidCurrency(Coin coin, Currency currency) {
+        return (coin.getCurrency().equals(currency));
+    }
+
     public int computeSelectedCoinsValue(){
-        Currency color = selectedCoins.get(0).getCurrency();
+        Currency currency = selectedCoins.get(0).getCurrency();
         int selectedCoinsValue = 0;
 
         for (Coin coin: selectedCoins){
-            if (!(coin.getCurrency().equals(color))){
+            if (!isValidCurrency(coin, currency)){
                 throw new AlhambraGameRuleException("Different currencies are not allowed");
             }else{
                 selectedCoinsValue += coin.getAmount();
             }
         }
-
         return selectedCoinsValue;
     }
-
-
-
-
-
-
-
-
-
-
 }

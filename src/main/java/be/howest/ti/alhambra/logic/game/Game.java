@@ -2,7 +2,6 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.player.Player;
-import be.howest.ti.alhambra.logic.money.Currency;
 
 import java.util.*;
 
@@ -33,7 +32,7 @@ public class Game {
             List<Coin> startingCoins = bank.dealStartingCoins();
             player.getBag().addCoins(startingCoins);
         }
-        bank.refill();
+        bank.addCoinsToBoard();
         market = new Market();
     }
 
@@ -74,6 +73,7 @@ public class Game {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,10 +85,5 @@ public class Game {
     @Override
     public int hashCode() {
         return Objects.hash(gameID);
-    }
-
-    @Override
-    public String toString() {
-        return gameID;
     }
 }

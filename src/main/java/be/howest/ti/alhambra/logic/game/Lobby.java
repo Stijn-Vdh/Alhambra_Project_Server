@@ -76,11 +76,6 @@ public class Lobby {
         return Objects.hash(getGameID(), getPlayers());
     }
 
-    @Override
-    public String toString() {
-        return gameID;
-    }
-
     public Map<String, Object> getState() {
         Map<String, Object> state = new HashMap<>();
 

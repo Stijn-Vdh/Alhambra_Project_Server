@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class City {
 
-    static final int SIZE =6;
+    static final int SIZE = 6;
 
     Building[][] board = new Building[SIZE][SIZE];
 
@@ -36,16 +36,15 @@ public class City {
             if (hasNeighbours(row,col)){
                 board[row][col] = b;
             } else {
-                throw new AlhambraGameRuleException("Deze plaats heeft geen aanliggende gebouwen!");
+                throw new AlhambraGameRuleException("This place has no neighbours!");
             }
         }
-        else{
-            throw new AlhambraGameRuleException("Hier staat al een gebouw!");
+        else {
+            throw new AlhambraGameRuleException("There is already a building here!");
         }
-
     }
 
-
+    // maybe change to OR functions???
     public boolean hasNeighbours(int row , int col){
         if (row+1<SIZE && board[row+1][col] != null){
              return true;

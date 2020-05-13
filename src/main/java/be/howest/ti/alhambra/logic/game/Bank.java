@@ -41,7 +41,7 @@ public class Bank {
         return coinsOnBoard;
     }
 
-    public void refill() {
+    public void addCoinsToBoard() {
         while (coinsOnBoard.size() < COINS_ON_BOARD_LIMIT) {
             coinsOnBoard.add(allCoins.poll());
         }
@@ -66,7 +66,7 @@ public class Bank {
 
         if (selectedCoins.size() == 1 || isValidTotalValue(valueCoins)) {
             removeSelectedCoins(selectedCoins);
-            refill();
+            addCoinsToBoard();
         } else {
             throw new AlhambraGameRuleException("Max amount is 5!");
         }

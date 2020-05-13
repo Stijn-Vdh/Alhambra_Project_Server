@@ -49,7 +49,7 @@ public class BankTest {
         assertEquals(10, allCoins.size());
 
         Bank bank = new Bank(allCoins);
-        bank.refill();
+        bank.addCoinsToBoard();
         assertEquals(6, allCoins.size());
 
         assertEquals(0, bank.totalValueSelectedCoins(selectedCoins));

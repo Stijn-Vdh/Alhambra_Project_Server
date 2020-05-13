@@ -15,7 +15,7 @@ public class BuildingRepo {
 
     private static List<Building> allBuildings = null;
 
-    public BuildingRepo() {
+    BuildingRepo() {
     }
 
     public static List<Building> getAllBuildings() {

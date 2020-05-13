@@ -35,7 +35,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
             int index = token.indexOf('+');
             playerName = token.substring(index+1);
         }
-        
+
         return token.equals(gameId + "+" + playerName);
     }
 

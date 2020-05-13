@@ -30,6 +30,10 @@ public class Market {
         return buildingsOnBoard;
     }
 
+    public int getAmountOfBuildings(){
+        return buildings.size();
+    }
+
     private void removeBuildingFromBoard(Currency currency){
         buildingsOnBoard.put(currency,null);
     }
@@ -60,10 +64,4 @@ public class Market {
             }
         }
     }
-
-    public int getAmountOfBuildings(){
-        return buildings.size();
-    }
-
-
 }

@@ -50,5 +50,4 @@ class CoinTest {
                 .flatMap(coin -> Stream.of(coin, coin, coin))
                 .collect(Collectors.toList());
     }
-
 }

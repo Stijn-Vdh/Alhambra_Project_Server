@@ -67,9 +67,7 @@ public class BankTest {
 
         bank.takeCoins(selectedCoins);
         assertEquals(4, allCoins.size());
-
     }
-
 
     @Test
     void startingMoney() {
@@ -117,6 +115,4 @@ public class BankTest {
         assertEquals(2, allCoins.size());
 
     }
-
-
 }

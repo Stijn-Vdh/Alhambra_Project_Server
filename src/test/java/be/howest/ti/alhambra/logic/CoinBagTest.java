@@ -78,8 +78,5 @@ public class CoinBagTest {
 
         bag.removeSelectedCoinsFromBag();
         assertEquals(2, bag.getCoinsInBag().size());
-
    }
-
-
 }

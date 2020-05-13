@@ -35,7 +35,6 @@ public class LobbyTest {
         lobby.addPlayer(new Player("john"));
         //Assert checkReadyState to start the alhambra
         assertFalse(lobby.checkReadyStateForStartGame());
-
     }
 
     @Test

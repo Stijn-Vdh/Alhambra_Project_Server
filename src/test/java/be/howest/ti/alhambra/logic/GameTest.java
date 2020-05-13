@@ -45,7 +45,6 @@ public class GameTest {
         System.out.println(controller.getGameState("group01-0"));
         controller.leaveGame("group01-0", "danny");
         assertEquals(1, controller.getOngoingGames().get("group01-0").getPlayers().size());
-
     }
 
     @Test
@@ -133,9 +132,5 @@ public class GameTest {
 
         assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("danny", "group01-0", coins));
         assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("John", "group01-0", coins));
-
-
     }
-
-
 }

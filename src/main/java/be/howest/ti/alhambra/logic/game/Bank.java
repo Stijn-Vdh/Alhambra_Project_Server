@@ -103,6 +103,5 @@ public class Bank {
 
         return startingCoins;
     }
-
-
+    //TODO -> implement getter to return amount of coins left
 }

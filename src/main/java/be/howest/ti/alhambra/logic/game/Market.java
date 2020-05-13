@@ -31,6 +31,7 @@ public class Market {
         return buildingsOnBoard;
     }
 
+    //will be used to inform client on how much buildings are left
     public int getAmountOfBuildings(){
         return buildings.size();
     }

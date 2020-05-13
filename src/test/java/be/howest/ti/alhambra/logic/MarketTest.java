@@ -44,6 +44,10 @@ public class MarketTest {
         market.fillBuildingToBoard();
         assertEquals(4,market.getBuildingsOnBoard().size());
 
+        coins.add(new Coin(Currency.BLUE, 5));
+        coins.add(new Coin(Currency.BLUE, 4));
+        coins.add(new Coin(Currency.BLUE, 4));
+
         assertThrows(AlhambraGameRuleException.class, ()-> market.buyBuilding(player, Currency.BLUE, coins));
 
         List<Coin> coins2 = new LinkedList<>();

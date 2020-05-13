@@ -47,13 +47,13 @@ public class Lobby {
     }
 
     public int getReadyAmount() {
-        int counter = 0;
+        readyAmount = 0;
         for (Player player : players) {
             if (player.isReady()) {
-                counter++;
+                readyAmount++;
             }
         }
-        readyAmount = counter;
+
         return readyAmount;
     }
 

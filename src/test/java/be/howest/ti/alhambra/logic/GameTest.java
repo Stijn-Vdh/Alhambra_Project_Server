@@ -76,12 +76,15 @@ public class GameTest {
         Game game = new Game(players, "group01-0");
 
         assertNotNull(denJohn.getBag());
-        assertFalse(denJohn.getBag().computeTotalCoinsValue() < 20);
-        assertFalse(denJohn.getBag().computeTotalCoinsValue() > 28);
+        List<Coin> johnsCoinsInBag = denJohn.getBag().getCoinsInBag();
+        List<Coin> eddiesCoinsInBag = denEddy.getBag().getCoinsInBag();
+
+        assertFalse(game.getBank().totalValueCoins(johnsCoinsInBag) < 20);
+        assertFalse(game.getBank().totalValueCoins(johnsCoinsInBag) > 28);
 
         assertNotNull(denEddy.getBag());
-        assertFalse(denEddy.getBag().computeTotalCoinsValue() < 20);
-        assertFalse(denEddy.getBag().computeTotalCoinsValue() > 28);
+        assertFalse(game.getBank().totalValueCoins(eddiesCoinsInBag) < 20);
+        assertFalse(game.getBank().totalValueCoins(eddiesCoinsInBag) > 28);
     }
 
     @Test

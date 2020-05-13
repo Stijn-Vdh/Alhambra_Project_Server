@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CoinBagTest {
 
@@ -29,20 +28,20 @@ public class CoinBagTest {
         bag.addCoins(coins);
     }
 
+    @Test
+    void addCoin() {
+        assertEquals(0, bag.getCoinsInBag().size());
+        init();
+        assertEquals(4, bag.getCoinsInBag().size());
+    }
 
     @Test
-    void totalValue(){
-        List<Coin> selectedCoins = new LinkedList<>();
-
-        assertEquals(0, bag.computeTotalCoinsValue());
+    void removeCoin() {
         init();
-        assertEquals(30, bag.computeTotalCoinsValue());
-        bag.removeCoin(coin4);
-        assertEquals(20, bag.computeTotalCoinsValue());
-        selectedCoins.add(coin4);
-        bag.addCoins(selectedCoins);
-        assertEquals(30, bag.computeTotalCoinsValue());
-
+        assertEquals(4, bag.getCoinsInBag().size());
+        bag.removeCoin(coin1);
+        bag.removeCoin(coin2);
+        assertEquals(2, bag.getCoinsInBag().size());
     }
 
     @Test

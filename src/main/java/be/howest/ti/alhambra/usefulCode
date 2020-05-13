@@ -5,3 +5,20 @@ public String coinsToString(Coin[] coins) {
    }
    return res.toString();
 }
+
+@Test
+void totalValue(){
+    List<Coin> selectedCoins = new LinkedList<>();
+
+    bag.addSelectedCoins(selectedCoins);
+
+    assertEquals(0, bag.computeSelectedCoinsValue());
+    init();
+    assertEquals(30, bag.computeSelectedCoinsValue());
+    bag.removeCoin(coin4);
+    assertEquals(20, bag.computeSelectedCoinsValue());
+    selectedCoins.add(coin4);
+    bag.addCoins(selectedCoins);
+    assertEquals(30, bag.computeSelectedCoinsValue());
+
+}

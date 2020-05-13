@@ -152,7 +152,7 @@ public class AlhambraController {
         lobbies.clear();
     }
 
-    
+
 
     private void incrID() {
         gameIdCounter++;

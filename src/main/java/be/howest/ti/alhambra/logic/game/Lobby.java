@@ -47,13 +47,13 @@ public class Lobby {
     }
 
     public int getReadyAmount() {
-        int counter = 0;
+        readyAmount = 0;
         for (Player player : players) {
             if (player.isReady()) {
-                counter++;
+                readyAmount++;
             }
         }
-        readyAmount = counter;
+
         return readyAmount;
     }
 
@@ -74,11 +74,6 @@ public class Lobby {
     @Override
     public int hashCode() {
         return Objects.hash(getGameID(), getPlayers());
-    }
-
-    @Override
-    public String toString() {
-        return gameID;
     }
 
     public Map<String, Object> getState() {

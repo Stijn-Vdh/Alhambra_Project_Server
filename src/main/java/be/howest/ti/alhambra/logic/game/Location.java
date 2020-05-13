@@ -2,9 +2,8 @@ package be.howest.ti.alhambra.logic.game;
 
 public class Location {
 
-    final int row;
-    final int col;
-
+    private final int row;
+    private final int col;
 
     public Location(int row, int col){
         this.row = row;

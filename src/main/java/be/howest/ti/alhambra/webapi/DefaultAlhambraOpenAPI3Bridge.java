@@ -9,6 +9,7 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,13 +27,16 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public boolean verifyAdminToken(String token) {
         LOGGER.info("verifyPlayerToken");
-        return token.contains("admin");
+        return token.contains("VandenDriessche");
     }
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {
         LOGGER.info("verifyPlayerToken");
-        int index = token.indexOf('+');
-        playerName = token.substring(index+1);
+        if (playerName == null) {
+            int index = token.indexOf('+');
+            playerName = token.substring(index+1);
+        }
+
         return token.equals(gameId + "+" + playerName);
     }
 
@@ -83,7 +87,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         String body = ctx.getBodyAsString();
         JsonObject obj = new JsonObject(body);
         String name = obj.getString(PLAYER_NAME);
-        return controller.joinGame(id, name);
+        return controller.joinLobby(id, name);
     }
 
 
@@ -98,14 +102,13 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         LOGGER.info("setReady");
         String name = ctx.request().getParam(PLAYER_NAME);
         String gameID = ctx.request().getParam(GAME_ID);
-        return controller.setReadyState(name,gameID);
+        return controller.setReady(name,gameID);
     }
 
     public Object setNotReady(RoutingContext ctx) {
         LOGGER.info("setNotReady");
         String name = ctx.request().getParam(PLAYER_NAME);
-        String gameID = ctx.request().getParam(GAME_ID);
-        return controller.setReadyState(name,gameID);
+        return controller.setNotReady(name);
     }
 
     public Object takeMoney(RoutingContext ctx) {
@@ -118,7 +121,6 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         Coin[] coins = Json.decodeValue(body, Coin[].class);
         List<Coin> selectedCoins = new ArrayList<>(Arrays.asList(coins));
 
-
         return controller.takeMoney(name, gameId, selectedCoins);
     }
 
@@ -130,8 +132,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         String body = ctx.getBodyAsString();
         Currency currency = Json.decodeValue(body, Currency.class);
         Coin[] coins = Json.decodeValue(body, Coin[].class);
-        controller.buyBuilding(gameId, name, currency, coins);
-        return null;
+        List<Coin> selectedCoins = new ArrayList<>(Arrays.asList(coins));
+        return controller.buyBuilding(gameId, name, currency, selectedCoins);
     }
 
 

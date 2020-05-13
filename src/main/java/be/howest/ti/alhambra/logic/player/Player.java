@@ -3,11 +3,9 @@ package be.howest.ti.alhambra.logic.player;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.City;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.*;
-import java.util.Objects;
 
 public class Player {
 
@@ -15,7 +13,7 @@ public class Player {
     private boolean isReady;
     private List<Building> reserve;
     private List<Building> buildingsInHand;
-    private List<City> city;
+    private City city;
     private int virtualScore;
     private int score;
     private CoinBag bag;
@@ -26,7 +24,7 @@ public class Player {
         this.isReady = false;
         this.reserve = new LinkedList<>();
         this.buildingsInHand = new LinkedList<>();
-        this.city = new LinkedList<>();
+        this.city = new City();
         this.virtualScore = 0;
         this.score = 0;
         this.bag = new CoinBag();
@@ -45,7 +43,7 @@ public class Player {
         return buildingsInHand;
     }
 
-    public List<City> getCity() {
+    public City getCity() {
         return city;
     }
 
@@ -61,10 +59,6 @@ public class Player {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public boolean isReady() {
         return isReady;
     }
@@ -73,11 +67,10 @@ public class Player {
         if (buildingsInHand.isEmpty()){
             buildingsInHand.add(b);
         }else throw new AlhambraGameRuleException("Hand already contains a building!");
+    } //TODO add possibility to add more then 1 building in hand
 
-    }
-
-    public void setReady(boolean ready) {
-        isReady = !ready;
+    public void setReady(boolean readyState) {
+        isReady = readyState;
     }
 
     @Override

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BankTest {
 
     @Test
-    void Bank(){
+    void Bank() {
 
         Coin coin1 = new Coin(Currency.BLUE, 1);
         Coin coin2 = new Coin(Currency.YELLOW, 2);
@@ -49,7 +49,7 @@ public class BankTest {
         assertEquals(10, allCoins.size());
 
         Bank bank = new Bank(allCoins);
-        bank.refill();
+        bank.addCoinsToBoard();
         assertEquals(6, allCoins.size());
 
         assertEquals(0, bank.totalValueCoins(selectedCoins));
@@ -67,9 +67,7 @@ public class BankTest {
 
         bank.takeCoins(selectedCoins);
         assertEquals(4, allCoins.size());
-
     }
-
 
     @Test
     void startingMoney() {
@@ -102,25 +100,19 @@ public class BankTest {
 
         Player p1 = new Player("daniel");
         Player p2 = new Player("stijn");
-        assertEquals(0, p1.getBag().getCoins().size());
-        assertEquals(0, p2.getBag().getCoins().size());
+        assertEquals(0, p1.getBag().getCoinsInBag().size());
+        assertEquals(0, p2.getBag().getCoinsInBag().size());
 
         List<Coin> startingCoinsP1 = bank.dealStartingCoins();
-        for (Coin coin: startingCoinsP1){
-            p1.getBag().addCoin(coin);
-        }
+        p1.getBag().addCoins(startingCoinsP1);
 
-        assertEquals(5, p1.getBag().getCoins().size());
+        assertEquals(5, p1.getBag().getCoinsInBag().size());
         assertEquals(5, allCoins.size());
 
         List<Coin> startingCoinsP2 = bank.dealStartingCoins();
-        for (Coin coin: startingCoinsP2){
-            p2.getBag().addCoin(coin);
-        }
-        assertEquals(3, p2.getBag().getCoins().size());
+        p2.getBag().addCoins(startingCoinsP2);
+        assertEquals(3, p2.getBag().getCoinsInBag().size());
         assertEquals(2, allCoins.size());
 
     }
-
-
 }

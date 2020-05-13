@@ -33,8 +33,5 @@ public class CityTest {
 
         assertTrue(c.hasNeighbours(3,4));
         assertFalse(c.hasNeighbours(1,1));
-
-
     }
-
 }

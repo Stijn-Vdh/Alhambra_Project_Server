@@ -22,10 +22,10 @@ public class GameTest {
         controller.initializeLobby();
         Lobby firstGame = controller.getLobbies().get("group01-0");
         assertEquals(0, firstGame.getPlayers().size());
-        controller.joinGame("group01-0", "john");
+        controller.joinLobby("group01-0", "john");
         assertEquals(1, firstGame.getPlayers().size());
 
-        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.joinGame("group01-5159", "john"));
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.joinLobby("group01-5159", "john"));
     }
 
     @Test
@@ -33,32 +33,31 @@ public class GameTest {
         // test when player is still in lobby
         controller.initializeLobby();
         Lobby firstGame = controller.getLobbies().get("group01-0");
-        controller.joinGame("group01-0", "john");
+        controller.joinLobby("group01-0", "john");
         controller.leaveGame("group01-0", "john");
         assertEquals(0, firstGame.getPlayers().size());
         // test when player is in game
-        controller.joinGame("group01-0", "john");
-        controller.joinGame("group01-0", "danny");
-        controller.setReadyState("john","group01-0");
-        controller.setReadyState("danny","group01-0");
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
 
         System.out.println(controller.getGameState("group01-0"));
         controller.leaveGame("group01-0", "danny");
         assertEquals(1, controller.getOngoingGames().get("group01-0").getPlayers().size());
-
     }
 
     @Test
     void startGame(){
         controller.initializeLobby();
 
-        controller.joinGame("group01-0", "john");
-        controller.joinGame("group01-0", "danny");
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
 
-        controller.setReadyState("john","group01-0");
+        controller.setReady("john","group01-0");
         assertEquals(1, controller.getLobbies().size());
 
-        controller.setReadyState("danny","group01-0");
+        controller.setReady("danny","group01-0");
 
         assertEquals(0, controller.getLobbies().size());
         assertEquals(1, controller.getOngoingGames().size());
@@ -76,23 +75,26 @@ public class GameTest {
         Game game = new Game(players, "group01-0");
 
         assertNotNull(denJohn.getBag());
-        assertFalse(denJohn.getBag().computeTotalCoinsValue() < 20);
-        assertFalse(denJohn.getBag().computeTotalCoinsValue() > 28);
+        List<Coin> johnsCoinsInBag = denJohn.getBag().getCoinsInBag();
+        List<Coin> eddiesCoinsInBag = denEddy.getBag().getCoinsInBag();
+
+        assertFalse(game.getBank().totalValueCoins(johnsCoinsInBag) < 20);
+        assertFalse(game.getBank().totalValueCoins(johnsCoinsInBag) > 28);
 
         assertNotNull(denEddy.getBag());
-        assertFalse(denEddy.getBag().computeTotalCoinsValue() < 20);
-        assertFalse(denEddy.getBag().computeTotalCoinsValue() > 28);
+        assertFalse(game.getBank().totalValueCoins(eddiesCoinsInBag) < 20);
+        assertFalse(game.getBank().totalValueCoins(eddiesCoinsInBag) > 28);
     }
 
     @Test
     void changeCurrentPlayer(){
         controller.initializeLobby();
 
-        controller.joinGame("group01-0", "john");
-        controller.joinGame("group01-0", "danny");
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
 
-        controller.setReadyState("john","group01-0");
-        controller.setReadyState("danny","group01-0");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
 
         Game firstGame = controller.getOngoingGames().get("group01-0");
 
@@ -110,10 +112,10 @@ public class GameTest {
 
         controller.initializeLobby();
 
-        controller.joinGame("group01-0", "john");
-        controller.joinGame("group01-0", "danny");
-        controller.setReadyState("john","group01-0");
-        controller.setReadyState("danny","group01-0");
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
 
         Game game = controller.getOngoingGames().get("group01-0");
         Coin firstCoin = game.getBank().getCoinsOnBoard().get(0);
@@ -121,18 +123,14 @@ public class GameTest {
         coins.add(firstCoin);
         Player firstPlayer = game.getPlayers().get(0);
 
-        int bagSize = firstPlayer.getBag().getCoins().size(); 
+        int bagSize = firstPlayer.getBag().getCoinsInBag().size();
         controller.takeMoney(firstPlayer.getName(), "group01-0", coins);
-        assertEquals(bagSize+1 , firstPlayer.getBag().getCoins().size());
+        assertEquals(bagSize+1 , firstPlayer.getBag().getCoinsInBag().size());
 
         Coin fakeCoin = new Coin(Currency.YELLOW, 99);
         coins.add(fakeCoin);
 
         assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("danny", "group01-0", coins));
         assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("John", "group01-0", coins));
-
-
     }
-
-
 }

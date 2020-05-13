@@ -2,7 +2,6 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.player.Player;
-import be.howest.ti.alhambra.logic.money.Currency;
 
 import java.util.*;
 
@@ -18,8 +17,9 @@ public class Game {
     private Market market;
     private int turnCounter = 0;
 
-
-
+    public Market getMarket() {
+        return market;
+    }
 
     public Game(List<Player> players, String gameID) {
         this.gameID = gameID;
@@ -32,16 +32,8 @@ public class Game {
             List<Coin> startingCoins = bank.dealStartingCoins();
             player.getBag().addCoins(startingCoins);
         }
-        bank.refill();
+        bank.addCoinsToBoard();
         market = new Market();
-    }
-
-    public void buyBuilding(String name, Currency currency, Coin[] coins){
-        for (Player player : players){
-            if (player.getName().equals(name)){
-                market.buyBuilding(player, currency, Arrays.asList(coins));
-            }
-        }
     }
 
     public void changeCurrentPlayer(){
@@ -81,6 +73,7 @@ public class Game {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,12 +85,5 @@ public class Game {
     @Override
     public int hashCode() {
         return Objects.hash(gameID);
-    }
-
-
-
-    @Override
-    public String toString() {
-        return gameID;
     }
 }

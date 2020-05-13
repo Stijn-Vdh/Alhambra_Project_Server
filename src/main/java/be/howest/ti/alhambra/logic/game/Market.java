@@ -12,6 +12,7 @@ import java.util.*;
 public class Market {
     private Queue<Building> buildings = new LinkedList<>();
     private Map<Currency,Building> buildingsOnBoard = new HashMap<>();
+    private final static int MAX_BUILDING_ON_BOARD = 4;
 
     public Market() {
         List<Building> buildingsToShuffle = new ArrayList<>(BuildingRepo.getAllBuildings());
@@ -30,43 +31,33 @@ public class Market {
         return buildingsOnBoard;
     }
 
-    private void takeBuilding(Currency currency){
-        buildingsOnBoard.put(currency,null);
-    }
-
-    public void buyBuilding(Player player, Currency currency, List<Coin> coins){
-        int givenCoinAmount = 0;
-
-        for(Coin coin : coins){
-            if (coin.getCurrency() != currency){
-                throw new AlhambraGameRuleException("This is against the rules");
-            }
-            givenCoinAmount += coin.getAmount();
-        }
-
-        if (givenCoinAmount < buildingsOnBoard.get(currency).getCost()){
-            throw new AlhambraGameRuleException("This is against the rules");
-        }
-        player.putBuildingInHand(buildingsOnBoard.get(currency));
-        takeBuilding(currency);
-    }
-
-    public void fillBuildingToBoard(){
-
-        if (buildingsOnBoard.isEmpty()) {
-            for (Currency currency : Currency.values()){
-                buildingsOnBoard.put(currency, buildings.poll());
-            }
-        }else{
-            for (Currency currency : buildingsOnBoard.keySet()){
-                buildingsOnBoard.computeIfAbsent(currency, k -> buildings.poll());
-            }
-        }
-    }
-
+    //will be used to inform client on how much buildings are left
     public int getAmountOfBuildings(){
         return buildings.size();
     }
 
+    private void removeBuildingFromBoard(Currency currency){
+        buildingsOnBoard.put(currency,null);
+    }
 
+    public void buyBuilding(Player player, Currency currency, List<Coin> coins){
+        player.getBag().addSelectedCoins(coins);
+        int givenCoinAmount = player.getBag().computeSelectedCoinsValue();
+
+        if (givenCoinAmount < buildingsOnBoard.get(currency).getCost()){
+            throw new AlhambraGameRuleException("Not enough coins!");
+        }
+
+        //TODO implement else if for paying with the exact amount
+
+        player.putBuildingInHand(buildingsOnBoard.get(currency));
+        removeBuildingFromBoard(currency);
+    }
+
+    public void fillBuildingToBoard(){
+
+        for (Currency currency : Currency.values()){
+            buildingsOnBoard.computeIfAbsent(currency, k -> buildings.poll());
+        }
+    }
 }

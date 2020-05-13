@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Bank {
-    private static final int BANK_LIMIT = 4;
+    private static final int COINS_ON_BOARD_LIMIT = 4;
     private static final int MAX_COIN_VALUE = 5;
     private static final int MIN_COIN_VALUE = 0;
     private Queue<Coin> allCoins= new LinkedList<>();
@@ -25,8 +25,8 @@ public class Bank {
 
     }
     // for testing
-    public Bank(Queue<Coin> allcoins){
-        this.allCoins = allcoins;
+    public Bank(Queue<Coin> allCoins){
+        this.allCoins = allCoins;
     }
 
     public static List<Coin> generateAllCoins() {
@@ -41,8 +41,8 @@ public class Bank {
         return coinsOnBoard;
     }
 
-    public void refill() {
-        while (coinsOnBoard.size() < BANK_LIMIT) {
+    public void addCoinsToBoard() {
+        while (coinsOnBoard.size() < COINS_ON_BOARD_LIMIT) {
             coinsOnBoard.add(allCoins.poll());
         }
     }
@@ -64,9 +64,9 @@ public class Bank {
 
         int valueCoins = totalValueCoins((selectedCoins));
 
-        if (selectedCoins.size() == 1 || validTotalValue(valueCoins)) {
+        if (selectedCoins.size() == 1 || isValidTotalValue(valueCoins)) {
             removeSelectedCoins(selectedCoins);
-            refill();
+            addCoinsToBoard();
         } else {
             throw new AlhambraGameRuleException("Max amount is 5!");
         }
@@ -80,26 +80,18 @@ public class Bank {
         }
     }
 
-    public int totalValueCoins(List<Coin> selectedCoins) {
+    public int totalValueCoins(List<Coin> coins) {
 
         int totalValue = 0;
-        for (Coin coin : selectedCoins) {
+        for (Coin coin : coins) {
             totalValue += coin.getAmount();
         }
         return totalValue;
     }
 
-    public boolean validTotalValue(int totalValue) {
+    public boolean isValidTotalValue(int totalValue) {
 
         return totalValue <= MAX_COIN_VALUE && totalValue > MIN_COIN_VALUE;
-    }
-
-    public String coinsToString(Coin[] coins) {
-        StringBuilder res = new StringBuilder();
-        for (int i = 0; i < BANK_LIMIT; i++) {
-            res.append(coins[i]);
-        }
-        return res.toString();
     }
 
     public List<Coin> dealStartingCoins(){
@@ -111,6 +103,5 @@ public class Bank {
 
         return startingCoins;
     }
-
-
+    //TODO -> implement getter to return amount of coins left
 }

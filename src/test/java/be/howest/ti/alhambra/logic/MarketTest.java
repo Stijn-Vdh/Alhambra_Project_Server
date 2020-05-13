@@ -17,6 +17,7 @@ import java.util.Queue;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MarketTest {
+
     @Test
     void market()
     {

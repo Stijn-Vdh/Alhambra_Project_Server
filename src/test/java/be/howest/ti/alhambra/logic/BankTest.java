@@ -52,18 +52,18 @@ public class BankTest {
         bank.refill();
         assertEquals(6, allCoins.size());
 
-        assertEquals(0, bank.totalValueCoins(selectedCoins));
+        assertEquals(0, bank.totalValueSelectedCoins(selectedCoins));
         selectedCoins.add(coin1);
         selectedCoins.add(coin2);
-        assertEquals(3, bank.totalValueCoins(selectedCoins));
+        assertEquals(3, bank.totalValueSelectedCoins(selectedCoins));
 
         selectedCoins.add(coin4);
-        assertEquals(11, bank.totalValueCoins(selectedCoins));
+        assertEquals(11, bank.totalValueSelectedCoins(selectedCoins));
 
         assertThrows(AlhambraGameRuleException.class, () -> bank.takeCoins(selectedCoins));
 
         selectedCoins.remove(coin4);
-        assertEquals(3, bank.totalValueCoins(selectedCoins));
+        assertEquals(3, bank.totalValueSelectedCoins(selectedCoins));
 
         bank.takeCoins(selectedCoins);
         assertEquals(4, allCoins.size());

@@ -41,6 +41,10 @@ public class Bank {
         return coinsOnBoard;
     }
 
+    public Queue<Coin> getAllCoins() {
+        return allCoins;
+    }
+
     public void addCoinsToBoard() {
         while (coinsOnBoard.size() < COINS_ON_BOARD_LIMIT) {
             coinsOnBoard.add(allCoins.poll());
@@ -103,5 +107,5 @@ public class Bank {
 
         return startingCoins;
     }
-    //TODO -> implement getter to return amount of coins left
+
 }

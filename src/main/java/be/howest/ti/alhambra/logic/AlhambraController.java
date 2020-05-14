@@ -139,8 +139,9 @@ public class AlhambraController {
     public boolean placeBuildingOnBoard(String gameId, String name, Building building, Location location){
         Game game = ongoingGames.get(gameId);
         Player player = searchPlayer(name);
-        if (player == game.getCurrentPlayer()) {
-            player.getCity().placeBuilding(building, location);
+        if (game.getCurrentPlayer() == player) {
+            Objects.requireNonNull(player).getCity().placeBuilding(building, location);
+            player.removeBuildingInHand(building);
         }else throw new AlhambraGameRuleException("It's not your turn!");
         return true;
     }
@@ -184,7 +185,7 @@ public class AlhambraController {
         gameIdCounter++;
     }
 
-    private void startGame(List<Player> players, String gameID) {
+    public void startGame(List<Player> players, String gameID) {
         Game game = new Game(players, gameID);
         ongoingGames.put(gameID, game);
         lobbies.remove(gameID);

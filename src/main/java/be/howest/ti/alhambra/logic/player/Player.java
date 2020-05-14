@@ -70,6 +70,9 @@ public class Player {
         isReady = readyState;
     }
 
+    public void removeBuildingInHand(Building b){
+        buildingsInHand.remove(b);
+    }
 
 
     @Override

@@ -149,7 +149,7 @@ public class GameTest {
         int allGeneratedCoins = Bank.generateAllCoins().size();
 
         int amountCoinsP1 = game.getPlayers().get(0).getBag().getCoinsInBag().size();
-        int amountCoinsP2 = game.getPlayers().get(0).getBag().getCoinsInBag().size();
+        int amountCoinsP2 = game.getPlayers().get(1).getBag().getCoinsInBag().size();
         int amountCoinsOnBoard = 4;
         int coinsDealt = amountCoinsP1 + amountCoinsP2 + amountCoinsOnBoard;
 

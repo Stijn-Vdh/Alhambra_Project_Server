@@ -37,7 +37,7 @@ public class Game {
 
         bank.addCoinsToBoard();
 
-        this.coinsRemaining = bank.getAllCoins().size();
+        this.coinsRemaining = getAmountOfCoinsLeft();
 
         market = new Market();
     }

@@ -15,7 +15,7 @@ public class Game {
     private Player currentPlayer;
     private Bank bank;
     private Market market;
-    private int turnCounter = 0;
+    private int turnCounter;
     private int coinsRemaining;
 
     public Market getMarket() {
@@ -53,6 +53,18 @@ public class Game {
         this.currentPlayer = players.get(turnCounter);
 
         turnCounter++;
+    }
+
+   public int getSmallestCoinBagSize(){
+        int smallestBag = players.get(0).getBag().getCoinsInBag().size();
+
+        for (Player player: players){
+            int playerBagSize = player.getBag().getCoinsInBag().size();
+            if (playerBagSize < smallestBag){
+                smallestBag = player.getBag().getCoinsInBag().size();
+            }
+        }
+        return smallestBag;
     }
 
     public String getGameID() {

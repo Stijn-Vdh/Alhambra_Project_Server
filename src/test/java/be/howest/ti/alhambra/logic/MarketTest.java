@@ -41,7 +41,7 @@ public class MarketTest {
         assertNull(market.getBuildingsOnBoard().get(Currency.GREEN));
         assertFalse(player.getBuildingsInHand().isEmpty());
 
-        market.fillBuildingToBoard();
+        market.addBuildingsToBoard();
         assertEquals(4,market.getBuildingsOnBoard().size());
 
         assertThrows(AlhambraGameRuleException.class, ()-> market.buyBuilding(player, Currency.BLUE, coins));

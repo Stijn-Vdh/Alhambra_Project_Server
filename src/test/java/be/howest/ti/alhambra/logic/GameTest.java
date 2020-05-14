@@ -104,33 +104,4 @@ public class GameTest {
         firstGame.changeCurrentPlayer();
         assertEquals("john", firstGame.getCurrentPlayer().getName());
     }
-
-    @Test
-    void takeMoneyTest(){
-
-        List<Coin> coins = new ArrayList<>();
-
-        controller.initializeLobby();
-
-        controller.joinLobby("group01-0", "john");
-        controller.joinLobby("group01-0", "danny");
-        controller.setReady("john","group01-0");
-        controller.setReady("danny","group01-0");
-
-        Game game = controller.getOngoingGames().get("group01-0");
-        Coin firstCoin = game.getBank().getCoinsOnBoard().get(0);
-
-        coins.add(firstCoin);
-        Player firstPlayer = game.getPlayers().get(0);
-
-        int bagSize = firstPlayer.getBag().getCoinsInBag().size();
-        controller.takeMoney(firstPlayer.getName(), "group01-0", coins);
-        assertEquals(bagSize+1 , firstPlayer.getBag().getCoinsInBag().size());
-
-        Coin fakeCoin = new Coin(Currency.YELLOW, 99);
-        coins.add(fakeCoin);
-
-        assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("danny", "group01-0", coins));
-        assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("John", "group01-0", coins));
-    }
 }

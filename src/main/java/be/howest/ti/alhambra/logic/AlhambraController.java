@@ -130,8 +130,11 @@ public class AlhambraController {
 
     public boolean buyBuilding(String gameId, String name, Currency currency, List<Coin> coins){
         Game currentGame = ongoingGames.get(gameId);
-        currentGame.getMarket().buyBuilding(Objects.requireNonNull(searchPlayer(name)), currency, coins);
+        Player player = searchPlayer(name);
+        currentGame.getMarket().buyBuilding(Objects.requireNonNull(player), currency, coins);
 
+        player.getBag().removeSelectedCoinsFromBag();
+        currentGame.changeCurrentPlayer();
         return true;
     }
     //TODO -> when no players are in game / lobby -> remove game / lobby

@@ -38,6 +38,7 @@ public class CoinBag {
         for (Coin coin: selectedCoins){
             coinsInBag.remove(coin);
         }
+        selectedCoins.clear();
     }
 
     private boolean isValidCurrency(Coin coin, Currency currency) {

@@ -134,17 +134,33 @@ public class AlhambraController {
 
         return true;
     }
-    //TODO -> when no players are in game / lobby -> remove game / lobby
+
     public boolean leaveGame(String gameID, String name) {
 
         if (!ongoingGames.containsKey(gameID)) {
             lobbies.get(gameID).removePlayer(name);
+            removeLobbyIfEmpty(gameID);
         } else {
             ongoingGames.get(gameID).getPlayers().remove(searchPlayer(name));
+            removeGameIfEmpty(gameID);
         }
         players.removeIf(player -> player.getName().equals(name));
         return true;
 
+    }
+
+    public void removeGameIfEmpty(String gameID) {
+        Game game = ongoingGames.get(gameID);
+        if (game.getPlayers().isEmpty()) {
+            ongoingGames.remove(gameID);
+        }
+    }
+
+    public void removeLobbyIfEmpty(String gameID) {
+        Lobby lobby = lobbies.get(gameID);
+        if (lobby.getPlayers().isEmpty()) {
+            lobbies.remove(gameID);
+        }
     }
 
     public void clearAllGames() {

@@ -27,18 +27,18 @@ public class Game {
         this.players = players;
         this.started = true;
         this.ended = false;
-        changeCurrentPlayer();
         bank = new Bank();
 
         for (Player player: players){
             List<Coin> startingCoins = bank.dealStartingCoins();
             player.getBag().addCoins(startingCoins);
         }
-
         bank.addCoinsToBoard();
 
-        this.coinsRemaining = getAmountOfCoinsLeft();
+        this.turnCounter = getStartingPlayerIndex();
+        changeCurrentPlayer();
 
+        this.coinsRemaining = getAmountOfCoinsLeft();
         market = new Market();
     }
 

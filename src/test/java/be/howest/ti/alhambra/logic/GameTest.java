@@ -162,6 +162,7 @@ public class GameTest {
     @Test
     void playerOrderTest(){
 
+        // No idea on how to exactly assert this test
         controller.initializeLobby();
 
         controller.joinLobby("group01-0", "john");

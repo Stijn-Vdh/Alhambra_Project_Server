@@ -8,15 +8,10 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
-
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAlhambraOpenAPI3Bridge.class);
     private final AlhambraController controller;
     private static final String PLAYER_NAME = "playerName";
@@ -129,13 +124,14 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         String gameId = ctx.request().getParam(GAME_ID);
         String name = ctx.request().getParam(PLAYER_NAME);
 
-        String body = ctx.getBodyAsString();
-        Currency currency = Json.decodeValue(body, Currency.class);
-        Coin[] coins = Json.decodeValue(body, Coin[].class);
+        JsonObject body = ctx.getBodyAsJson();
+
+        Currency currency = Currency.valueOf(body.getString("currency").toUpperCase());
+        Coin[] coins = Json.decodeValue(body.getJsonArray("coins").toString(), Coin[].class);
+
         List<Coin> selectedCoins = new ArrayList<>(Arrays.asList(coins));
         return controller.buyBuilding(gameId, name, currency, selectedCoins);
     }
-
 
     public Object redesign(RoutingContext ctx) {
         LOGGER.info("redesign");

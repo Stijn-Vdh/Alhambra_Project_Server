@@ -100,11 +100,15 @@ public class GameTest {
 
         Game firstGame = controller.getOngoingGames().get("group01-0");
 
-        assertEquals("john", firstGame.getCurrentPlayer().getName());
+        Player firstPlayer = firstGame.getCurrentPlayer();
+
         firstGame.changeCurrentPlayer();
-        assertEquals("danny", firstGame.getCurrentPlayer().getName());
+        assertNotEquals(firstPlayer, firstGame.getCurrentPlayer());
         firstGame.changeCurrentPlayer();
-        assertEquals("john", firstGame.getCurrentPlayer().getName());
+        assertEquals(firstPlayer, firstGame.getCurrentPlayer());
+        firstGame.changeCurrentPlayer();
+        assertNotEquals(firstPlayer, firstGame.getCurrentPlayer());
+
     }
 
     @Test
@@ -123,7 +127,7 @@ public class GameTest {
         Coin firstCoin = game.getBank().getCoinsOnBoard().get(0);
 
         coins.add(firstCoin);
-        Player firstPlayer = game.getPlayers().get(0);
+        Player firstPlayer = game.getCurrentPlayer();
 
         int bagSize = firstPlayer.getBag().getCoinsInBag().size();
         controller.takeMoney(firstPlayer.getName(), "group01-0", coins);

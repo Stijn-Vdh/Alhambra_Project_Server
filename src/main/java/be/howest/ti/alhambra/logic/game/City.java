@@ -46,15 +46,15 @@ public class City {
     }
 
     public boolean hasNeighbours(int row , int col){
-        if (row + OFFSET<SIZE && board[row + OFFSET][col] != null){
+        if ((row + OFFSET) < SIZE && board[row + OFFSET][col] != null){
              return true;
         }
-        else if (row - OFFSET<SIZE && board[row - OFFSET][col] != null){
+        else if ((row - OFFSET) < SIZE && board[row - OFFSET][col] != null){
             return true;
         }
-        else if (col + OFFSET<SIZE && board[row][col + OFFSET] != null){
+        else if ((col + OFFSET) < SIZE && board[row][col + OFFSET] != null){
             return true;
         }
-        else return col - OFFSET <SIZE && board[row][col - OFFSET] != null;
+        else return (col - OFFSET) < SIZE && board[row][col - OFFSET] != null;
     }
 }

@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import be.howest.ti.alhambra.logic.game.Bank;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Lobby;
 import be.howest.ti.alhambra.logic.money.Coin;
@@ -133,4 +134,28 @@ public class GameTest {
         assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("danny", "group01-0", coins));
         assertThrows(AlhambraGameRuleException.class, () -> controller.takeMoney("John", "group01-0", coins));
     }
+
+    @Test
+    void remainingCoins(){
+        controller.initializeLobby();
+
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
+
+        Game game = controller.getOngoingGames().get("group01-0");
+
+        int allGeneratedCoins = Bank.generateAllCoins().size();
+
+        int amountCoinsP1 = game.getPlayers().get(0).getBag().getCoinsInBag().size();
+        int amountCoinsP2 = game.getPlayers().get(0).getBag().getCoinsInBag().size();
+        int amountCoinsOnBoard = 4;
+        int coinsDealt = amountCoinsP1 + amountCoinsP2 + amountCoinsOnBoard;
+
+        assertEquals((allGeneratedCoins - coinsDealt), game.getAmountOfCoinsLeft());
+
+
+    }
+
 }

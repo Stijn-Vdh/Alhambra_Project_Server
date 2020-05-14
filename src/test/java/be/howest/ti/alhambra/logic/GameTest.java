@@ -1,6 +1,5 @@
 package be.howest.ti.alhambra.logic;
 
-import be.howest.ti.alhambra.exceptions.AlhambraException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Bank;
@@ -159,5 +158,30 @@ public class GameTest {
 
 
     }
+
+    @Test
+    void playerOrderTest(){
+
+        controller.initializeLobby();
+
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "freddy");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
+        controller.setReady("freddy","group01-0");
+
+        Game game = controller.getOngoingGames().get("group01-0");
+
+        System.out.println(game.getPlayers().get(0).getName() + game.getPlayers().get(0).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(0).getBag().calculateTotalCoinBagValue());
+        System.out.println(game.getPlayers().get(1).getName() + game.getPlayers().get(1).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(1).getBag().calculateTotalCoinBagValue());
+        System.out.println(game.getPlayers().get(2).getName() + game.getPlayers().get(2).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(2).getBag().calculateTotalCoinBagValue());
+        System.out.println(game.getCurrentPlayer().getName());
+
+
+
+    }
+
+
 
 }

@@ -67,6 +67,35 @@ public class Game {
         return smallestBag;
     }
 
+    private Player getPlayerWithLeastStartingCoinBagValue(List<Player> players) {
+
+        int lowestValue = players.get(0).getBag().calculateTotalCoinBagValue();
+
+        Player playerWithLeastValue = null;
+
+        for (Player player : players) {
+            if (player.getBag().calculateTotalCoinBagValue() <= lowestValue) {
+                playerWithLeastValue = player;
+            }
+        }
+
+        return playerWithLeastValue;
+    }
+
+    public int getStartingPlayerIndex() {
+        List<Player> tempList = new ArrayList<>();
+
+        for (Player player : players) {
+            if (player.getBag().getCoinsInBag().size() == getSmallestCoinBagSize()) {
+                tempList.add(player);
+            }
+        }
+
+        Player startingPlayer = getPlayerWithLeastStartingCoinBagValue(tempList);
+        return players.indexOf(startingPlayer);
+
+    }
+
     public String getGameID() {
         return gameID;
     }

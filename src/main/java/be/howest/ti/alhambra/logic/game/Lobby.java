@@ -85,4 +85,8 @@ public class Lobby {
         state.put("readyCount", getReadyAmount());
         return state;
     }
+    @Override
+    public String toString() {
+        return gameID;
+    }
 }

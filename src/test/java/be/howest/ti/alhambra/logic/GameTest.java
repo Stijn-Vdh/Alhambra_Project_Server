@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.exceptions.AlhambraException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Game;
@@ -35,16 +36,17 @@ public class GameTest {
         Lobby firstGame = controller.getLobbies().get("group01-0");
         controller.joinLobby("group01-0", "john");
         controller.leaveGame("group01-0", "john");
-        assertEquals(0, firstGame.getPlayers().size());
+        assertNull(controller.getLobbies().get("group01-0"));
         // test when player is in game
-        controller.joinLobby("group01-0", "john");
-        controller.joinLobby("group01-0", "danny");
-        controller.setReady("john","group01-0");
-        controller.setReady("danny","group01-0");
+        controller.initializeLobby();
+        controller.joinLobby("group01-1", "john");
+        controller.joinLobby("group01-1", "danny");
+        controller.setReady("john","group01-1");
+        controller.setReady("danny","group01-1");
 
-        System.out.println(controller.getGameState("group01-0"));
-        controller.leaveGame("group01-0", "danny");
-        assertEquals(1, controller.getOngoingGames().get("group01-0").getPlayers().size());
+        System.out.println(controller.getGameState("group01-1"));
+        controller.leaveGame("group01-1", "danny");
+        assertEquals(1, controller.getOngoingGames().get("group01-1").getPlayers().size());
     }
 
     @Test

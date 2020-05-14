@@ -42,7 +42,7 @@ public class BuildingTest {
 
     @Test
     void placeBuilding(){
-        
+
         AlhambraController controller = new AlhambraController();
 
         controller.initializeLobby();

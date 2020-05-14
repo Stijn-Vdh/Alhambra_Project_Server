@@ -84,9 +84,10 @@ public class Game {
 
     public int getStartingPlayerIndex() {
         List<Player> tempList = new ArrayList<>();
-
+        int smallestCoinBagSize = getSmallestCoinBagSize();
+        
         for (Player player : players) {
-            if (player.getBag().getCoinsInBag().size() == getSmallestCoinBagSize()) {
+            if (player.getBag().getCoinsInBag().size() == smallestCoinBagSize) {
                 tempList.add(player);
             }
         }

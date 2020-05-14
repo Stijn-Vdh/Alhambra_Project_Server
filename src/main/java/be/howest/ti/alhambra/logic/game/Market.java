@@ -12,7 +12,6 @@ import java.util.*;
 public class Market {
     private Queue<Building> buildings = new LinkedList<>();
     private Map<Currency,Building> buildingsOnBoard = new HashMap<>();
-    private final static int MAX_BUILDING_ON_BOARD = 4;
 
     public Market() {
         List<Building> buildingsToShuffle = new ArrayList<>(BuildingRepo.getAllBuildings());

@@ -24,7 +24,7 @@ public class AlhambraController {
         List<String> tempList = new LinkedList<>();
 
         for (Lobby lobby : lobbies.values()) {
-            tempList.add(lobby.toString());
+            tempList.add(lobby.getGameID());
         }
         return tempList;
     }

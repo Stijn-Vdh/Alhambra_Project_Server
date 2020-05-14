@@ -13,7 +13,7 @@ public class Bank {
     private static final int COINS_ON_BOARD_LIMIT = 4;
     private static final int MAX_COIN_VALUE = 5;
     private static final int MIN_COIN_VALUE = 0;
-    private Queue<Coin> allCoins= new LinkedList<>();
+    private Queue<Coin> allCoins = new LinkedList<>();
     private List<Coin> coinsOnBoard = new LinkedList<>();
 
     public Bank() {
@@ -107,5 +107,4 @@ public class Bank {
 
         return startingCoins;
     }
-
 }

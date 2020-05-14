@@ -70,6 +70,8 @@ public class Player {
         isReady = readyState;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

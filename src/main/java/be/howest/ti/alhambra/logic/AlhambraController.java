@@ -130,12 +130,16 @@ public class AlhambraController {
 
     public boolean buyBuilding(String gameId, String name, Currency currency, List<Coin> coins){
         Game currentGame = ongoingGames.get(gameId);
-        Player player = searchPlayer(name);
-        currentGame.getMarket().buyBuilding(Objects.requireNonNull(player), currency, coins);
+        if (currentGame.getCurrentPlayer().getName().equals(name)){
+            Player player = searchPlayer(name);
+            currentGame.getMarket().buyBuilding(Objects.requireNonNull(player), currency, coins);
 
-        player.getBag().removeSelectedCoinsFromBag();
-        currentGame.changeCurrentPlayer();
-        return true;
+            player.getBag().removeSelectedCoinsFromBag();
+            currentGame.changeCurrentPlayer();
+            return true;
+        }
+        throw new AlhambraGameRuleException("it's not your turn!!!!");
+
     }
     //TODO -> when no players are in game / lobby -> remove game / lobby
     public boolean leaveGame(String gameID, String name) {

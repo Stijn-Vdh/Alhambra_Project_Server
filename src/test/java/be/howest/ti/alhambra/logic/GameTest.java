@@ -1,7 +1,9 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.exceptions.AlhambraException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import be.howest.ti.alhambra.logic.game.Bank;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Lobby;
 import be.howest.ti.alhambra.logic.money.Coin;
@@ -35,16 +37,17 @@ public class GameTest {
         Lobby firstGame = controller.getLobbies().get("group01-0");
         controller.joinLobby("group01-0", "john");
         controller.leaveGame("group01-0", "john");
-        assertEquals(0, firstGame.getPlayers().size());
+        assertNull(controller.getLobbies().get("group01-0"));
         // test when player is in game
-        controller.joinLobby("group01-0", "john");
-        controller.joinLobby("group01-0", "danny");
-        controller.setReady("john","group01-0");
-        controller.setReady("danny","group01-0");
+        controller.initializeLobby();
+        controller.joinLobby("group01-1", "john");
+        controller.joinLobby("group01-1", "danny");
+        controller.setReady("john","group01-1");
+        controller.setReady("danny","group01-1");
 
-        System.out.println(controller.getGameState("group01-0"));
-        controller.leaveGame("group01-0", "danny");
-        assertEquals(1, controller.getOngoingGames().get("group01-0").getPlayers().size());
+        System.out.println(controller.getGameState("group01-1"));
+        controller.leaveGame("group01-1", "danny");
+        assertEquals(1, controller.getOngoingGames().get("group01-1").getPlayers().size());
     }
 
     @Test
@@ -103,5 +106,29 @@ public class GameTest {
         assertEquals("danny", firstGame.getCurrentPlayer().getName());
         firstGame.changeCurrentPlayer();
         assertEquals("john", firstGame.getCurrentPlayer().getName());
+    }
+
+   
+    @Test
+    void remainingCoins(){
+        controller.initializeLobby();
+
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
+
+        Game game = controller.getOngoingGames().get("group01-0");
+
+        int allGeneratedCoins = Bank.generateAllCoins().size();
+
+        int amountCoinsP1 = game.getPlayers().get(0).getBag().getCoinsInBag().size();
+        int amountCoinsP2 = game.getPlayers().get(1).getBag().getCoinsInBag().size();
+        int amountCoinsOnBoard = 4;
+        int coinsDealt = amountCoinsP1 + amountCoinsP2 + amountCoinsOnBoard;
+
+        assertEquals((allGeneratedCoins - coinsDealt), game.getAmountOfCoinsLeft());
+
+
     }
 }

@@ -4,7 +4,6 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.player.Player;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.*;
 
@@ -85,5 +84,9 @@ public class Lobby {
         state.put("playerCount", players.size());
         state.put("readyCount", getReadyAmount());
         return state;
+    }
+    @Override
+    public String toString() {
+        return gameID;
     }
 }

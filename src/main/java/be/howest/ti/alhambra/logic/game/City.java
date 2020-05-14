@@ -8,7 +8,8 @@ import java.util.Arrays;
 
 public class City {
 
-    static final int SIZE = 6;
+    private static final int SIZE = 6;
+    private static final int OFFSET = 1;
 
     Building[][] board = new Building[SIZE][SIZE];
 
@@ -44,17 +45,16 @@ public class City {
         }
     }
 
-    // maybe change to OR functions???
     public boolean hasNeighbours(int row , int col){
-        if (row+1<SIZE && board[row+1][col] != null){
+        if ((row + OFFSET) < SIZE && board[row + OFFSET][col] != null){
              return true;
         }
-        else if (row-1<SIZE && board[row-1][col] != null){
+        else if ((row - OFFSET) < SIZE && board[row - OFFSET][col] != null){
             return true;
         }
-        else if (col+1<SIZE && board[row][col+1] != null){
+        else if ((col + OFFSET) < SIZE && board[row][col + OFFSET] != null){
             return true;
         }
-        else return col-1<SIZE && board[row][col - 1] != null;
+        else return (col - OFFSET) < SIZE && board[row][col - OFFSET] != null;
     }
 }

@@ -16,6 +16,7 @@ public class Game {
     private Bank bank;
     private Market market;
     private int turnCounter = 0;
+    private int coinsRemaining;
 
     public Market getMarket() {
         return market;
@@ -28,12 +29,21 @@ public class Game {
         this.ended = false;
         changeCurrentPlayer();
         bank = new Bank();
+
         for (Player player: players){
             List<Coin> startingCoins = bank.dealStartingCoins();
             player.getBag().addCoins(startingCoins);
         }
+
         bank.addCoinsToBoard();
+
+        this.coinsRemaining = getAmountOfCoinsLeft();
+
         market = new Market();
+    }
+
+    public int getAmountOfCoinsLeft(){
+        return bank.getAllCoins().size();
     }
 
     public void changeCurrentPlayer(){
@@ -66,6 +76,7 @@ public class Game {
         state.put("started", started);
         state.put("ended", ended);
         state.put("currentPlayer", currentPlayer.getName());
+        state.put("coinsRemaining", coinsRemaining);
 
         return state;
     }

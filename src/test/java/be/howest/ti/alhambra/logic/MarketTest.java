@@ -39,9 +39,6 @@ public class MarketTest {
 
         market.buyBuilding(player,Currency.GREEN, coins);
 
-        //  test faalt vamwege aanpassing dat de de buildingsonboard nooit null is
-        // Todo use test with paying for building with exact amount
-        // assertNull(market.getBuildingsOnBoard().get(Currency.GREEN));
         assertFalse(player.getBuildingsInHand().isEmpty());
 
         market.addBuildingsToBoard();

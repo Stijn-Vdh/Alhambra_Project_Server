@@ -4,12 +4,10 @@ import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingType;
 import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
-import be.howest.ti.alhambra.logic.game.Bank;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Market;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
-import be.howest.ti.alhambra.logic.player.CoinBag;
 import be.howest.ti.alhambra.logic.player.Player;
 import org.junit.jupiter.api.Test;
 
@@ -39,11 +37,11 @@ public class FunctionalityTest {
         Coin firstCoin = game.getBank().getCoinsOnBoard().get(0);
 
         coins.add(firstCoin);
-        Player firstPlayer = game.getPlayers().get(0);
+        Player currentPlayer = game.getCurrentPlayer();
 
-        int bagSize = firstPlayer.getBag().getCoinsInBag().size();
-        controller.takeMoney(firstPlayer.getName(), "group01-0", coins);
-        assertEquals(bagSize+1 , firstPlayer.getBag().getCoinsInBag().size());
+        int bagSize = currentPlayer.getBag().getCoinsInBag().size();
+        controller.takeMoney(currentPlayer.getName(), "group01-0", coins);
+        assertEquals(bagSize+1 , currentPlayer.getBag().getCoinsInBag().size());
 
         Coin fakeCoin = new Coin(Currency.YELLOW, 99);
         coins.add(fakeCoin);

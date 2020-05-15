@@ -18,12 +18,12 @@ public class Market {
         Collections.shuffle(buildingsToShuffle);
 
         this.buildings.addAll(buildingsToShuffle);
-        fillBuildingToBoard();
+        addBuildingsToBoard();
     }
     // for testing
     public Market(Queue<Building> buildings){
         this.buildings = buildings;
-        fillBuildingToBoard();
+        addBuildingsToBoard();
     }
 
     public Map<Currency, Building> getBuildingsOnBoard() {
@@ -39,7 +39,16 @@ public class Market {
         buildingsOnBoard.put(currency,null);
     }
 
+    private boolean isValidBuilding(Building selectedBuilding){
+        return buildingsOnBoard.containsValue(selectedBuilding);
+    }
+
+
     public void buyBuilding(Player player, Currency currency, List<Coin> coins){
+        if (!isValidBuilding(buildingsOnBoard.get(currency))){
+            throw new AlhambraGameRuleException("This building does not exist on gameBoard");
+        }
+
         player.getBag().addSelectedCoins(coins);
         int givenCoinAmount = player.getBag().computeSelectedCoinsValue();
 
@@ -51,9 +60,10 @@ public class Market {
 
         player.putBuildingInHand(buildingsOnBoard.get(currency));
         removeBuildingFromBoard(currency);
+        addBuildingsToBoard();
     }
 
-    public void fillBuildingToBoard(){
+    public void addBuildingsToBoard(){
 
         for (Currency currency : Currency.values()){
             buildingsOnBoard.computeIfAbsent(currency, k -> buildings.poll());

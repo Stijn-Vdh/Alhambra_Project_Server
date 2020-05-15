@@ -18,8 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BuildingTest {
     @Test
@@ -55,14 +54,14 @@ public class BuildingTest {
         Game game = controller.getOngoingGames().get("group01-0");
 
         Player player = game.getCurrentPlayer();
-        assertEquals(game.getCurrentPlayer().getName(), "john");
+
 
         Location location = new Location(-1,0);
         Walls walls = new Walls(true, false, true, false);
         Building building = new Building(BuildingType.PAVILION, 1, walls);
-
-        controller.placeBuildingOnBoard("group01-0", "john", building, location);
-
+        assertNull(player.getCity().getBoard()[2][3]);
+        controller.placeBuildingOnBoard(game.getGameID(), player.getName(), building, location);
+        assertNotNull(player.getCity().getBoard()[2][3]);
 
     }
 }

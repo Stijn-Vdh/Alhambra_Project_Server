@@ -38,10 +38,10 @@ public class MarketTest {
         assertEquals(4,market.getBuildingsOnBoard().size());
 
         market.buyBuilding(player,Currency.GREEN, coins);
-        assertNull(market.getBuildingsOnBoard().get(Currency.GREEN));
+
         assertFalse(player.getBuildingsInHand().isEmpty());
 
-        market.fillBuildingToBoard();
+        market.addBuildingsToBoard();
         assertEquals(4,market.getBuildingsOnBoard().size());
 
         coins.add(new Coin(Currency.BLUE, 5));

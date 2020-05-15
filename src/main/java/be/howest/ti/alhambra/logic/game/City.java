@@ -33,6 +33,11 @@ public class City {
         int row = location.getRow();
         int col = location.getCol();
 
+        final int CHANGE_TO_ACTUAL_POSITION = 3;
+
+        row = row + CHANGE_TO_ACTUAL_POSITION;
+        col = col + CHANGE_TO_ACTUAL_POSITION;
+
         if (board[row][col] == null) {
             if (hasNeighbours(row,col)){
                 board[row][col] = b;

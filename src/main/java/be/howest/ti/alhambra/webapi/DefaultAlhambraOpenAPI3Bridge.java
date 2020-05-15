@@ -18,6 +18,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     private final AlhambraController controller;
     private static final String PLAYER_NAME = "playerName";
     private static final String GAME_ID = "gameId";
+    private static final String TKN_SALT = "$Sm3lly_3lli3$TKN.";
+    
     public DefaultAlhambraOpenAPI3Bridge(){
         this.controller = new AlhambraController();
     }
@@ -34,7 +36,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
             playerName = token.substring(index+1);
         }
 
-        return token.equals(gameId + "+" + playerName);
+        return token.equals(TKN_SALT + gameId + "+" + playerName);
     }
 
     public Object getBuildings(RoutingContext ctx) {

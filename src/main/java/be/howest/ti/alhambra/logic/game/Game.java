@@ -15,7 +15,7 @@ public class Game {
     private Player currentPlayer;
     private Bank bank;
     private Market market;
-    private int turnCounter = 0;
+    private int turnCounter;
     private int coinsRemaining;
 
     public Market getMarket() {
@@ -27,18 +27,18 @@ public class Game {
         this.players = players;
         this.started = true;
         this.ended = false;
-        changeCurrentPlayer();
         bank = new Bank();
 
         for (Player player: players){
             List<Coin> startingCoins = bank.dealStartingCoins();
             player.getBag().addCoins(startingCoins);
         }
-
         bank.addCoinsToBoard();
 
-        this.coinsRemaining = getAmountOfCoinsLeft();
+        this.turnCounter = getStartingPlayerIndex();
+        changeCurrentPlayer();
 
+        this.coinsRemaining = getAmountOfCoinsLeft();
         market = new Market();
     }
 
@@ -53,6 +53,48 @@ public class Game {
         this.currentPlayer = players.get(turnCounter);
 
         turnCounter++;
+    }
+
+   public int getSmallestCoinBagSize(){
+        int smallestBag = players.get(0).getBag().getCoinsInBag().size();
+
+        for (Player player: players){
+            int playerBagSize = player.getBag().getCoinsInBag().size();
+            if (playerBagSize < smallestBag){
+                smallestBag = player.getBag().getCoinsInBag().size();
+            }
+        }
+        return smallestBag;
+    }
+
+    private Player getPlayerWithLeastStartingCoinBagValue(List<Player> players) {
+
+        int lowestValue = players.get(0).getBag().calculateTotalCoinBagValue();
+
+        Player playerWithLeastValue = null;
+
+        for (Player player : players) {
+            if (player.getBag().calculateTotalCoinBagValue() <= lowestValue) {
+                playerWithLeastValue = player;
+            }
+        }
+
+        return playerWithLeastValue;
+    }
+
+    public int getStartingPlayerIndex() {
+        List<Player> tempList = new ArrayList<>();
+        int smallestCoinBagSize = getSmallestCoinBagSize();
+
+        for (Player player : players) {
+            if (player.getBag().getCoinsInBag().size() == smallestCoinBagSize) {
+                tempList.add(player);
+            }
+        }
+
+        Player startingPlayer = getPlayerWithLeastStartingCoinBagValue(tempList);
+        return players.indexOf(startingPlayer);
+
     }
 
     public String getGameID() {

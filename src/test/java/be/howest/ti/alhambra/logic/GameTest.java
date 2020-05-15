@@ -155,10 +155,6 @@ public class GameTest {
         System.out.println(game.getPlayers().get(2).getName() + game.getPlayers().get(2).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(2).getBag().calculateTotalCoinBagValue());
         System.out.println(game.getCurrentPlayer().getName());
 
-
-
     }
-
-
 
 }

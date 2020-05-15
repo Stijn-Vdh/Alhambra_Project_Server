@@ -19,14 +19,15 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     private static final String PLAYER_NAME = "playerName";
     private static final String GAME_ID = "gameId";
     private static final String TKN_SALT = "$Sm3lly_3lli3$TKN.";
-    
+    private static final String ADMIN_TKN = "d49aedca2af303f3439c9ddcfaa6c534";
+
     public DefaultAlhambraOpenAPI3Bridge(){
         this.controller = new AlhambraController();
     }
 
     public boolean verifyAdminToken(String token) {
         LOGGER.info("\nverifyAdminToken \n");
-        return token.contains("d49aedca2af303f3439c9ddcfaa6c534");
+        return token.contains(ADMIN_TKN);
     }
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {

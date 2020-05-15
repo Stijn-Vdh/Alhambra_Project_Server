@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic.player;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.game.City;
+import be.howest.ti.alhambra.logic.game.Location;
 import com.fasterxml.jackson.annotation.*;
 
 import java.util.*;
@@ -74,6 +75,25 @@ public class Player {
         buildingsInHand.remove(b);
     }
 
+    public void removeBuildingFromReserve(Building building) {
+        reserve.remove(building);
+    }
+
+    public void putBuildingFromBoardInReserve(Location location) {
+
+        int row = location.getRow();
+        int col = location.getCol();
+
+        final int CHANGE_TO_ACTUAL_POSITION = 3;
+
+        row = row + CHANGE_TO_ACTUAL_POSITION;
+        col = col + CHANGE_TO_ACTUAL_POSITION;
+
+        Building building = city.getBoard()[row][col];
+        reserve.add(building);
+        city.getBoard()[row][col] = null;
+
+    }
 
     @Override
     public boolean equals(Object o) {

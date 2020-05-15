@@ -38,7 +38,6 @@ public class Game {
         this.turnCounter = getStartingPlayerIndex();
         changeCurrentPlayer();
 
-        this.coinsRemaining = getAmountOfCoinsLeft();
         market = new Market();
     }
 
@@ -51,8 +50,12 @@ public class Game {
             turnCounter = 0;
         }
         this.currentPlayer = players.get(turnCounter);
-
+        updateCoinsRemaining();
         turnCounter++;
+    }
+
+    public void updateCoinsRemaining(){
+        this.coinsRemaining = getAmountOfCoinsLeft();
     }
 
    public int getSmallestCoinBagSize(){

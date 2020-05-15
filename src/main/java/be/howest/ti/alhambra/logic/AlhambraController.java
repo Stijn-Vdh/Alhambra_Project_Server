@@ -1,5 +1,4 @@
 package be.howest.ti.alhambra.logic;
-
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.building.BuildingType;
@@ -11,7 +10,6 @@ import be.howest.ti.alhambra.logic.game.Location;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
-
 import java.util.*;
 
 public class AlhambraController {
@@ -66,10 +64,7 @@ public class AlhambraController {
         } else {
             return lobby.getState();
         }
-
     }
-
-
 
     public boolean setReady(String name, String gameID) {
         Player player = searchPlayer(name);
@@ -94,8 +89,6 @@ public class AlhambraController {
         }
         return false;
     }
-
-
 
     public String initializeLobby() {
         Lobby lobby = new Lobby("group01-" + gameIdCounter);
@@ -127,7 +120,6 @@ public class AlhambraController {
         }else{
             throw new AlhambraGameRuleException("It's not your turn!");
         }
-
     }
 
     public boolean buyBuilding(String gameId, String name, Currency currency, List<Coin> coins){
@@ -141,10 +133,8 @@ public class AlhambraController {
             return true;
         }
         throw new AlhambraGameRuleException("it's not your turn!!!!");
-
-        currentGame.getMarket().buyBuilding(Objects.requireNonNull(searchPlayer(name)), currency, coins);
-        return true;
     }
+
     public boolean placeBuildingOnBoard(String gameId, String name, Building building, Location location){
         Game game = ongoingGames.get(gameId);
         Player player = searchPlayer(name);
@@ -154,6 +144,7 @@ public class AlhambraController {
         }else throw new AlhambraGameRuleException("It's not your turn!");
         return true;
     }
+
     public boolean leaveGame(String gameID, String name) {
 
         if (!ongoingGames.containsKey(gameID)) {
@@ -165,7 +156,6 @@ public class AlhambraController {
         }
         players.removeIf(player -> player.getName().equals(name));
         return true;
-
     }
 
     public void removeGameIfEmpty(String gameID) {
@@ -186,8 +176,6 @@ public class AlhambraController {
         ongoingGames.clear();
         lobbies.clear();
     }
-
-
 
     private void incrID() {
         gameIdCounter++;

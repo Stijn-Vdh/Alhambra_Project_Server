@@ -43,7 +43,6 @@ public class Market {
         return buildingsOnBoard.containsValue(selectedBuilding);
     }
 
-
     public void buyBuilding(Player player, Currency currency, List<Coin> coins){
         if (!isValidBuilding(buildingsOnBoard.get(currency))){
             throw new AlhambraGameRuleException("This building does not exist on gameBoard");

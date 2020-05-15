@@ -7,6 +7,7 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Lobby;
+import be.howest.ti.alhambra.logic.game.Location;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
@@ -141,6 +142,18 @@ public class AlhambraController {
         }
         throw new AlhambraGameRuleException("it's not your turn!!!!");
 
+        currentGame.getMarket().buyBuilding(Objects.requireNonNull(searchPlayer(name)), currency, coins);
+        return true;
+    }
+
+    public boolean placeBuildingOnBoard(String gameId, String name, Building building, Location location){
+        Game game = ongoingGames.get(gameId);
+        Player player = searchPlayer(name);
+        if (game.getCurrentPlayer() == player) {
+            Objects.requireNonNull(player).getCity().placeBuilding(building, location);
+            player.removeBuildingInHand(building);
+        }else throw new AlhambraGameRuleException("It's not your turn!");
+        return true;
     }
 
     public boolean leaveGame(String gameID, String name) {
@@ -182,7 +195,7 @@ public class AlhambraController {
         gameIdCounter++;
     }
 
-    private void startGame(List<Player> players, String gameID) {
+    public void startGame(List<Player> players, String gameID) {
         Game game = new Game(players, gameID);
         ongoingGames.put(gameID, game);
         lobbies.remove(gameID);

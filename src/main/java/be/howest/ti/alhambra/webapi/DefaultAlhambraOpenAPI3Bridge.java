@@ -149,9 +149,16 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         String name = ctx.request().getParam(PLAYER_NAME);
         String gameId = ctx.request().getParam(GAME_ID);
 
-        String body = ctx.getBodyAsString();
-        Building building = Json.decodeValue(body, Building.class);
-        Location location = Json.decodeValue(body, Location.class);
+        JsonObject body = ctx.getBodyAsJson();
+
+        Building building = body.getJsonObject("building").mapTo(Building.class);
+        Location location;
+
+        if (body.getJsonObject("location") == null){
+            location = null;
+        }else{
+            location = body.getJsonObject("location").mapTo(Location.class);
+        }
 
         LOGGER.info(LOGGER_PREFIX+name+") build a building in his city or reserve \n");
         return controller.placeBuilding(gameId, name, building, location);

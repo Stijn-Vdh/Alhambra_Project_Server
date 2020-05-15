@@ -1,6 +1,8 @@
 package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.game.Location;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import io.vertx.core.json.Json;
@@ -141,8 +143,14 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object build(RoutingContext ctx) {
         String name = ctx.request().getParam(PLAYER_NAME);
+        String gameId = ctx.request().getParam(GAME_ID);
+
+        String body = ctx.getBodyAsString();
+        Building building = Json.decodeValue(body, Building.class);
+        Location location = Json.decodeValue(body, Location.class);
+
         LOGGER.info("\nPlayer("+name+") build a building in his city \n");
-        return null;
+        return controller.placeBuildingOnBoard(gameId, name, building, location);
     }
 
     public Object getGame(RoutingContext ctx) {

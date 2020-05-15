@@ -70,6 +70,11 @@ public class Player {
         isReady = readyState;
     }
 
+    public void removeBuildingInHand(Building b){
+        buildingsInHand.remove(b);
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

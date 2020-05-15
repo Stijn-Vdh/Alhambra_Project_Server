@@ -149,8 +149,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         Building building = Json.decodeValue(body, Building.class);
         Location location = Json.decodeValue(body, Location.class);
 
-        LOGGER.info("\nPlayer("+name+") build a building in his city \n");
-        return controller.placeBuildingOnBoard(gameId, name, building, location);
+        LOGGER.info("\nPlayer("+name+") build a building in his city or reserve \n");
+        return controller.placeBuilding(gameId, name, building, location);
     }
 
     public Object getGame(RoutingContext ctx) {

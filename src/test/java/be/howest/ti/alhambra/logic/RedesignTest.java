@@ -33,10 +33,10 @@ public class RedesignTest {
         Walls walls = new Walls(true, false, true, false);
         Building building = new Building(BuildingType.PAVILION, 1, walls);
         assertNull(player.getCity().getBoard()[2][3]);
-        controller.placeBuildingOnBoard(game.getGameID(), player.getName(), building, location);
+        controller.placeBuilding(game.getGameID(), player.getName(), building, location);
         assertNotNull(player.getCity().getBoard()[2][3]);
 
-
+        game.changeCurrentPlayer();
 
         Player player1 = game.getCurrentPlayer();
 

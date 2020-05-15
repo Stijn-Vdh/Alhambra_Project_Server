@@ -151,6 +151,23 @@ public class AlhambraController {
         return true;
     }
 
+    public boolean redesignCity(String gameId, String name, Building building, Location location){
+        Game currentGame = ongoingGames.get(gameId);
+        Player player = searchPlayer(name);
+
+        if (currentGame.getCurrentPlayer() == player) {
+            if (building == null){
+                Objects.requireNonNull(player).putBuildingFromBoardInReserve(location);
+            } else {
+                Objects.requireNonNull(player).getCity().placeBuilding(building, location);
+                player.removeBuildingFromReserve(building);
+            }
+            currentGame.changeCurrentPlayer();
+        }else throw new AlhambraGameRuleException("It's not your turn!");
+
+        return true;
+    }
+
     public boolean leaveGame(String gameID, String name) {
 
         if (!ongoingGames.containsKey(gameID)) {

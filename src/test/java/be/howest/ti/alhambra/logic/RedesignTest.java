@@ -5,42 +5,15 @@ import be.howest.ti.alhambra.logic.building.BuildingType;
 import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Location;
-import be.howest.ti.alhambra.logic.game.Market;
-import be.howest.ti.alhambra.logic.money.Coin;
-import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
-import io.vertx.core.json.Json;
-import io.vertx.core.json.JsonObject;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BuildingTest {
-    @Test
-    void building() {
-
-        Walls walls = new Walls(true, false, true, false);
-
-        Building building = new Building(BuildingType.PAVILION, 1, walls);
-
-        JsonObject buildingAsJsonObject = JsonObject.mapFrom(building);
-
-        assertTrue(buildingAsJsonObject.containsKey("type"));
-        assertTrue(buildingAsJsonObject.containsKey("cost"));
-        assertTrue(buildingAsJsonObject.containsKey("walls"));
-
-        assertEquals(building, buildingAsJsonObject.mapTo(Building.class));
-
-        assertEquals(building, Json.decodeValue(Json.encode(building), Building.class));
-    }
+public class RedesignTest {
 
     @Test
-    void placeBuilding(){
+    void redesignCity(){
 
         AlhambraController controller = new AlhambraController();
 
@@ -55,12 +28,31 @@ public class BuildingTest {
 
         Player player = game.getCurrentPlayer();
 
+
         Location location = new Location(-1,0);
         Walls walls = new Walls(true, false, true, false);
         Building building = new Building(BuildingType.PAVILION, 1, walls);
         assertNull(player.getCity().getBoard()[2][3]);
         controller.placeBuildingOnBoard(game.getGameID(), player.getName(), building, location);
         assertNotNull(player.getCity().getBoard()[2][3]);
+
+
+
+        Player player1 = game.getCurrentPlayer();
+
+        assertEquals(player, player1);
+
+        Building building1 = null;
+
+        controller.redesignCity(game.getGameID(), player1.getName(), building1, location);
+        assertNull(player1.getCity().getBoard()[2][3]);
+        assertFalse(player1.getReserve().isEmpty());
+
+        game.changeCurrentPlayer();
+
+        controller.redesignCity(game.getGameID(), player1.getName(), building, location);
+        assertNotNull(player1.getCity().getBoard()[2][3]);
+        assertTrue(player1.getReserve().isEmpty());
 
     }
 }

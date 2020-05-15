@@ -181,7 +181,7 @@ public class AlhambraController {
         gameIdCounter++;
     }
 
-    public void startGame(List<Player> players, String gameID) {
+    private void startGame(List<Player> players, String gameID) {
         Game game = new Game(players, gameID);
         ongoingGames.put(gameID, game);
         lobbies.remove(gameID);

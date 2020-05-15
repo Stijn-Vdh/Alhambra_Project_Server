@@ -142,6 +142,8 @@ public class AlhambraController {
         }
         throw new AlhambraGameRuleException("it's not your turn!!!!");
 
+        currentGame.getMarket().buyBuilding(Objects.requireNonNull(searchPlayer(name)), currency, coins);
+        return true;
     }
     public boolean placeBuildingOnBoard(String gameId, String name, Building building, Location location){
         Game game = ongoingGames.get(gameId);
@@ -191,7 +193,7 @@ public class AlhambraController {
         gameIdCounter++;
     }
 
-    private void startGame(List<Player> players, String gameID) {
+    public void startGame(List<Player> players, String gameID) {
         Game game = new Game(players, gameID);
         ongoingGames.put(gameID, game);
         lobbies.remove(gameID);

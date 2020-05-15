@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class City {
 
-    private static final int SIZE = 6;
+    private static final int SIZE = 7;
     private static final int OFFSET = 1;
 
     Building[][] board = new Building[SIZE][SIZE];
@@ -17,7 +17,7 @@ public class City {
          initializeCity();
     }
     public void initializeCity(){
-        int center = SIZE/2;
+        int center = (int)(Math.floor(SIZE/2));
         for (Building[] buildings : board) {
             Arrays.fill(buildings, null);
         }

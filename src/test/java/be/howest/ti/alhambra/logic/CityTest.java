@@ -24,14 +24,14 @@ public class CityTest {
         assertNull(c.getBoard()[1][1]);
         assertEquals(0, c.getBoard()[3][3].getCost());
 
-        assertThrows(AlhambraGameRuleException.class, () -> c.placeBuilding(a, new Location(4,5)));
+        assertThrows(AlhambraGameRuleException.class, () -> c.placeBuilding(a, new Location(0,0)));
 
-        c.placeBuilding(p, new Location(3,4));
+        c.placeBuilding(p, new Location(0,1));
         assertEquals(BuildingType.PAVILION,c.getBoard()[3][4].getType());
 
-        assertThrows(AlhambraGameRuleException.class, () -> c.placeBuilding(p, new Location(3,4)));
+        assertThrows(AlhambraGameRuleException.class, () -> c.placeBuilding(p, new Location(0,1)));
 
-        assertTrue(c.hasNeighbours(3,4));
-        assertFalse(c.hasNeighbours(1,1));
+        assertTrue(c.hasNeighbours(3,5));
+        assertFalse(c.hasNeighbours(5,4));
     }
 }

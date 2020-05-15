@@ -57,7 +57,7 @@ public class BuildingTest {
         Player player = game.getCurrentPlayer();
         assertEquals(game.getCurrentPlayer().getName(), "john");
 
-        Location location = new Location(0,1);
+        Location location = new Location(-1,0);
         Walls walls = new Walls(true, false, true, false);
         Building building = new Building(BuildingType.PAVILION, 1, walls);
 

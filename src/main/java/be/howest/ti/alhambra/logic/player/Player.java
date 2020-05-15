@@ -66,6 +66,8 @@ public class Player {
             buildingsInHand.add(b);
     }
 
+    public void placeBuildingInReserve(Building building) { reserve.add(building); }
+
     public void setReady(boolean readyState) {
         isReady = readyState;
     }
@@ -87,4 +89,6 @@ public class Player {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+
 }

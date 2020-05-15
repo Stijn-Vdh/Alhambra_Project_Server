@@ -129,19 +129,25 @@ public class AlhambraController {
             currentGame.getMarket().buyBuilding(Objects.requireNonNull(player), currency, coins);
 
             player.getBag().removeSelectedCoinsFromBag();
-            currentGame.changeCurrentPlayer();
             return true;
         }
         throw new AlhambraGameRuleException("it's not your turn!!!!");
     }
 
-    public boolean placeBuildingOnBoard(String gameId, String name, Building building, Location location){
-        Game game = ongoingGames.get(gameId);
+    public boolean placeBuilding(String gameId, String name, Building building, Location location){
+        Game currentGame = ongoingGames.get(gameId);
         Player player = searchPlayer(name);
-        if (game.getCurrentPlayer() == player) {
-            Objects.requireNonNull(player).getCity().placeBuilding(building, location);
+
+        if (currentGame.getCurrentPlayer() == player) {
+            if (location == null){
+                Objects.requireNonNull(player).placeBuildingInReserve(building);
+            } else {
+                Objects.requireNonNull(player).getCity().placeBuilding(building, location);
+            }
             player.removeBuildingInHand(building);
+            currentGame.changeCurrentPlayer();
         }else throw new AlhambraGameRuleException("It's not your turn!");
+
         return true;
     }
 

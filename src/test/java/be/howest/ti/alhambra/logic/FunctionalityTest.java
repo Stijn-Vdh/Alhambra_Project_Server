@@ -5,6 +5,7 @@ import be.howest.ti.alhambra.logic.building.BuildingType;
 import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.game.Location;
 import be.howest.ti.alhambra.logic.game.Market;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
@@ -105,16 +106,61 @@ public class FunctionalityTest {
         market.buyBuilding(player, Currency.BLUE, player.getBag().getSelectedCoins());
 
         assertEquals(1, player.getBuildingsInHand().size());
+    }
 
+    @Test
+    void placeBuilding(){
 
+        AlhambraController controller = new AlhambraController();
 
+        controller.initializeLobby();
 
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
 
+        Game game = controller.getOngoingGames().get("group01-0");
 
+        Player player = game.getCurrentPlayer();
 
+        Location location = new Location(-1,0);
 
+        Walls walls = new Walls(true, false, true, false);
+        Building building = new Building(BuildingType.PAVILION, 1, walls);
+
+        assertNull(player.getCity().getBoard()[2][3]);
+        controller.placeBuilding(game.getGameID(), player.getName(), building, location);
+        assertNotNull(player.getCity().getBoard()[2][3]);
 
     }
 
+    @Test
+    void placeBuildingInReserve(){
+        AlhambraController controller = new AlhambraController();
+
+        controller.initializeLobby();
+
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
+
+        Game game = controller.getOngoingGames().get("group01-0");
+
+        Player player = game.getCurrentPlayer();
+
+        Location location = null;
+
+        Walls walls = new Walls(true, false, true, false);
+        Building building = new Building(BuildingType.PAVILION, 1, walls);
+
+        controller.placeBuilding(game.getGameID(), player.getName(), building, location);
+        assertEquals(1, player.getReserve().size());
+
+        game.changeCurrentPlayer();
+
+
+    }
 
 }

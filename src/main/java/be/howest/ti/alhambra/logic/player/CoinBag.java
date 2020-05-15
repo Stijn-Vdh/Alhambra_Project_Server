@@ -44,6 +44,15 @@ public class CoinBag {
         return (coin.getCurrency().equals(currency));
     }
 
+    public int calculateTotalCoinBagValue() {
+
+        int totalBagCoinValue = 0;
+        for (Coin coin : coinsInBag) {
+            totalBagCoinValue += coin.getAmount();
+        }
+        return totalBagCoinValue;
+    }
+
     public int computeSelectedCoinsValue(){
         Currency currency = selectedCoins.get(0).getCurrency();
         int selectedCoinsValue = 0;

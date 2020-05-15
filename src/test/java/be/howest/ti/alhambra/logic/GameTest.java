@@ -1,6 +1,5 @@
 package be.howest.ti.alhambra.logic;
 
-import be.howest.ti.alhambra.exceptions.AlhambraException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Bank;
@@ -101,11 +100,15 @@ public class GameTest {
 
         Game firstGame = controller.getOngoingGames().get("group01-0");
 
-        assertEquals("john", firstGame.getCurrentPlayer().getName());
+        Player firstPlayer = firstGame.getCurrentPlayer();
+
         firstGame.changeCurrentPlayer();
-        assertEquals("danny", firstGame.getCurrentPlayer().getName());
+        assertNotEquals(firstPlayer, firstGame.getCurrentPlayer());
         firstGame.changeCurrentPlayer();
-        assertEquals("john", firstGame.getCurrentPlayer().getName());
+        assertEquals(firstPlayer, firstGame.getCurrentPlayer());
+        firstGame.changeCurrentPlayer();
+        assertNotEquals(firstPlayer, firstGame.getCurrentPlayer());
+
     }
 
     @Test
@@ -124,7 +127,7 @@ public class GameTest {
         Coin firstCoin = game.getBank().getCoinsOnBoard().get(0);
 
         coins.add(firstCoin);
-        Player firstPlayer = game.getPlayers().get(0);
+        Player firstPlayer = game.getCurrentPlayer();
 
         int bagSize = firstPlayer.getBag().getCoinsInBag().size();
         controller.takeMoney(firstPlayer.getName(), "group01-0", coins);
@@ -159,5 +162,31 @@ public class GameTest {
 
 
     }
+
+    @Test
+    void playerOrderTest(){
+
+        // No idea on how to exactly assert this test
+        controller.initializeLobby();
+
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "freddy");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
+        controller.setReady("freddy","group01-0");
+
+        Game game = controller.getOngoingGames().get("group01-0");
+
+        System.out.println(game.getPlayers().get(0).getName() + game.getPlayers().get(0).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(0).getBag().calculateTotalCoinBagValue());
+        System.out.println(game.getPlayers().get(1).getName() + game.getPlayers().get(1).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(1).getBag().calculateTotalCoinBagValue());
+        System.out.println(game.getPlayers().get(2).getName() + game.getPlayers().get(2).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(2).getBag().calculateTotalCoinBagValue());
+        System.out.println(game.getCurrentPlayer().getName());
+
+
+
+    }
+
+
 
 }

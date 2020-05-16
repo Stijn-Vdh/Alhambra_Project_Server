@@ -88,7 +88,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         JsonObject obj = new JsonObject(body);
         String name = obj.getString(PLAYER_NAME);
         LOGGER.info(LOGGER_PREFIX+name+") has joined the lobby("+id+") \n");
-        return controller.joinLobby(id, name);
+        return TKN_SALT + controller.joinLobby(id, name);
     }
 
 

@@ -78,7 +78,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object clearGames(RoutingContext ctx) {
         LOGGER.info("\nClearing all current games from the server \n");
-        controller.clearAllGames();
+        controller.clearServer();
         return controller.getLobbies();
     }
 

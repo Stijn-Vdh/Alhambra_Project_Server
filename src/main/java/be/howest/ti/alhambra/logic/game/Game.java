@@ -16,6 +16,11 @@ public class Game {
     private Bank bank;
     private Market market;
     private int turnCounter;
+    private int coinsRemaining;
+    private int coinsRemainingForScoringRound1;
+    private int coinsRemainingForScoringRound2;
+    private boolean scoringRound1 = false;
+    private boolean scoringRound2 = false;
 
     public Market getMarket() {
         return market;
@@ -34,10 +39,29 @@ public class Game {
         }
         bank.addCoinsToBoard();
 
+        coinsRemaining = bank.getAmountOfCoins();
+        calculateCoinsPerStack();
+
         this.turnCounter = getStartingPlayerIndex();
         changeCurrentPlayer();
 
         market = new Market();
+    }
+
+    private void calculateCoinsPerStack() {
+        int coinsPileSize = coinsRemaining / 5;
+        coinsRemainingForScoringRound1 = coinsRemaining - coinsPileSize;
+        coinsRemainingForScoringRound2 = coinsRemaining - 3* coinsPileSize;
+    }
+
+    private void checkScoringRounds() {
+        if (coinsRemaining <= coinsRemainingForScoringRound1 && !scoringRound1) {
+            scoringRound1 = true;
+            //TODO --> write function for calculating scoring round score
+        } else if (coinsRemaining <= coinsRemainingForScoringRound2 && !scoringRound2) {
+            scoringRound2 = true;
+            //TODO --> write function for calculating scoring round score
+        }
     }
 
     public void changeCurrentPlayer(){
@@ -46,6 +70,7 @@ public class Game {
         }
         this.currentPlayer = players.get(turnCounter);
         turnCounter++;
+        checkScoringRounds();
     }
 
    public int getSmallestCoinBagSize(){

@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.player.Player;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,9 +23,15 @@ public class Lobby {
     }
 
     public void addPlayer(Player player) {
-        if (!players.contains(player)){
-            players.add(player);
+        if (players.size() < 6){
+            if (!players.contains(player)){
+                players.add(player);
+            }
+        } else{
+            throw new AlhambraGameRuleException("Lobby is full!!");
         }
+
+
     }
 
     public void removePlayer(String name) {

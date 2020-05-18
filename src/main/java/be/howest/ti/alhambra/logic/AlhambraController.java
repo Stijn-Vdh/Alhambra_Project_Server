@@ -23,7 +23,9 @@ public class AlhambraController {
         List<String> tempList = new LinkedList<>();
 
         for (Lobby lobby : lobbies.values()) {
-            tempList.add(lobby.toString());
+            if (lobby.getPlayers().size() < 6){
+                tempList.add(lobby.toString());
+            }
         }
         Collections.sort(tempList);
         return tempList;

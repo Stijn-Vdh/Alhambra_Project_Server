@@ -49,9 +49,9 @@ public class Game {
     }
 
     private void calculateCoinsPerStack() {
-        int coinsPerStack = coinsRemaining / 5;
-        coinsRemainingForScoringRound1 = coinsRemaining - coinsPerStack;
-        coinsRemainingForScoringRound2 = coinsRemaining - 3* coinsPerStack;
+        int coinsPileSize = coinsRemaining / 5;
+        coinsRemainingForScoringRound1 = coinsRemaining - coinsPileSize;
+        coinsRemainingForScoringRound2 = coinsRemaining - 3* coinsPileSize;
     }
 
     private void checkScoringRounds() {

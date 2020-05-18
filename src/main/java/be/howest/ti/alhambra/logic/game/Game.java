@@ -67,18 +67,14 @@ public class Game {
         return bank.getAllCoins().size();
     }
 
+
     public void changeCurrentPlayer(){
         if (turnCounter == players.size()){
             turnCounter = 0;
         }
         this.currentPlayer = players.get(turnCounter);
-        updateCoinsRemaining();
         turnCounter++;
         checkScoringRounds();
-    }
-
-    public void updateCoinsRemaining(){
-        this.coinsRemaining = getAmountOfCoinsLeft();
     }
 
    public int getSmallestCoinBagSize(){
@@ -144,7 +140,6 @@ public class Game {
         state.put("started", started);
         state.put("ended", ended);
         state.put("currentPlayer", currentPlayer.getName());
-        state.put("coinsRemaining", coinsRemaining);
 
         return state;
     }

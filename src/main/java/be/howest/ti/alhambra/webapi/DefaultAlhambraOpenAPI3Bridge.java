@@ -142,6 +142,25 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         return controller.buyBuilding(gameId, name, currency, selectedCoins);
     }
 
+    public Object build(RoutingContext ctx) {
+        String name = ctx.request().getParam(PLAYER_NAME);
+        String gameId = ctx.request().getParam(GAME_ID);
+
+        JsonObject body = ctx.getBodyAsJson();
+
+        Building building = body.getJsonObject("building").mapTo(Building.class);
+        Location location;
+
+        if (body.getJsonObject("location") == null){
+            location = null;
+        }else{
+            location = body.getJsonObject("location").mapTo(Location.class);
+        }
+
+        LOGGER.info(LOGGER_PREFIX+name+") build a building in his city or reserve \n");
+        return controller.placeBuilding(gameId, name, building, location);
+    }
+
     public Object redesign(RoutingContext ctx) {
         String name = ctx.request().getParam(PLAYER_NAME);
         String gameId = ctx.request().getParam(GAME_ID);
@@ -161,24 +180,6 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         return controller.redesignCity(gameId, name, building, location);
     }
 
-    public Object build(RoutingContext ctx) {
-        String name = ctx.request().getParam(PLAYER_NAME);
-        String gameId = ctx.request().getParam(GAME_ID);
-
-        JsonObject body = ctx.getBodyAsJson();
-
-        Building building = body.getJsonObject("building").mapTo(Building.class);
-        Location location;
-
-        if (body.getJsonObject("location") == null){
-            location = null;
-        }else{
-            location = body.getJsonObject("location").mapTo(Location.class);
-        }
-
-        LOGGER.info(LOGGER_PREFIX+name+") build a building in his city or reserve \n");
-        return controller.placeBuilding(gameId, name, building, location);
-    }
 
     public Object getGame(RoutingContext ctx) {
         String gameId = ctx.request().getParam(GAME_ID);

@@ -67,27 +67,31 @@ public class AlhambraController {
     }
 
     public boolean setReady(String name, String gameID) {
-        Player player = searchPlayer(name);
         Lobby currentLobby = lobbies.get(gameID);
-        if (player != null) {
-            player.setReady(true);
-
-            if (currentLobby.getPlayers().size() > 1 && currentLobby.checkReadyStateForStartGame()) {
-                startGame(lobbies.get(gameID).getPlayers(), gameID);
+        for (Player player: currentLobby.getPlayers()
+             ) {
+            if (player.getName().equals(name)){
+                player.setReady(true);
             }
-            return true;
         }
-        return false;
+
+        if (currentLobby.getPlayers().size() > 1 && currentLobby.checkReadyStateForStartGame()) {
+            startGame(lobbies.get(gameID).getPlayers(), gameID);
+        }
+        return true;
+
+
     }
 
-    public boolean setNotReady(String name) {
-        Player player = searchPlayer(name);
-
-        if (player != null) {
-            player.setReady(false);
-            return true;
+    public boolean setNotReady(String name, String gameID) {
+        Lobby currentLobby = lobbies.get(gameID);
+        for (Player player: currentLobby.getPlayers()
+        ) {
+            if (player.getName().equals(name)){
+                player.setReady(false);
+            }
         }
-        return false;
+        return true;
     }
 
     public String initializeLobby() {

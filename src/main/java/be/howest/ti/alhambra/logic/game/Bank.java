@@ -41,8 +41,9 @@ public class Bank {
         return coinsOnBoard;
     }
 
-    public Queue<Coin> getAllCoins() {
-        return allCoins;
+
+    public int getAmountOfCoins(){
+        return allCoins.size();
     }
 
     public void addCoinsToBoard() {

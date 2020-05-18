@@ -130,7 +130,7 @@ public class GameTest {
         int amountCoinsOnBoard = 4;
         int coinsDealt = amountCoinsP1 + amountCoinsP2 + amountCoinsOnBoard;
 
-        assertEquals((allGeneratedCoins - coinsDealt), game.getAmountOfCoinsLeft());
+        assertEquals((allGeneratedCoins - coinsDealt), game.getBank().getAmountOfCoins());
 
 
     }

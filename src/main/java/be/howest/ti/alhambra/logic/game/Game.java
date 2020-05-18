@@ -16,7 +16,6 @@ public class Game {
     private Bank bank;
     private Market market;
     private int turnCounter;
-    private int coinsRemaining;
 
     public Market getMarket() {
         return market;
@@ -41,21 +40,12 @@ public class Game {
         market = new Market();
     }
 
-    public int getAmountOfCoinsLeft(){
-        return bank.getAllCoins().size();
-    }
-
     public void changeCurrentPlayer(){
         if (turnCounter == players.size()){
             turnCounter = 0;
         }
         this.currentPlayer = players.get(turnCounter);
-        updateCoinsRemaining();
         turnCounter++;
-    }
-
-    public void updateCoinsRemaining(){
-        this.coinsRemaining = getAmountOfCoinsLeft();
     }
 
    public int getSmallestCoinBagSize(){
@@ -121,7 +111,6 @@ public class Game {
         state.put("started", started);
         state.put("ended", ended);
         state.put("currentPlayer", currentPlayer.getName());
-        state.put("coinsRemaining", coinsRemaining);
 
         return state;
     }

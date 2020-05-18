@@ -19,6 +19,8 @@ public class Game {
     private int coinsRemaining;
     private int coinsRemainingForScoringRound1;
     private int coinsRemainingForScoringRound2;
+    private boolean scoringRound1 = false;
+    private boolean scoringRound2 = false;
 
     public Market getMarket() {
         return market;
@@ -47,15 +49,17 @@ public class Game {
 
     private void calculateCoinsPerStack() {
         int coinsPerStack = coinsRemaining / 5;
-        coinsRemainingForScoringRound1 = coinsRemaining - coinsPerStack; //76
-        coinsRemainingForScoringRound2 = coinsRemaining - 3* coinsPerStack; //38
+        coinsRemainingForScoringRound1 = coinsRemaining - coinsPerStack;
+        coinsRemainingForScoringRound2 = coinsRemaining - 3* coinsPerStack;
     }
 
     private void checkScoringRounds() {
-        if (coinsRemaining <= coinsRemainingForScoringRound1) {
-            //TODO --> write code to calculate 1st roundScore
-        } else if (coinsRemaining <= coinsRemainingForScoringRound2) {
-            //TODO --> write code to calculate 2nd roundScore
+        if (coinsRemaining <= coinsRemainingForScoringRound1 && !scoringRound1) {
+            scoringRound1 = true;
+            //TODO --> write function for calculating scoring round score
+        } else if (coinsRemaining <= coinsRemainingForScoringRound2 && !scoringRound2) {
+            scoringRound2 = true;
+            //TODO --> write function for calculating scoring round score
         }
     }
 

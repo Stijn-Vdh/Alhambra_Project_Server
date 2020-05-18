@@ -195,8 +195,9 @@ public class AlhambraController {
         }
     }
 
-    public void clearAllGames() {
+    public void clearServer() {
         ongoingGames.clear();
+        players.clear();
         lobbies.clear();
     }
 

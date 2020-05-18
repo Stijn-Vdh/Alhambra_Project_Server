@@ -94,7 +94,9 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object leaveGame(RoutingContext ctx) {
         String id = ctx.request().getParam(GAME_ID);
+        System.out.println(id);
         String name = ctx.request().getParam(PLAYER_NAME);
+        System.out.println(name);
         LOGGER.info(LOGGER_PREFIX+name+") has left the game("+id+") \n");
         return controller.leaveGame(id, name);
     }
@@ -108,8 +110,9 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object setNotReady(RoutingContext ctx) {
         String name = ctx.request().getParam(PLAYER_NAME);
+        String gameID = ctx.request().getParam(GAME_ID);
         LOGGER.info(LOGGER_PREFIX+name+") is no longer ready \n");
-        return controller.setNotReady(name);
+        return controller.setNotReady(name, gameID);
     }
 
     public Object takeMoney(RoutingContext ctx) {

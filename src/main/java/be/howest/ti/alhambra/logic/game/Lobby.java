@@ -28,12 +28,16 @@ public class Lobby {
     }
 
     public void removePlayer(String name) {
+        boolean result = false;
         for (Player player : players) {
             if (player.getName().equals(name)) {
                 players.remove(player);
-            } else {
-                throw new AlhambraEntityNotFoundException("name of player doesn't exist");
+                result = true;
             }
+        }
+
+        if (!result){
+            throw new AlhambraEntityNotFoundException("name of player doesn't exist");
         }
     }
 

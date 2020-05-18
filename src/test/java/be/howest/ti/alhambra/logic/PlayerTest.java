@@ -18,7 +18,7 @@ public class PlayerTest {
 
         assertTrue(controller.getPlayers().get(0).isReady());
 
-        controller.setNotReady("john");
+        controller.setNotReady("john", "group01-0");
 
         assertFalse(controller.getPlayers().get(0).isReady());
     }

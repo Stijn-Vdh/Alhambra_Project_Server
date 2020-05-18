@@ -17,6 +17,8 @@ public class Game {
     private Market market;
     private int turnCounter;
     private int coinsRemaining;
+    private int coinsRemainingForScoringRound1;
+    private int coinsRemainingForScoringRound2;
 
     public Market getMarket() {
         return market;
@@ -35,10 +37,26 @@ public class Game {
         }
         bank.addCoinsToBoard();
 
+        calculateCoinsPerStack();
+
         this.turnCounter = getStartingPlayerIndex();
         changeCurrentPlayer();
 
         market = new Market();
+    }
+
+    private void calculateCoinsPerStack() {
+        int coinsPerStack = coinsRemaining / 5;
+        coinsRemainingForScoringRound1 = coinsRemaining - coinsPerStack; //76
+        coinsRemainingForScoringRound2 = coinsRemaining - 3* coinsPerStack; //38
+    }
+
+    private void checkScoringRounds() {
+        if (coinsRemaining <= coinsRemainingForScoringRound1) {
+            //TODO --> write code to calculate 1st roundScore
+        } else if (coinsRemaining <= coinsRemainingForScoringRound2) {
+            //TODO --> write code to calculate 2nd roundScore
+        }
     }
 
     public int getAmountOfCoinsLeft(){
@@ -52,6 +70,7 @@ public class Game {
         this.currentPlayer = players.get(turnCounter);
         updateCoinsRemaining();
         turnCounter++;
+        checkScoringRounds();
     }
 
     public void updateCoinsRemaining(){

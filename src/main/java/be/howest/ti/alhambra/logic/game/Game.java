@@ -39,6 +39,7 @@ public class Game {
         }
         bank.addCoinsToBoard();
 
+        coinsRemaining = bank.getAmountOfCoins();
         calculateCoinsPerStack();
 
         this.turnCounter = getStartingPlayerIndex();
@@ -62,11 +63,6 @@ public class Game {
             //TODO --> write function for calculating scoring round score
         }
     }
-
-    public int getAmountOfCoinsLeft(){
-        return bank.getAllCoins().size();
-    }
-
 
     public void changeCurrentPlayer(){
         if (turnCounter == players.size()){

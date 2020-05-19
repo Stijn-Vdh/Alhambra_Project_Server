@@ -57,9 +57,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         Boolean west = Boolean.parseBoolean(ctx.request().getParam("west"));
 
         Walls walls = new Walls(north,east,south,west);
-        controller.getAvailableLocations(gameId, name, walls).toString();
         LOGGER.info("\nReturning all available build locations \n");
-        return  controller.getAvailableLocations(gameId, name, walls).toString();
+        return  controller.getAvailableLocations(gameId, name, walls);
     }
 
     public Object getBuildingTypes(RoutingContext ctx) {

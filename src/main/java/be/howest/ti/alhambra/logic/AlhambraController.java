@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.building.BuildingType;
+import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Game;
@@ -172,6 +173,17 @@ public class AlhambraController {
         }else throw new AlhambraGameRuleException("It's not your turn!");
 
         return true;
+    }
+
+    public List<Location> getAvailableLocations(String gameId, String name, Walls walls){
+
+        Game currentGame = ongoingGames.get(gameId);
+        Player player = searchPlayer(name);
+
+        if (currentGame.getCurrentPlayer() == player) {
+            return Objects.requireNonNull(player).getCity().getAvailableLocations(walls);
+        }else throw new AlhambraGameRuleException("It's not your turn!");
+
     }
 
     public boolean leaveGame(String gameID, String name) {

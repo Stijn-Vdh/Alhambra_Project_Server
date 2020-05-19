@@ -16,7 +16,7 @@ public class Player {
     private City city;
     private int virtualScore;
     private int score;
-    private CoinBag bag;
+    private CoinBag money;
 
     @JsonCreator
     public Player(@JsonProperty("name") String name) {
@@ -27,12 +27,12 @@ public class Player {
         this.city = new City();
         this.virtualScore = 0;
         this.score = 0;
-        this.bag = new CoinBag();
+        this.money = new CoinBag();
 
     }
 
-    public CoinBag getBag() {
-        return bag;
+    public CoinBag getMoney() {
+        return money;
     }
 
     public List<Building> getReserve() {

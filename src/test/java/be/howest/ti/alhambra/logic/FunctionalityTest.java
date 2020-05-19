@@ -40,9 +40,9 @@ public class FunctionalityTest {
         coins.add(firstCoin);
         Player currentPlayer = game.getCurrentPlayer();
 
-        int bagSize = currentPlayer.getBag().getCoinsInBag().size();
+        int bagSize = currentPlayer.getMoney().getCoinsInBag().size();
         controller.takeMoney(currentPlayer.getName(), "group01-0", coins);
-        assertEquals(bagSize+1 , currentPlayer.getBag().getCoinsInBag().size());
+        assertEquals(bagSize+1 , currentPlayer.getMoney().getCoinsInBag().size());
 
         Coin fakeCoin = new Coin(Currency.YELLOW, 99);
         coins.add(fakeCoin);
@@ -94,16 +94,16 @@ public class FunctionalityTest {
         Game game = controller.getOngoingGames().get("group01-0");
 
         Player player = game.getCurrentPlayer();
-        player.getBag().addCoins(allCoins);
+        player.getMoney().addCoins(allCoins);
         selectedCoins.add(coin1);
 
         assertTrue(player.getBuildingsInHand().isEmpty());
 
 
-        player.getBag().addSelectedCoins(selectedCoins);
-        assertEquals(selectedCoins, player.getBag().getSelectedCoins());
+        player.getMoney().addSelectedCoins(selectedCoins);
+        assertEquals(selectedCoins, player.getMoney().getSelectedCoins());
 
-        market.buyBuilding(player, Currency.BLUE, player.getBag().getSelectedCoins());
+        market.buyBuilding(player, Currency.BLUE, player.getMoney().getSelectedCoins());
 
         assertEquals(1, player.getBuildingsInHand().size());
     }

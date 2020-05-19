@@ -1,12 +1,10 @@
 package be.howest.ti.alhambra.logic;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
-import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Bank;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Lobby;
 import be.howest.ti.alhambra.logic.money.Coin;
-import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
 import org.junit.jupiter.api.Test;
 
@@ -76,14 +74,14 @@ public class GameTest {
 
         Game game = new Game(players, "group01-0");
 
-        assertNotNull(denJohn.getBag());
-        List<Coin> johnsCoinsInBag = denJohn.getBag().getCoinsInBag();
-        List<Coin> eddiesCoinsInBag = denEddy.getBag().getCoinsInBag();
+        assertNotNull(denJohn.getMoney());
+        List<Coin> johnsCoinsInBag = denJohn.getMoney().getCoinsInBag();
+        List<Coin> eddiesCoinsInBag = denEddy.getMoney().getCoinsInBag();
 
         assertFalse(game.getBank().totalValueCoins(johnsCoinsInBag) < 20);
         assertFalse(game.getBank().totalValueCoins(johnsCoinsInBag) > 28);
 
-        assertNotNull(denEddy.getBag());
+        assertNotNull(denEddy.getMoney());
         assertFalse(game.getBank().totalValueCoins(eddiesCoinsInBag) < 20);
         assertFalse(game.getBank().totalValueCoins(eddiesCoinsInBag) > 28);
     }
@@ -125,8 +123,8 @@ public class GameTest {
 
         int allGeneratedCoins = Bank.generateAllCoins().size();
 
-        int amountCoinsP1 = game.getPlayers().get(0).getBag().getCoinsInBag().size();
-        int amountCoinsP2 = game.getPlayers().get(1).getBag().getCoinsInBag().size();
+        int amountCoinsP1 = game.getPlayers().get(0).getMoney().getCoinsInBag().size();
+        int amountCoinsP2 = game.getPlayers().get(1).getMoney().getCoinsInBag().size();
         int amountCoinsOnBoard = 4;
         int coinsDealt = amountCoinsP1 + amountCoinsP2 + amountCoinsOnBoard;
 
@@ -150,9 +148,9 @@ public class GameTest {
 
         Game game = controller.getOngoingGames().get("group01-0");
 
-        System.out.println(game.getPlayers().get(0).getName() + game.getPlayers().get(0).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(0).getBag().calculateTotalCoinBagValue());
-        System.out.println(game.getPlayers().get(1).getName() + game.getPlayers().get(1).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(1).getBag().calculateTotalCoinBagValue());
-        System.out.println(game.getPlayers().get(2).getName() + game.getPlayers().get(2).getBag().getCoinsInBag().size() + " " + game.getPlayers().get(2).getBag().calculateTotalCoinBagValue());
+        System.out.println(game.getPlayers().get(0).getName() + game.getPlayers().get(0).getMoney().getCoinsInBag().size() + " " + game.getPlayers().get(0).getMoney().calculateTotalCoinBagValue());
+        System.out.println(game.getPlayers().get(1).getName() + game.getPlayers().get(1).getMoney().getCoinsInBag().size() + " " + game.getPlayers().get(1).getMoney().calculateTotalCoinBagValue());
+        System.out.println(game.getPlayers().get(2).getName() + game.getPlayers().get(2).getMoney().getCoinsInBag().size() + " " + game.getPlayers().get(2).getMoney().calculateTotalCoinBagValue());
         System.out.println(game.getCurrentPlayer().getName());
 
     }

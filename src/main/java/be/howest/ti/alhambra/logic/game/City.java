@@ -68,6 +68,9 @@ public class City {
     public List<Location> getAvailableLocations(Walls walls){
         List<Location> locations = new ArrayList<>();
 
+        final int CHANGE_TO_LOGIC_POSITION = 3;
+        
+
         for (int row = 0; row < board.length;row++){
             for (int col = 0; col < board[row].length; col++){
                 if (board[row][col] == null && hasNeighbours(row, col) ){
@@ -96,7 +99,7 @@ public class City {
                     }
 
                     if (availableLocation){
-                        locations.add(new Location(row , col));
+                        locations.add(new Location(row - CHANGE_TO_LOGIC_POSITION, col - CHANGE_TO_LOGIC_POSITION));
                     }
 
                 }

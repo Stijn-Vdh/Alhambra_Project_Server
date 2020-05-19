@@ -56,13 +56,13 @@ public class City {
         if ((row + OFFSET) < SIZE && board[row + OFFSET][col] != null){
              return true;
         }
-        else if ((row - OFFSET) < SIZE && board[row - OFFSET][col] != null){
+        else if ((row - OFFSET) >= 0 && board[row - OFFSET][col] != null){
             return true;
         }
         else if ((col + OFFSET) < SIZE && board[row][col + OFFSET] != null){
             return true;
         }
-        else return (col - OFFSET) < SIZE && board[row][col - OFFSET] != null;
+        else return (col - OFFSET) >= 0 && board[row][col - OFFSET] != null;
     }
 
     public List<Location> getAvailableLocations(Walls walls){
@@ -79,7 +79,7 @@ public class City {
                              availableLocation = false;
                         }
                     }
-                    if ((row - OFFSET) < SIZE && board[row - OFFSET][col] != null){
+                    if ((row - OFFSET) >= 0 && board[row - OFFSET][col] != null){
                         if (walls.isNorth() != board[row - OFFSET][col].getWalls().isSouth()){
                             availableLocation = false;
                         }
@@ -89,7 +89,7 @@ public class City {
                             availableLocation = false;
                         }
                     }
-                    if ((col + OFFSET) < SIZE && board[row][col - OFFSET] != null){
+                    if ((col + OFFSET) > 0 && board[row][col - OFFSET] != null){
                         if (walls.isWest() != board[row][col - OFFSET].getWalls().isEast()){
                             availableLocation = false;
                         }

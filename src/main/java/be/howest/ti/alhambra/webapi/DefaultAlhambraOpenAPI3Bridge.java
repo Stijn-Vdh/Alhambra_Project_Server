@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
 import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.game.Location;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
@@ -47,8 +48,18 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     }
 
     public Object getAvailableBuildLocations(RoutingContext ctx) {
+        String name = ctx.request().getParam(PLAYER_NAME);
+        String gameId = ctx.request().getParam(GAME_ID);
+
+        Boolean north = Boolean.parseBoolean(ctx.request().getParam("north"));
+        Boolean east = Boolean.parseBoolean(ctx.request().getParam("east"));
+        Boolean south = Boolean.parseBoolean(ctx.request().getParam("south"));
+        Boolean west = Boolean.parseBoolean(ctx.request().getParam("west"));
+
+        Walls walls = new Walls(north,east,south,west);
+        controller.getAvailableLocations(gameId, name, walls).toString();
         LOGGER.info("\nReturning all available build locations \n");
-        return null;
+        return  controller.getAvailableLocations(gameId, name, walls).toString();
     }
 
     public Object getBuildingTypes(RoutingContext ctx) {

@@ -4,7 +4,9 @@ import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class City {
 
@@ -17,7 +19,7 @@ public class City {
          initializeCity();
     }
     public void initializeCity(){
-        int center = (int)(Math.floor(SIZE/2));
+        int center = (int)(SIZE/2);
         for (Building[] buildings : board) {
             Arrays.fill(buildings, null);
         }
@@ -54,12 +56,52 @@ public class City {
         if ((row + OFFSET) < SIZE && board[row + OFFSET][col] != null){
              return true;
         }
-        else if ((row - OFFSET) < SIZE && board[row - OFFSET][col] != null){
+        else if ((row - OFFSET) >= 0 && board[row - OFFSET][col] != null){
             return true;
         }
         else if ((col + OFFSET) < SIZE && board[row][col + OFFSET] != null){
             return true;
         }
-        else return (col - OFFSET) < SIZE && board[row][col - OFFSET] != null;
+        else return (col - OFFSET) >= 0 && board[row][col - OFFSET] != null;
+    }
+
+    public List<Location> getAvailableLocations(Walls walls){
+        List<Location> locations = new ArrayList<>();
+
+        for (int row = 0; row < board.length;row++){
+            for (int col = 0; col < board[row].length; col++){
+                if (board[row][col] == null && hasNeighbours(row, col) ){
+
+                    boolean availableLocation = true;
+
+                    if ((row + OFFSET) < SIZE && board[row + OFFSET][col] != null){
+                        if (walls.isSouth() != board[row + OFFSET][col].getWalls().isNorth()){
+                             availableLocation = false;
+                        }
+                    }
+                    if ((row - OFFSET) >= 0 && board[row - OFFSET][col] != null){
+                        if (walls.isNorth() != board[row - OFFSET][col].getWalls().isSouth()){
+                            availableLocation = false;
+                        }
+                    }
+                    if ((col + OFFSET) < SIZE && board[row][col + OFFSET] != null){
+                        if (walls.isEast() != board[row][col + OFFSET].getWalls().isWest()){
+                            availableLocation = false;
+                        }
+                    }
+                    if ((col + OFFSET) > 0 && board[row][col - OFFSET] != null){
+                        if (walls.isWest() != board[row][col - OFFSET].getWalls().isEast()){
+                            availableLocation = false;
+                        }
+                    }
+
+                    if (availableLocation){
+                        locations.add(new Location(row , col));
+                    }
+
+                }
+            }
+        }
+        return locations;
     }
 }

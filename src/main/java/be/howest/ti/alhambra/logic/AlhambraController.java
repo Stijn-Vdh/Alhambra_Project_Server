@@ -120,7 +120,7 @@ public class AlhambraController {
 
         if (currentGame.getCurrentPlayer().getName().equals(name)){
             currentGame.getBank().takeCoins(coins);
-            currentGame.getCurrentPlayer().getBag().addCoins(coins);
+            currentGame.getCurrentPlayer().getMoney().addCoins(coins);
             currentGame.changeCurrentPlayer();
             return true;
         }else{
@@ -134,7 +134,7 @@ public class AlhambraController {
             Player player = searchPlayer(name);
             currentGame.getMarket().buyBuilding(Objects.requireNonNull(player), currency, coins);
 
-            player.getBag().removeSelectedCoinsFromBag();
+            player.getMoney().removeSelectedCoinsFromBag();
             return true;
         }
         throw new AlhambraGameRuleException("it's not your turn!!!!");

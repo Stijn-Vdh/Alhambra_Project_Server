@@ -100,18 +100,18 @@ public class BankTest {
 
         Player p1 = new Player("daniel");
         Player p2 = new Player("stijn");
-        assertEquals(0, p1.getBag().getCoinsInBag().size());
-        assertEquals(0, p2.getBag().getCoinsInBag().size());
+        assertEquals(0, p1.getMoney().getCoinsInBag().size());
+        assertEquals(0, p2.getMoney().getCoinsInBag().size());
 
         List<Coin> startingCoinsP1 = bank.dealStartingCoins();
-        p1.getBag().addCoins(startingCoinsP1);
+        p1.getMoney().addCoins(startingCoinsP1);
 
-        assertEquals(5, p1.getBag().getCoinsInBag().size());
+        assertEquals(5, p1.getMoney().getCoinsInBag().size());
         assertEquals(5, allCoins.size());
 
         List<Coin> startingCoinsP2 = bank.dealStartingCoins();
-        p2.getBag().addCoins(startingCoinsP2);
-        assertEquals(3, p2.getBag().getCoinsInBag().size());
+        p2.getMoney().addCoins(startingCoinsP2);
+        assertEquals(3, p2.getMoney().getCoinsInBag().size());
         assertEquals(2, allCoins.size());
 
     }

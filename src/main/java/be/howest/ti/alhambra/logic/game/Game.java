@@ -35,7 +35,7 @@ public class Game {
 
         for (Player player: players){
             List<Coin> startingCoins = bank.dealStartingCoins();
-            player.getBag().addCoins(startingCoins);
+            player.getMoney().addCoins(startingCoins);
         }
         bank.addCoinsToBoard();
 
@@ -74,12 +74,12 @@ public class Game {
     }
 
    public int getSmallestCoinBagSize(){
-        int smallestBag = players.get(0).getBag().getCoinsInBag().size();
+        int smallestBag = players.get(0).getMoney().getCoinsInBag().size();
 
         for (Player player: players){
-            int playerBagSize = player.getBag().getCoinsInBag().size();
+            int playerBagSize = player.getMoney().getCoinsInBag().size();
             if (playerBagSize < smallestBag){
-                smallestBag = player.getBag().getCoinsInBag().size();
+                smallestBag = player.getMoney().getCoinsInBag().size();
             }
         }
         return smallestBag;
@@ -87,12 +87,12 @@ public class Game {
 
     private Player getPlayerWithLeastStartingCoinBagValue(List<Player> players) {
 
-        int lowestValue = players.get(0).getBag().calculateTotalCoinBagValue();
+        int lowestValue = players.get(0).getMoney().calculateTotalCoinBagValue();
 
         Player playerWithLeastValue = null;
 
         for (Player player : players) {
-            if (player.getBag().calculateTotalCoinBagValue() <= lowestValue) {
+            if (player.getMoney().calculateTotalCoinBagValue() <= lowestValue) {
                 playerWithLeastValue = player;
             }
         }
@@ -105,7 +105,7 @@ public class Game {
         int smallestCoinBagSize = getSmallestCoinBagSize();
 
         for (Player player : players) {
-            if (player.getBag().getCoinsInBag().size() == smallestCoinBagSize) {
+            if (player.getMoney().getCoinsInBag().size() == smallestCoinBagSize) {
                 tempList.add(player);
             }
         }

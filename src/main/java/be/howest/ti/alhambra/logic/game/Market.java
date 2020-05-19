@@ -47,8 +47,8 @@ public class Market {
             throw new AlhambraGameRuleException("This building does not exist on gameBoard");
         }
 
-        player.getBag().addSelectedCoins(coins);
-        int givenCoinAmount = player.getBag().computeSelectedCoinsValue();
+        player.getMoney().addSelectedCoins(coins);
+        int givenCoinAmount = player.getMoney().computeSelectedCoinsValue();
 
         if (givenCoinAmount < buildingsOnBoard.get(currency).getCost()){
             throw new AlhambraGameRuleException("Not enough coins!");

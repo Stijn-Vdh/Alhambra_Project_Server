@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic.player;
 
 import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.City;
 import be.howest.ti.alhambra.logic.game.Location;
 import com.fasterxml.jackson.annotation.*;
@@ -83,6 +84,8 @@ public class Player {
 
     public void putBuildingFromBoardInReserve(Location location) {
 
+        Location fountainLocation = new Location(0,0);
+
         int row = location.getRow();
         int col = location.getCol();
 
@@ -91,10 +94,11 @@ public class Player {
         row = row + CHANGE_TO_ACTUAL_POSITION;
         col = col + CHANGE_TO_ACTUAL_POSITION;
 
-        Building building = city.getBoard()[row][col];
-        reserve.add(building);
-        city.getBoard()[row][col] = null;
-
+        if (!location.equals(fountainLocation)){
+            Building building = city.getBoard()[row][col];
+            reserve.add(building);
+            city.getBoard()[row][col] = null;
+        }else throw new AlhambraGameRuleException("It is against the rules to remove the fountain from the board.");
     }
 
     @Override

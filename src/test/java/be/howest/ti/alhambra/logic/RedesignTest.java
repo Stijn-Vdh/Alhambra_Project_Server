@@ -3,6 +3,7 @@ package be.howest.ti.alhambra.logic;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingType;
 import be.howest.ti.alhambra.logic.building.Walls;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Location;
 import be.howest.ti.alhambra.logic.player.Player;
@@ -29,30 +30,32 @@ public class RedesignTest {
         Player player = game.getCurrentPlayer();
 
 
-        Location location = new Location(-1,0);
+        Location location = new Location(0,1);
         Walls walls = new Walls(true, false, true, false);
         Building building = new Building(BuildingType.PAVILION, 1, walls);
-        assertNull(player.getCity().getBoard()[2][3]);
+        assertNull(player.getCity().getBoard()[3][4]);
         controller.placeBuilding(game.getGameID(), player.getName(), building, location);
-        assertNotNull(player.getCity().getBoard()[2][3]);
+        assertNotNull(player.getCity().getBoard()[3][4]);
 
         game.changeCurrentPlayer();
 
-        Player player1 = game.getCurrentPlayer();
-
-        assertEquals(player, player1);
 
         Building building1 = null;
 
-        controller.redesignCity(game.getGameID(), player1.getName(), building1, location);
-        assertNull(player1.getCity().getBoard()[2][3]);
-        assertFalse(player1.getReserve().isEmpty());
+        assertThrows(AlhambraGameRuleException.class, () -> controller.redesignCity(game.getGameID(), player.getName(),building1, new Location(0,0)));
+        assertNotNull(player.getCity().getBoard()[3][3]);
+
+
+        controller.redesignCity(game.getGameID(), player.getName(), building1, location);
+        assertNull(player.getCity().getBoard()[3][4]);
+        assertFalse(player.getReserve().isEmpty());
 
         game.changeCurrentPlayer();
 
-        controller.redesignCity(game.getGameID(), player1.getName(), building, location);
-        assertNotNull(player1.getCity().getBoard()[2][3]);
-        assertTrue(player1.getReserve().isEmpty());
+        controller.redesignCity(game.getGameID(), player.getName(), building, location);
+        System.out.println(player.getCity().getBoard()[3][4]);
+        assertNotNull(player.getCity().getBoard()[3][4]);
+        assertTrue(player.getReserve().isEmpty());
 
     }
 }

@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic.game;
 
+
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
@@ -40,15 +41,15 @@ public class City {
         row = row + CHANGE_TO_ACTUAL_POSITION;
         col = col + CHANGE_TO_ACTUAL_POSITION;
 
+        List<Location> availableLocations = getAvailableLocations(b.getWalls());
+
         if (board[row][col] == null) {
-            if (hasNeighbours(row,col)){
-                board[row][col] = b;
-            } else {
-                throw new AlhambraGameRuleException("This place has no neighbours!");
-            }
+                if (availableLocations.contains(location)){
+                    board[row][col] = b;
+                }else throw new AlhambraGameRuleException("It is against the rules to place a building here!");
         }
         else {
-            throw new AlhambraGameRuleException("There is already a building here!");
+            throw new AlhambraGameRuleException("This move is against the rules!");
         }
     }
 
@@ -92,7 +93,7 @@ public class City {
                             availableLocation = false;
                         }
                     }
-                    if ((col + OFFSET) > 0 && board[row][col - OFFSET] != null){
+                    if ((col - OFFSET) > 0 && board[row][col - OFFSET] != null){
                         if (walls.isWest() != board[row][col - OFFSET].getWalls().isEast()){
                             availableLocation = false;
                         }

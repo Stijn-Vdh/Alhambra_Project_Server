@@ -144,7 +144,6 @@ public class AlhambraController {
     public boolean placeBuilding(String gameId, String name, Building building, Location location){
         Game currentGame = ongoingGames.get(gameId);
         Player player = searchPlayer(name);
-        System.out.println(location);
         if (currentGame.getCurrentPlayer() == player) {
             if (location == null){
                 Objects.requireNonNull(player).placeBuildingInReserve(building);

@@ -136,6 +136,8 @@ public class Game {
         state.put("started", started);
         state.put("ended", ended);
         state.put("currentPlayer", currentPlayer.getName());
+        state.put("scoringRound1", scoringRound1);
+        state.put("scoringRound2", scoringRound2);
 
         return state;
     }

@@ -48,7 +48,8 @@ public class Game {
     }
 
     private void calculateCoinsPerStack() {
-        int coinsPileSize = bank.getAmountOfCoins() / 5;
+        coinsRemaining = bank.getAmountOfCoins();
+        int coinsPileSize = coinsRemaining / 5;
         coinsRemainingForScoringRound1 = coinsRemaining - coinsPileSize;
         coinsRemainingForScoringRound2 = coinsRemaining - 3* coinsPileSize;
     }

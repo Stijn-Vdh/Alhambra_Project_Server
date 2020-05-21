@@ -44,13 +44,12 @@ public class City {
         List<Location> availableLocations = getAvailableLocations(b.getWalls());
 
         if (board[row][col] == null) {
-            if (availableLocations.contains(location)){
-                board[row][col] = b;
-            } else throw new AlhambraGameRuleException("You are not allowed to place a building here");
-
+                if (availableLocations.contains(location)){
+                    board[row][col] = b;
+                }else throw new AlhambraGameRuleException("It is against the rules to place a building here!");
         }
         else {
-            throw new AlhambraGameRuleException("There is already a building here!");
+            throw new AlhambraGameRuleException("This move is against the rules!");
         }
     }
 

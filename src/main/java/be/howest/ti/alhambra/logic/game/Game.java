@@ -39,7 +39,6 @@ public class Game {
         }
         bank.addCoinsToBoard();
 
-        coinsRemaining = bank.getAmountOfCoins();
         calculateCoinsPerStack();
 
         this.turnCounter = getStartingPlayerIndex();
@@ -49,7 +48,7 @@ public class Game {
     }
 
     private void calculateCoinsPerStack() {
-        int coinsPileSize = coinsRemaining / 5;
+        int coinsPileSize = bank.getAmountOfCoins() / 5;
         coinsRemainingForScoringRound1 = coinsRemaining - coinsPileSize;
         coinsRemainingForScoringRound2 = coinsRemaining - 3* coinsPileSize;
     }
@@ -70,6 +69,7 @@ public class Game {
         }
         this.currentPlayer = players.get(turnCounter);
         turnCounter++;
+        coinsRemaining = bank.getAmountOfCoins();
         checkScoringRounds();
     }
 

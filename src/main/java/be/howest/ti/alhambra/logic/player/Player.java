@@ -28,11 +28,18 @@ public class Player {
         this.isReady = false;
         this.reserve = new LinkedList<>();
         this.buildingsInHand = new LinkedList<>();
+        this.buildingTypesInCity = new HashMap<>();
         this.city = new City();
         this.virtualScore = 0;
         this.score = 0;
         this.money = new CoinBag();
-        this.buildingTypesInCity = new HashMap<>();
+        initializeBuildingTypesInCity();
+    }
+
+    public void initializeBuildingTypesInCity(){
+        for (BuildingType type : BuildingType.values()){
+            buildingTypesInCity.put(type, 0);
+        }
     }
 
     public CoinBag getMoney() {

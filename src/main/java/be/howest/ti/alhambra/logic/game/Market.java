@@ -49,17 +49,17 @@ public class Market {
 
         player.getMoney().addSelectedCoins(coins);
         int givenCoinAmount = player.getMoney().computeSelectedCoinsValue();
+        boolean exactAmount = givenCoinAmount == buildingsOnBoard.get(currency).getCost();
 
         if (givenCoinAmount < buildingsOnBoard.get(currency).getCost()){
             throw new AlhambraGameRuleException("Not enough coins!");
         }
 
-
         player.putBuildingInHand(buildingsOnBoard.get(currency));
         removeBuildingFromBoard(currency);
         addBuildingsToBoard();
 
-        return true;
+        return exactAmount;
     }
 
     public void addBuildingsToBoard(){

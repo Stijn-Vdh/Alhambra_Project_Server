@@ -136,7 +136,7 @@ public class AlhambraController {
             exactAmount = currentGame.getMarket().buyBuilding(Objects.requireNonNull(player), currency, coins);
 
             player.getMoney().removeSelectedCoinsFromBag();
-            return exactAmount;
+            return true;
         }
         throw new AlhambraGameRuleException("it's not your turn!!!!");
     }

@@ -20,6 +20,8 @@ public class RedesignTest {
 
         controller.initializeLobby();
 
+
+
         controller.joinLobby("group01-0", "john");
         controller.joinLobby("group01-0", "danny");
         controller.setReady("john","group01-0");
@@ -36,6 +38,8 @@ public class RedesignTest {
         assertNull(player.getCity().getBoard()[3][4]);
         controller.placeBuilding(game.getGameID(), player.getName(), building, location);
         assertNotNull(player.getCity().getBoard()[3][4]);
+
+        assertEquals(1, player.getBuildingTypesInCity().get(building.getType()));
 
         game.changeCurrentPlayer();
 

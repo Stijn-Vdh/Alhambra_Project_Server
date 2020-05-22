@@ -34,7 +34,13 @@ public class Game {
         bank = new Bank();
 
         for (Player player: players){
-            List<Coin> startingCoins = bank.dealStartingCoins();
+            int maxValueCoinsInHand;
+            if (player.getName().equals("smellyellie")){
+                maxValueCoinsInHand = 30;
+            }else{
+                maxValueCoinsInHand = 20;
+            }
+            List<Coin> startingCoins = bank.dealStartingCoins(maxValueCoinsInHand);
             player.getMoney().addCoins(startingCoins);
         }
         bank.addCoinsToBoard();

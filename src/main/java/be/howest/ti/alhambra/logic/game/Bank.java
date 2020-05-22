@@ -99,10 +99,10 @@ public class Bank {
         return totalValue <= MAX_COIN_VALUE && totalValue > MIN_COIN_VALUE;
     }
 
-    public List<Coin> dealStartingCoins(){
+    public List<Coin> dealStartingCoins(int maxValueCoinsInHand){
         List<Coin> startingCoins = new ArrayList<>();
 
-        while (totalValueCoins(startingCoins) < 20){
+        while (totalValueCoins(startingCoins) < maxValueCoinsInHand){
             startingCoins.add(allCoins.poll());
         }
 

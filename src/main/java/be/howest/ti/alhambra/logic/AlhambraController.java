@@ -1,4 +1,5 @@
 package be.howest.ti.alhambra.logic;
+import be.howest.ti.alhambra.exceptions.AlhambraException;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.building.BuildingType;
@@ -163,15 +164,31 @@ public class AlhambraController {
         player.getBuildingTypesInCity().put(building.getType(), ++typeCounter);
     }
 
+    private void decreaseBuildingTypesInCity(Player player, Building building){
+        int typeCounter = player.getBuildingTypesInCity().get(building.getType());
+        if (typeCounter > 0) {
+            player.getBuildingTypesInCity().put(building.getType(), --typeCounter);
+        }else throw new AlhambraException("Counter is 0");
+
+    }
+
     public boolean redesignCity(String gameId, String name, Building building, Location location){
         Game currentGame = ongoingGames.get(gameId);
         Player player = searchPlayer(name);
 
         if (currentGame.getCurrentPlayer() == player) {
             if (building == null){
+                int CHANGE_TO_ACTUAL_POSITION = 3;
+                
+                Building buildingFromCity = player.getCity().getBoard()
+                        [location.getRow()+CHANGE_TO_ACTUAL_POSITION]
+                        [location.getCol()+CHANGE_TO_ACTUAL_POSITION];
+                decreaseBuildingTypesInCity(player, buildingFromCity);
                 Objects.requireNonNull(player).putBuildingFromBoardInReserve(location);
+
             } else {
                 Objects.requireNonNull(player).getCity().placeBuilding(building, location);
+                increaseBuildingTypesInCity(player, building);
                 player.removeBuildingFromReserve(building);
             }
             currentGame.changeCurrentPlayer();

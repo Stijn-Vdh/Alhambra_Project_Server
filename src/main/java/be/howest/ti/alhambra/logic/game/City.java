@@ -31,7 +31,7 @@ public class City {
         return board;
     }
 
-    public void placeBuilding(Building b, Location location){
+    public void placeBuilding(Building building, Location location){
 
         int row = location.getRow();
         int col = location.getCol();
@@ -41,21 +41,25 @@ public class City {
         row = row + CHANGE_TO_ACTUAL_POSITION;
         col = col + CHANGE_TO_ACTUAL_POSITION;
 
-        List<Location> availableLocations = getAvailableLocations(b.getWalls());
+        List<Location> availableLocations = getAvailableLocations(building.getWalls());
+
+
 
         if (board[row][col] == null) {
-
-                for (Location l : availableLocations){
-                    if (location.equals(l)){
-                        board[row][col] = b;
+                for (Location availableLocation : availableLocations) {
+                    if (location.equals(availableLocation)) {
+                        board[row][col] = building;
+                        //increaseBuildingTypeCounter(building);
                     }
                 }
-
         }
         else {
             throw new AlhambraGameRuleException("This move is against the rules!");
         }
     }
+
+
+
 
     public boolean hasNeighbours(int row , int col){
         if ((row + OFFSET) < SIZE && board[row + OFFSET][col] != null){

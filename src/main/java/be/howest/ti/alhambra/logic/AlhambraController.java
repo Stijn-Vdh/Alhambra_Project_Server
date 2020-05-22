@@ -157,6 +157,23 @@ public class AlhambraController {
         return true;
     }
 
+    public void increaseBuildingTypesInCity(Player player, Building building){
+
+        int typeCounter;
+
+        if (!player.getBuildingTypesInCity().containsKey(building.getType())) {
+            typeCounter = 1;
+
+        }else{
+            typeCounter = player.getBuildingTypesInCity().get(building.getType());
+            typeCounter++;
+        }
+
+        player.getBuildingTypesInCity().put(building.getType(), typeCounter);
+
+
+    }
+
     public boolean redesignCity(String gameId, String name, Building building, Location location){
         Game currentGame = ongoingGames.get(gameId);
         Player player = searchPlayer(name);

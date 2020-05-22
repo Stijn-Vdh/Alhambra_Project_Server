@@ -21,7 +21,6 @@ public class RedesignTest {
         controller.initializeLobby();
 
 
-
         controller.joinLobby("group01-0", "john");
         controller.joinLobby("group01-0", "danny");
         controller.setReady("john","group01-0");

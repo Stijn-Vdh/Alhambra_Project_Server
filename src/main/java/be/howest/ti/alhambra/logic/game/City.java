@@ -49,7 +49,6 @@ public class City {
                 for (Location availableLocation : availableLocations) {
                     if (location.equals(availableLocation)) {
                         board[row][col] = building;
-                        //increaseBuildingTypeCounter(building);
                     }
                 }
         }

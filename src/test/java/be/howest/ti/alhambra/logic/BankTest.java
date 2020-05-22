@@ -103,13 +103,13 @@ public class BankTest {
         assertEquals(0, p1.getMoney().getCoinsInBag().size());
         assertEquals(0, p2.getMoney().getCoinsInBag().size());
 
-        List<Coin> startingCoinsP1 = bank.dealStartingCoins();
+        List<Coin> startingCoinsP1 = bank.dealStartingCoins(20);
         p1.getMoney().addCoins(startingCoinsP1);
 
         assertEquals(5, p1.getMoney().getCoinsInBag().size());
         assertEquals(5, allCoins.size());
 
-        List<Coin> startingCoinsP2 = bank.dealStartingCoins();
+        List<Coin> startingCoinsP2 = bank.dealStartingCoins(20);
         p2.getMoney().addCoins(startingCoinsP2);
         assertEquals(3, p2.getMoney().getCoinsInBag().size());
         assertEquals(2, allCoins.size());

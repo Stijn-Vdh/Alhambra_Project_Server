@@ -42,7 +42,7 @@ public class Market {
         return buildingsOnBoard.containsValue(selectedBuilding);
     }
 
-    public void buyBuilding(Player player, Currency currency, List<Coin> coins){
+    public boolean buyBuilding(Player player, Currency currency, List<Coin> coins){
         if (!isValidBuilding(buildingsOnBoard.get(currency))){
             throw new AlhambraGameRuleException("This building does not exist on gameBoard");
         }
@@ -54,11 +54,12 @@ public class Market {
             throw new AlhambraGameRuleException("Not enough coins!");
         }
 
-        //TODO implement else if for paying with the exact amount
 
         player.putBuildingInHand(buildingsOnBoard.get(currency));
         removeBuildingFromBoard(currency);
         addBuildingsToBoard();
+
+        return true;
     }
 
     public void addBuildingsToBoard(){

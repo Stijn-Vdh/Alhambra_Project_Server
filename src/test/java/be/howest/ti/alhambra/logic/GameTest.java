@@ -1,15 +1,14 @@
 package be.howest.ti.alhambra.logic;
 
+
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
-import be.howest.ti.alhambra.logic.game.Bank;
-import be.howest.ti.alhambra.logic.game.Game;
-import be.howest.ti.alhambra.logic.game.Lobby;
+import be.howest.ti.alhambra.logic.game.*;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.player.Player;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -154,5 +153,4 @@ public class GameTest {
         System.out.println(game.getCurrentPlayer().getName());
 
     }
-
 }

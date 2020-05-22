@@ -14,7 +14,7 @@ import be.howest.ti.alhambra.logic.player.Player;
 import java.util.*;
 
 public class AlhambraController {
-
+    private boolean exactAmount = false;
     private Map<String, Game> ongoingGames = new HashMap<>();
     private Map<String, Lobby> lobbies = new HashMap<>();
     private List<Player> players = new LinkedList<>();
@@ -133,10 +133,10 @@ public class AlhambraController {
         Game currentGame = ongoingGames.get(gameId);
         if (currentGame.getCurrentPlayer().getName().equals(name)){
             Player player = searchPlayer(name);
-            currentGame.getMarket().buyBuilding(Objects.requireNonNull(player), currency, coins);
+            exactAmount = currentGame.getMarket().buyBuilding(Objects.requireNonNull(player), currency, coins);
 
             player.getMoney().removeSelectedCoinsFromBag();
-            return true;
+            return exactAmount;
         }
         throw new AlhambraGameRuleException("it's not your turn!!!!");
     }
@@ -151,7 +151,10 @@ public class AlhambraController {
                 Objects.requireNonNull(player).getCity().placeBuilding(building, location);
             }
             player.removeBuildingInHand(building);
-            currentGame.changeCurrentPlayer();
+            if (!exactAmount){
+                currentGame.changeCurrentPlayer();
+            }
+
         }else throw new AlhambraGameRuleException("It's not your turn!");
 
         return true;

@@ -1,6 +1,9 @@
 package be.howest.ti.alhambra.logic;
 
 
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.BuildingType;
+import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.game.*;
 import be.howest.ti.alhambra.logic.money.Coin;
@@ -152,5 +155,51 @@ public class GameTest {
         System.out.println(game.getPlayers().get(2).getName() + game.getPlayers().get(2).getMoney().getCoinsInBag().size() + " " + game.getPlayers().get(2).getMoney().calculateTotalCoinBagValue());
         System.out.println(game.getCurrentPlayer().getName());
 
+    }
+
+    @Test
+    void equals() {
+        AlhambraController controller = new AlhambraController();
+        controller.initializeLobby();
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
+
+        controller.initializeLobby();
+        controller.joinLobby("group01-1", "freddy");
+        controller.joinLobby("group01-1", "jeff");
+        controller.setReady("freddy","group01-1");
+        controller.setReady("jeff","group01-1");
+        Game testGame1 = controller.getOngoingGames().get("group01-0");
+        Game testGame2 = controller.getOngoingGames().get("group01-0");
+        Game testGame3 = controller.getOngoingGames().get("group01-1");
+        Game testGame4 = controller.getOngoingGames().get("group01-4");
+        assertNotNull(testGame1);
+        assertNotEquals(testGame3, testGame1);
+        assertEquals(testGame1, testGame2);
+        assertFalse(controller.getOngoingGames().containsKey("group01-4"));
+    }
+    @Test
+    void hashCodeTest() {
+        AlhambraController controller = new AlhambraController();
+        controller.initializeLobby();
+        controller.joinLobby("group01-0", "john");
+        controller.joinLobby("group01-0", "danny");
+        controller.setReady("john","group01-0");
+        controller.setReady("danny","group01-0");
+
+        controller.initializeLobby();
+        controller.joinLobby("group01-1", "freddy");
+        controller.joinLobby("group01-1", "jeff");
+        controller.setReady("freddy","group01-1");
+        controller.setReady("jeff","group01-1");
+        Game testGame1 = controller.getOngoingGames().get("group01-0");
+        Game testGame2 = controller.getOngoingGames().get("group01-0");
+        Game testGame3 = controller.getOngoingGames().get("group01-1");
+
+        assertNotSame(testGame1, testGame3);
+        assertNotEquals(testGame1.hashCode(), testGame3.hashCode());
+        assertEquals(testGame1.hashCode(), testGame2.hashCode());
     }
 }

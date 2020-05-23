@@ -11,8 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BankTest {
 
@@ -57,7 +56,9 @@ public class BankTest {
         selectedCoins.add(coin2);
         assertEquals(3, bank.totalValueCoins(selectedCoins));
 
+        assertTrue(bank.isValidTotalValue(bank.totalValueCoins(selectedCoins)));
         selectedCoins.add(coin4);
+        assertFalse(bank.isValidTotalValue(bank.totalValueCoins(selectedCoins)));
         assertEquals(11, bank.totalValueCoins(selectedCoins));
 
         assertThrows(AlhambraGameRuleException.class, () -> bank.takeCoins(selectedCoins));

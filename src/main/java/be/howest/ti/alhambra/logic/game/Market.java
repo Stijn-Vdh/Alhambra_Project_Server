@@ -63,7 +63,6 @@ public class Market {
 
         player.putBuildingInHand(buildingsOnBoard.get(currency));
         removeBuildingFromBoard(currency);
-        addBuildingsToBoard();
 
         return exactAmount;
     }

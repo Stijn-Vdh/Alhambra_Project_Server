@@ -78,6 +78,7 @@ public class Game {
         turnCounter++;
         coinsRemaining = bank.getAmountOfCoins();
         checkScoringRounds();
+        market.addBuildingsToBoard();
     }
 
    public int getSmallestCoinBagSize(){

@@ -55,6 +55,12 @@ public class Market {
             throw new AlhambraGameRuleException("Not enough coins!");
         }
 
+        for (Coin coin: coins) {
+            if (coin.getCurrency() != currency){
+                throw new AlhambraGameRuleException("This is not the right currency");
+            }
+        }
+
         player.putBuildingInHand(buildingsOnBoard.get(currency));
         removeBuildingFromBoard(currency);
         addBuildingsToBoard();

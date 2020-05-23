@@ -167,8 +167,17 @@ public class FunctionalityTest {
         assertEquals(1, player.getReserve().size());
 
         game.changeCurrentPlayer();
+    }
 
+    @Test
+    void LocationHash(){
+        Location location1 = new Location(0,1);
+        Location location2 = new Location(0,1);
+        Location location3 = new Location(1,0);
 
+        assertNotSame(location1, location3);
+        assertNotEquals(location1.hashCode(), location3.hashCode());
+        assertEquals(location1.hashCode(), location2.hashCode());
     }
 
 }

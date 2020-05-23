@@ -63,7 +63,5 @@ public class MarketTest {
             coins.add(new Coin(Currency.GREEN, i));
         }
         assertThrows(AlhambraGameRuleException.class, ()-> market.buyBuilding(player, Currency.GREEN, coins2));
-
     }
-    
 }

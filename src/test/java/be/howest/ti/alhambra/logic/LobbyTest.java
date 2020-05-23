@@ -57,7 +57,33 @@ public class LobbyTest {
 
         assertThrows(AlhambraGameRuleException.class , ()-> controller.joinLobby("group01-0", "kurt"));
 
+    }
+    @Test
+    void equals() {
+        AlhambraController controller = new AlhambraController();
+        controller.initializeLobby();
+        controller.initializeLobby();
+        controller.initializeLobby();
 
+        Lobby testGame1 = controller.getLobbies().get("group01-0");
+        Lobby testGame2 = controller.getLobbies().get("group01-0");
+        Lobby testGame3 = controller.getLobbies().get("group01-1");
+        assertNotNull(testGame1);
+        assertNotEquals(testGame3, testGame1);
+        assertEquals(testGame1, testGame2);
+    }
+    @Test
+    void hashCodeTest() {
+        AlhambraController controller = new AlhambraController();
+        controller.initializeLobby();
+        controller.initializeLobby();
+        controller.initializeLobby();
+        Lobby testGame1 = controller.getLobbies().get("group01-0");
+        Lobby testGame2 = controller.getLobbies().get("group01-0");
+        Lobby testGame3 = controller.getLobbies().get("group01-1");
+        assertNotSame(testGame1, testGame3);
+        assertNotEquals(testGame1.hashCode(), testGame3.hashCode());
+        assertEquals(testGame1.hashCode(), testGame2.hashCode());
     }
 
     @Test

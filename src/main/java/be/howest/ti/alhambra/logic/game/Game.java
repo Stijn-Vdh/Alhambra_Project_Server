@@ -32,6 +32,7 @@ public class Game {
         this.started = true;
         this.ended = false;
         bank = new Bank();
+        market = new Market();
 
         for (Player player: players){
             int maxValueCoinsInHand;
@@ -48,9 +49,8 @@ public class Game {
         calculateCoinsPerStack();
 
         this.turnCounter = getStartingPlayerIndex();
-        changeCurrentPlayer();
 
-        market = new Market();
+        changeCurrentPlayer();
     }
 
     private void calculateCoinsPerStack() {

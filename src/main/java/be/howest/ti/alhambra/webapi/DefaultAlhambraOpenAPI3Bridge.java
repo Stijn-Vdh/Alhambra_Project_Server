@@ -51,10 +51,10 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         String name = ctx.request().getParam(PLAYER_NAME);
         String gameId = ctx.request().getParam(GAME_ID);
 
-        Boolean north = Boolean.parseBoolean(ctx.request().getParam("north"));
-        Boolean east = Boolean.parseBoolean(ctx.request().getParam("east"));
-        Boolean south = Boolean.parseBoolean(ctx.request().getParam("south"));
-        Boolean west = Boolean.parseBoolean(ctx.request().getParam("west"));
+        boolean north = Boolean.parseBoolean(ctx.request().getParam("north"));
+        boolean east = Boolean.parseBoolean(ctx.request().getParam("east"));
+        boolean south = Boolean.parseBoolean(ctx.request().getParam("south"));
+        boolean west = Boolean.parseBoolean(ctx.request().getParam("west"));
 
         Walls walls = new Walls(north,east,south,west);
         LOGGER.info("\nReturning all available build locations \n");

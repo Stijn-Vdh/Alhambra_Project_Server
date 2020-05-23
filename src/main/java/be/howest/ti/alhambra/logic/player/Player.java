@@ -78,6 +78,10 @@ public class Player {
         this.score = score;
     }
 
+    public void setVirtualScore(int virtualScore) {
+        this.virtualScore = virtualScore;
+    }
+
     public void putBuildingInHand(Building b){
             buildingsInHand.add(b);
     }
@@ -123,7 +127,12 @@ public class Player {
         return buildingTypesInCity;
     }
 
-
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -30,4 +30,22 @@ public class BuildingTest {
 
         assertEquals(building, Json.decodeValue(Json.encode(building), Building.class));
     }
+    @Test
+    void equals() {
+        Walls walls = new Walls(true, false, true, false);
+        Building testBuilding =  new Building(BuildingType.TOWER, 2, walls);
+        assertEquals(new Building(BuildingType.TOWER, 2, walls), testBuilding);
+        assertNotEquals(new Building(BuildingType.TOWER, 3, walls), testBuilding);
+    }
+    @Test
+    void hashCodeTest() {
+        Walls walls = new Walls(true, false, true, false);
+        Building testBuilding1 = new Building(BuildingType.TOWER, 2, walls);
+        Building testBuilding2 = new Building(BuildingType.TOWER, 2, walls);
+        Building testBuilding3 = new Building(BuildingType.SERAGLIO, 2, walls);
+        assertNotSame(testBuilding1, testBuilding2);
+        assertNotSame(testBuilding1, testBuilding3);
+        assertEquals(testBuilding1.hashCode(), testBuilding2.hashCode());
+        assertNotEquals(testBuilding3.hashCode(), testBuilding1.hashCode());
+    }
 }

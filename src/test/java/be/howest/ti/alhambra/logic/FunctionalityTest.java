@@ -126,12 +126,20 @@ public class FunctionalityTest {
 
         Location location = new Location(0,-1);
 
-        Walls walls = new Walls(true, false, true, false);
-        Building building = new Building(BuildingType.PAVILION, 1, walls);
+        Walls walls1 = new Walls(true, false, true, false);
+        Walls walls2 = new Walls(false, true, false, true);
+        Building building1 = new Building(BuildingType.PAVILION, 1, walls1);
+        Building building2 = new Building(BuildingType.PAVILION, 1, walls2);
 
         assertNull(player.getCity().getBoard()[3][2]);
-        controller.placeBuilding(game.getGameID(), player.getName(), building, location);
+        controller.placeBuilding(game.getGameID(), player.getName(), building1, location);
         assertNotNull(player.getCity().getBoard()[3][2]);
+
+        player = game.getCurrentPlayer();
+        location = new Location(-1,0);
+        assertNull(player.getCity().getBoard()[2][3]);
+        controller.placeBuilding(game.getGameID(), player.getName(), building2, location);
+        assertNotNull(player.getCity().getBoard()[2][3]);
 
     }
 

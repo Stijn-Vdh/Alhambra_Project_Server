@@ -70,6 +70,9 @@ public class Game {
             calcScoringRound1();
         } else if (coinsRemaining <= coinsRemainingForScoringRound2 && !scoringRound2) {
             scoringRound2 = true;
+            for (Player player : players) {
+                player.setVirtualScore(0);
+            }
             //TODO --> write function for calculating scoring round score
         }
     }
@@ -80,34 +83,45 @@ public class Game {
         for (BuildingType type : scoringTable.keySet()) {
             for (Player player : players) {
 
-                ArrayList<Player> tempList = new ArrayList<>();
                 if (player.getBuildingTypesInCity().get(type) != 0) {
-                    if (scoringTable.get(type).isEmpty() || scoringTable.get(type).get(0).getBuildingTypesInCity().get(type) < player.getBuildingTypesInCity().get(type)) {
-                        tempList.add(player);
-                        scoringTable.put(type, tempList);
-                    } else if (scoringTable.get(type).get(0).getBuildingTypesInCity().get(type).equals(player.getBuildingTypesInCity().get(type))) {
-                        tempList = scoringTable.get(type);
-                        tempList.add(player);
-                        scoringTable.put(type, tempList);
-                    }
-                    tempList.clear();
-                }
+                    if (scoringTable.get(type) == null || scoringTable.get(type).get(0).getBuildingTypesInCity().get(type) < player.getBuildingTypesInCity().get(type)) {
+                        if (scoringTable.get(type) != null){
+                            scoringTable.get(type).clear();
+                        }else{
+                            scoringTable.put(type,new ArrayList<Player>());
+                        }
+                        scoringTable.get(type).add(player);
 
+                    } else if (scoringTable.get(type).get(0).getBuildingTypesInCity().get(type).equals(player.getBuildingTypesInCity().get(type))) {
+                        scoringTable.get(type).add(player);
+                    }
+                }
             }
         }
     }
 
     private void calcScoringRound1(){
         for (BuildingType type : scoringTable.keySet()){
-            int maxValue = getMaxValueRound1(type);
-            if (scoringTable.get(type).size() > 1){
-                maxValue = maxValue / scoringTable.get(type).size();
-                for (Player player : scoringTable.get(type)){
-                    int playerScore = player.getScore() + maxValue;
-                    player.setScore(playerScore);
+            if (scoringTable.get(type) != null){
+                int maxValue = getMaxValueRound1(type);
+                if (scoringTable.get(type).size() > 1){
+                    maxValue = maxValue / scoringTable.get(type).size();
+                    for (Player player : scoringTable.get(type)){
+                        int playerScore = player.getScore() + maxValue;
+                        int playerVirtualScore = player.getVirtualScore() + maxValue;
+
+                        player.setScore(playerScore);
+                        player.setVirtualScore(playerVirtualScore);
+                    }
+
+                }else{
+
+                    int playerVirtualScore = scoringTable.get(type).get(0).getVirtualScore() + maxValue;
+                    int playerScore = scoringTable.get(type).get(0).getScore() + maxValue;
+
+                    scoringTable.get(type).get(0).setScore(playerScore);
+                    scoringTable.get(type).get(0).setVirtualScore(playerVirtualScore);
                 }
-            }else{
-                scoringTable.get(type).get(0).setScore(maxValue);
             }
         }
     }
@@ -115,13 +129,13 @@ public class Game {
     private int getMaxValueRound1(BuildingType type){
         switch(type){
             case PAVILION:
-                return  1;
+                return 1;
             case SERAGLIO:
-                return  2;
+                return 2;
             case ARCADES:
-                return  3;
+                return 3;
             case CHAMBERS:
-                return  4;
+                return 4;
             case GARDEN:
                 return 5;
             case TOWER:

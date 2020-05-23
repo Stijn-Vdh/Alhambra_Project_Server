@@ -74,6 +74,10 @@ public class Player {
         return isReady;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public void putBuildingInHand(Building b){
             buildingsInHand.add(b);
     }

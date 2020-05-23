@@ -20,6 +20,7 @@ public class RedesignTest {
 
         controller.initializeLobby();
 
+
         controller.joinLobby("group01-0", "john");
         controller.joinLobby("group01-0", "danny");
         controller.setReady("john","group01-0");
@@ -37,18 +38,21 @@ public class RedesignTest {
         controller.placeBuilding(game.getGameID(), player.getName(), building, location);
         assertNotNull(player.getCity().getBoard()[3][4]);
 
+        assertEquals(1, player.getBuildingTypesInCity().get(building.getType()));
+
         game.changeCurrentPlayer();
 
 
         Building building1 = null;
 
-        assertThrows(AlhambraGameRuleException.class, () -> controller.redesignCity(game.getGameID(), player.getName(),building1, new Location(0,0)));
+        //assertThrows(AlhambraGameRuleException.class, () -> controller.redesignCity(game.getGameID(), player.getName(),building1, new Location(0,0)));
         assertNotNull(player.getCity().getBoard()[3][3]);
 
 
         controller.redesignCity(game.getGameID(), player.getName(), building1, location);
         assertNull(player.getCity().getBoard()[3][4]);
         assertFalse(player.getReserve().isEmpty());
+        assertEquals(0, player.getBuildingTypesInCity().get(building.getType()));
 
         game.changeCurrentPlayer();
 

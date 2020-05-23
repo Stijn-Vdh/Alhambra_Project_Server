@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic.player;
 
 import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.BuildingType;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.City;
 import be.howest.ti.alhambra.logic.game.Location;
@@ -14,10 +15,12 @@ public class Player {
     private boolean isReady;
     private List<Building> reserve;
     private List<Building> buildingsInHand;
+    private Map<BuildingType, Integer> buildingTypesInCity;
     private City city;
     private int virtualScore;
     private int score;
     private CoinBag money;
+
 
     @JsonCreator
     public Player(@JsonProperty("name") String name) {
@@ -25,11 +28,18 @@ public class Player {
         this.isReady = false;
         this.reserve = new LinkedList<>();
         this.buildingsInHand = new LinkedList<>();
+        this.buildingTypesInCity = new HashMap<>();
         this.city = new City();
         this.virtualScore = 0;
         this.score = 0;
         this.money = new CoinBag();
+        initializeBuildingTypesInCity();
+    }
 
+    public void initializeBuildingTypesInCity(){
+        for (BuildingType type : BuildingType.values()){
+            buildingTypesInCity.put(type, 0);
+        }
     }
 
     public CoinBag getMoney() {
@@ -100,6 +110,16 @@ public class Player {
             city.getBoard()[row][col] = null;
         }else throw new AlhambraGameRuleException("It is against the rules to remove the fountain from the board.");
     }
+
+    public void setCityBuildingTypes(Map<BuildingType, Integer> buildingTypesInCity) {
+        this.buildingTypesInCity = buildingTypesInCity;
+    }
+
+    public Map<BuildingType, Integer> getBuildingTypesInCity() {
+        return buildingTypesInCity;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

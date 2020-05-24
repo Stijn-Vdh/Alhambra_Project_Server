@@ -45,20 +45,14 @@ public class AlhambraControllerTest {
         assertTrue(controller.getPlayers().isEmpty());
     }
 
-    @BeforeEach
-    AlhambraController init(){
+    @Test
+    void removeGameIfEmptyTest() {
         AlhambraController controller = new AlhambraController();
         controller.initializeLobby();
         controller.joinLobby("group01-0", "john");
         controller.joinLobby("group01-0", "danny");
         controller.setReady("john", "group01-0");
         controller.setReady("danny", "group01-0");
-        return controller;
-    }
-
-    @Test
-    void removeGameIfEmptyTest() {
-        AlhambraController controller = init();
 
         assertEquals(1, controller.getOngoingGames().size());
         controller.leaveGame("group01-0", "john");
@@ -68,14 +62,14 @@ public class AlhambraControllerTest {
 
     @Test
     void getAllBuildingsTest(){
-        AlhambraController controller = init();
+        AlhambraController controller = new AlhambraController();
 
         assertEquals(BuildingRepo.getAllBuildings(), controller.getAllBuildings());
     }
 
     @Test
     void getCurrencies(){
-        AlhambraController controller = init();
+        AlhambraController controller = new AlhambraController();
 
         assertEquals(Currency.BLUE, controller.getCurrencies()[0]);
         assertEquals(Currency.GREEN, controller.getCurrencies()[1]);
@@ -85,7 +79,8 @@ public class AlhambraControllerTest {
 
     @Test
     void getBuildingTypes(){
-        AlhambraController controller = init();
+        AlhambraController controller = new AlhambraController();
+
         assertEquals(BuildingType.PAVILION, controller.getBuildingTypes()[0]);
         assertEquals(BuildingType.SERAGLIO, controller.getBuildingTypes()[1]);
         assertEquals(BuildingType.ARCADES, controller.getBuildingTypes()[2]);

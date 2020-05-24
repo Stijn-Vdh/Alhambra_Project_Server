@@ -44,12 +44,12 @@ public class ScoringRound {
         }
     }
 
-    public void calcScoringRound1() {
+    public void calcScoringRound1(int incr) {
         for (BuildingType type : scoringTable.keySet()) {
             if (!scoringTable.get(type).isEmpty()) {
                 ArrayList<Player> firstPlaceList = scoringTable.get(type);
 
-                int maxValue = getMaxValueRound(type);
+                int maxValue = getMaxValueRound(type, incr);
 
                 if (firstPlaceList.size() > 1) {
                     maxValue = maxValue / firstPlaceList.size();
@@ -74,20 +74,20 @@ public class ScoringRound {
     }
 
 
-    private int getMaxValueRound(BuildingType type) {
+    private int getMaxValueRound(BuildingType type, int incr) {
         switch (type) {
             case PAVILION:
-                return 1;
+                return 1 + incr;
             case SERAGLIO:
-                return 2;
+                return 2 + incr;
             case ARCADES:
-                return 3;
+                return 3 + incr;
             case CHAMBERS:
-                return 4;
+                return 4 + incr;
             case GARDEN:
-                return 5;
+                return 5 + incr;
             case TOWER:
-                return 6;
+                return 6 + incr;
             default:
                 return 0;
         }

@@ -1,6 +1,5 @@
 package be.howest.ti.alhambra.logic.game;
 
-import be.howest.ti.alhambra.logic.building.BuildingType;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.player.Player;
 
@@ -22,7 +21,7 @@ public class Game {
     private int coinsRemainingForScoringRound2;
     private boolean scoringRound1 = false;
     private boolean scoringRound2 = false;
-    private Map<BuildingType, ArrayList<Player>> scoringTable;
+    private ScoringRound scoringRound;
 
     public Market getMarket() {
         return market;
@@ -33,9 +32,9 @@ public class Game {
         this.players = players;
         this.started = true;
         this.ended = false;
-        this.scoringTable = new HashMap<>();
         bank = new Bank();
         market = new Market();
+        this.scoringRound = new ScoringRound(players);
 
         for (Player player : players) {
             int maxValueCoinsInHand;
@@ -66,89 +65,18 @@ public class Game {
     private void checkScoringRounds() {
         if (coinsRemaining <= coinsRemainingForScoringRound1 && !scoringRound1) {
             scoringRound1 = true;
-            calcMVPRound1perType();
-            calcScoringRound1();
+
+            scoringRound.calcMVPRound1perType();
+            scoringRound.calcScoringRound1();
         } else if (coinsRemaining <= coinsRemainingForScoringRound2 && !scoringRound2) {
             scoringRound2 = true;
+
             for (Player player : players) {
                 player.setVirtualScore(0);
             }
-            //TODO --> write function for calculating scoring round score
-        }
-    }
 
-    private void calcMVPRound1perType() {
-        initScoringTable();
-
-        for (BuildingType type : scoringTable.keySet()) {
-            for (Player player : players) {
-
-                if (player.getBuildingTypesInCity().get(type) != 0) {
-                    if (scoringTable.get(type) == null || scoringTable.get(type).get(0).getBuildingTypesInCity().get(type) < player.getBuildingTypesInCity().get(type)) {
-                        if (scoringTable.get(type) != null){
-                            scoringTable.get(type).clear();
-                        }else{
-                            scoringTable.put(type,new ArrayList<Player>());
-                        }
-                        scoringTable.get(type).add(player);
-
-                    } else if (scoringTable.get(type).get(0).getBuildingTypesInCity().get(type).equals(player.getBuildingTypesInCity().get(type))) {
-                        scoringTable.get(type).add(player);
-                    }
-                }
-            }
-        }
-    }
-
-    private void calcScoringRound1(){
-        for (BuildingType type : scoringTable.keySet()){
-            if (scoringTable.get(type) != null){
-                int maxValue = getMaxValueRound1(type);
-                if (scoringTable.get(type).size() > 1){
-                    maxValue = maxValue / scoringTable.get(type).size();
-                    for (Player player : scoringTable.get(type)){
-                        int playerScore = player.getScore() + maxValue;
-                        int playerVirtualScore = player.getVirtualScore() + maxValue;
-
-                        player.setScore(playerScore);
-                        player.setVirtualScore(playerVirtualScore);
-                    }
-
-                }else{
-
-                    int playerVirtualScore = scoringTable.get(type).get(0).getVirtualScore() + maxValue;
-                    int playerScore = scoringTable.get(type).get(0).getScore() + maxValue;
-
-                    scoringTable.get(type).get(0).setScore(playerScore);
-                    scoringTable.get(type).get(0).setVirtualScore(playerVirtualScore);
-                }
-            }
-        }
-    }
-
-    private int getMaxValueRound1(BuildingType type){
-        switch(type){
-            case PAVILION:
-                return 1;
-            case SERAGLIO:
-                return 2;
-            case ARCADES:
-                return 3;
-            case CHAMBERS:
-                return 4;
-            case GARDEN:
-                return 5;
-            case TOWER:
-                return 6;
-            default:
-                return 0;
-        }
-
-    }
-
-    private void initScoringTable() {
-        for (BuildingType type : BuildingType.values()) {
-            scoringTable.put(type, null);
+            scoringRound.calcMVPRound1perType();
+            scoringRound.calcScoringRound1();
         }
     }
 
@@ -161,6 +89,13 @@ public class Game {
         coinsRemaining = bank.getAmountOfCoins();
         checkScoringRounds();
         market.addBuildingsToBoard();
+        checkEndOfGame();
+    }
+
+    private void checkEndOfGame() {
+        if (market.getAmountOfBuildings() == 0){
+            ended = true;
+        }
     }
 
     public int getSmallestCoinBagSize() {

@@ -47,20 +47,19 @@ public class Market {
             throw new AlhambraGameRuleException("This building does not exist on gameBoard");
         }
 
-        for (Coin coin: coins) {
-            if (coin.getCurrency() != currency){
-                throw new AlhambraGameRuleException("This is not the right currency");
-            }
-        }
-
+        player.getMoney().addSelectedCoins(coins);
         int givenCoinAmount = player.getMoney().computeSelectedCoinsValue();
+        boolean exactAmount = givenCoinAmount == buildingsOnBoard.get(currency).getCost();
 
         if (givenCoinAmount < buildingsOnBoard.get(currency).getCost()){
             throw new AlhambraGameRuleException("Not enough coins!");
         }
 
-        player.getMoney().addSelectedCoins(coins);
-        boolean exactAmount = givenCoinAmount == buildingsOnBoard.get(currency).getCost();
+        for (Coin coin: coins) {
+            if (coin.getCurrency() != currency){
+                throw new AlhambraGameRuleException("This is not the right currency");
+            }
+        }
 
         player.putBuildingInHand(buildingsOnBoard.get(currency));
         removeBuildingFromBoard(currency);

@@ -43,10 +43,16 @@ public class City {
         List<Location> availableLocations = getAvailableLocations(building.getWalls());
 
         if (board[row][col] == null) {
+
+            boolean placed = false;
                 for (Location availableLocation : availableLocations) {
                     if (location.equals(availableLocation)) {
                         board[row][col] = building;
+                        placed = true;
                     }
+                }
+                if (!placed){
+                    throw new AlhambraGameRuleException("It is not allowed to place a building here!");
                 }
         }
         else {

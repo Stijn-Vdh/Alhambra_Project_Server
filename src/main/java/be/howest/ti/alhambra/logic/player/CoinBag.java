@@ -46,7 +46,6 @@ public class CoinBag {
     }
 
     public int calculateTotalCoinBagValue() {
-
         int totalBagCoinValue = 0;
         for (Coin coin : coinsInBag) {
             totalBagCoinValue += coin.getAmount();

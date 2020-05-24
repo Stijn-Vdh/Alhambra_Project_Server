@@ -2,7 +2,6 @@ package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.player.Player;
-
 import java.util.*;
 
 
@@ -23,10 +22,6 @@ public class Game {
     private boolean scoringRound2 = false;
     private ScoringRound scoringRound;
 
-    public Market getMarket() {
-        return market;
-    }
-
     public Game(List<Player> players, String gameID) {
         this.gameID = gameID;
         this.players = players;
@@ -36,110 +31,15 @@ public class Game {
         market = new Market();
         this.scoringRound = new ScoringRound(players);
 
-        for (Player player : players) {
-            int maxValueCoinsInHand;
-            if (player.getName().equals("smellyellie")) {
-                maxValueCoinsInHand = 30;
-            } else {
-                maxValueCoinsInHand = 20;
-            }
-            List<Coin> startingCoins = bank.dealStartingCoins(maxValueCoinsInHand);
-            player.getMoney().addCoins(startingCoins);
-        }
+        giveStartingCoins();
         bank.addCoinsToBoard();
-
         calculateCoinsPerStack();
-
         this.turnCounter = getStartingPlayerIndex();
-
         changeCurrentPlayer();
     }
 
-    private void calculateCoinsPerStack() {
-        coinsRemaining = bank.getAmountOfCoins();
-        int coinsPileSize = coinsRemaining / 5;
-        coinsRemainingForScoringRound1 = coinsRemaining - coinsPileSize;
-        coinsRemainingForScoringRound2 = coinsRemaining - 3 * coinsPileSize;
-    }
-
-    private void checkScoringRounds() {
-        if (coinsRemaining <= coinsRemainingForScoringRound1 && !scoringRound1) {
-            scoringRound1 = true;
-
-            scoringRound.calcMVPRound1perType();
-            scoringRound.calcScoringRound1(0);
-        } else if (coinsRemaining <= coinsRemainingForScoringRound2 && !scoringRound2) {
-            scoringRound2 = true;
-
-            for (Player player : players) {
-                player.setVirtualScore(0);
-            }
-
-            scoringRound.calcMVPRound1perType();
-            scoringRound.calcScoringRound1(7);
-        }
-    }
-
-    public void changeCurrentPlayer() {
-        if (turnCounter == players.size()) {
-            turnCounter = 0;
-        }
-        this.currentPlayer = players.get(turnCounter);
-        turnCounter++;
-        coinsRemaining = bank.getAmountOfCoins();
-        checkScoringRounds();
-        market.addBuildingsToBoard();
-        checkEndOfGame();
-    }
-
-    private void checkEndOfGame() {
-        if (market.getAmountOfBuildings() == 0){
-            scoringRound.calcMVPRound1perType();
-            scoringRound.calcScoringRound1(15);
-            ended = true;
-        }
-    }
-
-    public int getSmallestCoinBagSize() {
-        int smallestBag = players.get(0).getMoney().getCoinsInBag().size();
-
-        for (Player player : players) {
-            int playerBagSize = player.getMoney().getCoinsInBag().size();
-            if (playerBagSize < smallestBag) {
-                smallestBag = player.getMoney().getCoinsInBag().size();
-            }
-        }
-        return smallestBag;
-    }
-
-    private Player getPlayerWithLeastStartingCoinBagValue(List<Player> players) {
-
-        int lowestValue = players.get(0).getMoney().calculateTotalCoinBagValue();
-
-        Player playerWithLeastValue = null;
-
-        for (Player player : players) {
-            if (player.getMoney().calculateTotalCoinBagValue() <= lowestValue) {
-                playerWithLeastValue = player;
-            }
-        }
-
-        return playerWithLeastValue;
-    }
-
-    public int getStartingPlayerIndex() {
-        List<Player> tempList = new ArrayList<>();
-        int smallestCoinBagSize = getSmallestCoinBagSize();
-
-        for (Player player : players) {
-            if (player.getMoney().getCoinsInBag().size() == smallestCoinBagSize) {
-                tempList.add(player);
-            }
-        }
-
-        Player startingPlayer = getPlayerWithLeastStartingCoinBagValue(tempList);
-        return players.indexOf(startingPlayer);
-
+    public Market getMarket() {
+        return market;
     }
 
     public String getGameID() {
@@ -152,6 +52,18 @@ public class Game {
 
     public Bank getBank() {
         return bank;
+    }
+
+    public int getSmallestCoinBagSize() {
+        int smallestBag = players.get(0).getMoney().getCoinsInBag().size();
+
+        for (Player player : players) {
+            int playerBagSize = player.getMoney().getCoinsInBag().size();
+            if (playerBagSize < smallestBag) {
+                smallestBag = player.getMoney().getCoinsInBag().size();
+            }
+        }
+        return smallestBag;
     }
 
     public Object getState() {
@@ -171,6 +83,94 @@ public class Game {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    private Player getPlayerWithLeastStartingCoinBagValue(List<Player> players) {
+
+        int lowestValue = players.get(0).getMoney().calculateTotalCoinBagValue();
+
+        Player playerWithLeastValue = null;
+
+        for (Player player : players) {
+            if (player.getMoney().calculateTotalCoinBagValue() <= lowestValue) {
+                playerWithLeastValue = player;
+            }
+        }
+        return playerWithLeastValue;
+    }
+
+    public int getStartingPlayerIndex() {
+        List<Player> tempList = new ArrayList<>();
+        int smallestCoinBagSize = getSmallestCoinBagSize();
+
+        for (Player player : players) {
+            if (player.getMoney().getCoinsInBag().size() == smallestCoinBagSize) {
+                tempList.add(player);
+            }
+        }
+
+        Player startingPlayer = getPlayerWithLeastStartingCoinBagValue(tempList);
+        return players.indexOf(startingPlayer);
+
+    }
+
+    private void giveStartingCoins(){
+
+        for (Player player : players) {
+            int maxValueCoinsInHand;
+            if (player.getName().equals("smellyellie")) {
+                maxValueCoinsInHand = 30;
+            } else {
+                maxValueCoinsInHand = 20;
+            }
+            List<Coin> startingCoins = bank.dealStartingCoins(maxValueCoinsInHand);
+            player.getMoney().addCoins(startingCoins);
+        }
+
+    }
+
+    private void calculateCoinsPerStack() {
+        coinsRemaining = bank.getAmountOfCoins();
+        int coinsPileSize = coinsRemaining / 5;
+        coinsRemainingForScoringRound1 = coinsRemaining - coinsPileSize;
+        coinsRemainingForScoringRound2 = coinsRemaining - 3 * coinsPileSize;
+    }
+
+    private void checkScoringRounds() {
+        if (coinsRemaining <= coinsRemainingForScoringRound1 && !scoringRound1) {
+            scoringRound1 = true;
+            scoringRound.calcMVPperType();
+            scoringRound.calcScoringRound(0);
+        } else if (coinsRemaining <= coinsRemainingForScoringRound2 && !scoringRound2) {
+            scoringRound2 = true;
+
+            for (Player player : players) {
+                player.setVirtualScore(0);
+            }
+
+            scoringRound.calcMVPperType();
+            scoringRound.calcScoringRound(7);
+        }
+    }
+
+    public void changeCurrentPlayer() {
+        if (turnCounter == players.size()) {
+            turnCounter = 0;
+        }
+        this.currentPlayer = players.get(turnCounter);
+        turnCounter++;
+        coinsRemaining = bank.getAmountOfCoins();
+        checkScoringRounds();
+        market.addBuildingsToBoard();
+        checkEndOfGame();
+    }
+
+    private void checkEndOfGame() {
+        if (market.getAmountOfBuildings() == 0){
+            scoringRound.calcMVPperType();
+            scoringRound.calcScoringRound(15);
+            ended = true;
+        }
     }
 
     @Override

@@ -1,10 +1,8 @@
 package be.howest.ti.alhambra.logic.game;
 
-
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walls;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +17,9 @@ public class City {
     public City(){
          initializeCity();
     }
+
     public void initializeCity(){
-        int center = (int)(SIZE/2);
+        int center = (SIZE/2);
         for (Building[] buildings : board) {
             Arrays.fill(buildings, null);
         }
@@ -43,8 +42,6 @@ public class City {
 
         List<Location> availableLocations = getAvailableLocations(building.getWalls());
 
-
-
         if (board[row][col] == null) {
                 for (Location availableLocation : availableLocations) {
                     if (location.equals(availableLocation)) {
@@ -56,9 +53,6 @@ public class City {
             throw new AlhambraGameRuleException("This move is against the rules!");
         }
     }
-
-
-
 
     public boolean hasNeighbours(int row , int col){
         if ((row + OFFSET) < SIZE && board[row + OFFSET][col] != null){
@@ -77,7 +71,6 @@ public class City {
         List<Location> locations = new ArrayList<>();
 
         final int CHANGE_TO_LOGIC_POSITION = 3;
-        
 
         for (int row = 0; row < board.length;row++){
             for (int col = 0; col < board[row].length; col++){

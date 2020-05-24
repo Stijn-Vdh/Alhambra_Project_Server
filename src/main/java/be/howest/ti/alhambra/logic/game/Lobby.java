@@ -22,38 +22,23 @@ public class Lobby {
         this.started = false;
     }
 
-    public void addPlayer(Player player) {
-        if (players.size() < 6){
-            if (!players.contains(player)){
-                players.add(player);
-            }
-        } else{
-            throw new AlhambraGameRuleException("Lobby is full!!");
-        }
-
-
-    }
-
-    public void removePlayer(String name) {
-        boolean result = false;
-        for (Player player : players) {
-            if (player.getName().equals(name)) {
-                players.remove(player);
-                result = true;
-            }
-        }
-
-        if (!result){
-            throw new AlhambraEntityNotFoundException("name of player doesn't exist");
-        }
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
 
     public String getGameID() {
         return gameID;
+    }
+
+    public Map<String, Object> getState() {
+        Map<String, Object> state = new HashMap<>();
+
+        state.put("id", gameID);
+        state.put("players", players);
+        state.put("started", started);
+        state.put("playerCount", players.size());
+        state.put("readyCount", getReadyAmount());
+        return state;
     }
 
     public int getReadyAmount() {
@@ -65,6 +50,29 @@ public class Lobby {
         }
 
         return readyAmount;
+    }
+
+    public void addPlayer(Player player) {
+        if (players.size() < 6){
+            if (!players.contains(player)){
+                players.add(player);
+            }
+        } else{
+            throw new AlhambraGameRuleException("Lobby is full!!");
+        }
+    }
+
+    public void removePlayer(String name) {
+        boolean result = false;
+        for (Player player : players) {
+            if (player.getName().equals(name)) {
+                players.remove(player);
+                result = true;
+            }
+        }
+        if (!result){
+            throw new AlhambraEntityNotFoundException("name of player doesn't exist");
+        }
     }
 
     public boolean checkReadyStateForStartGame() {
@@ -86,16 +94,6 @@ public class Lobby {
         return Objects.hash(getGameID(), getPlayers());
     }
 
-    public Map<String, Object> getState() {
-        Map<String, Object> state = new HashMap<>();
-
-        state.put("id", gameID);
-        state.put("players", players);
-        state.put("started", started);
-        state.put("playerCount", players.size());
-        state.put("readyCount", getReadyAmount());
-        return state;
-    }
     @Override
     public String toString() {
         return gameID;

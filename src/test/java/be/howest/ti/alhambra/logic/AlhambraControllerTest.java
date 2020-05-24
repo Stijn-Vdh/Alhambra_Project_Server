@@ -6,6 +6,7 @@ import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Array;
@@ -62,11 +63,6 @@ public class AlhambraControllerTest {
     @Test
     void getAllBuildingsTest(){
         AlhambraController controller = new AlhambraController();
-        controller.initializeLobby();
-        controller.joinLobby("group01-0", "john");
-        controller.joinLobby("group01-0", "danny");
-        controller.setReady("john","group01-0");
-        controller.setReady("danny","group01-0");
 
         assertEquals(BuildingRepo.getAllBuildings(), controller.getAllBuildings());
     }
@@ -84,6 +80,7 @@ public class AlhambraControllerTest {
     @Test
     void getBuildingTypes(){
         AlhambraController controller = new AlhambraController();
+
         assertEquals(BuildingType.PAVILION, controller.getBuildingTypes()[0]);
         assertEquals(BuildingType.SERAGLIO, controller.getBuildingTypes()[1]);
         assertEquals(BuildingType.ARCADES, controller.getBuildingTypes()[2]);

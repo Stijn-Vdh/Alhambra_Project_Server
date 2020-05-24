@@ -9,11 +9,9 @@ import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.player.Player;
 import org.junit.jupiter.api.Test;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MarketTest {
@@ -29,9 +27,8 @@ public class MarketTest {
             buildings.add(new Building(BuildingType.PAVILION, i, walls));
         }
 
-            for (int i = 0; i < 1; i++) {
-            coins.add(new Coin(Currency.GREEN, i));
-        }
+        coins.add(new Coin(Currency.GREEN, 1));
+
         Market market = new Market(buildings);
 
         assertEquals(4, market.getBuildingsOnBoard().size());

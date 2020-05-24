@@ -68,7 +68,6 @@ public class Market {
     }
 
     public void addBuildingsToBoard(){
-
         for (Currency currency : Currency.values()){
             buildingsOnBoard.computeIfAbsent(currency, k -> buildings.poll());
         }

@@ -21,11 +21,10 @@ public class ScoringRound {
     private void initScoringTable() {
         for (BuildingType type : BuildingType.values()) {
                 scoringTable.put(type, new ArrayList<>());
-
         }
     }
 
-    public void calcMVPRound1perType() {
+    public void calcMVPperType() {
 
         for (BuildingType type : scoringTable.keySet()) {
             for (Player player : players) {
@@ -44,7 +43,7 @@ public class ScoringRound {
         }
     }
 
-    public void calcScoringRound1(int incr) {
+    public void calcScoringRound(int incr) {
         for (BuildingType type : scoringTable.keySet()) {
             if (!scoringTable.get(type).isEmpty()) {
                 ArrayList<Player> firstPlaceList = scoringTable.get(type);
@@ -60,7 +59,6 @@ public class ScoringRound {
                         player.setScore(playerScore);
                         player.setVirtualScore(playerVirtualScore);
                     }
-
                 } else {
 
                     int playerVirtualScore = firstPlaceList.get(0).getVirtualScore() + maxValue;
@@ -72,7 +70,6 @@ public class ScoringRound {
             }
         }
     }
-
 
     private int getMaxValueRound(BuildingType type, int incr) {
         switch (type) {
@@ -92,5 +89,4 @@ public class ScoringRound {
                 return 0;
         }
     }
-
 }

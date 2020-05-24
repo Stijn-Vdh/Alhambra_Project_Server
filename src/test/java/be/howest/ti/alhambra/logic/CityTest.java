@@ -37,7 +37,7 @@ public class CityTest {
        c.placeBuilding(p, new Location(-1,1));
         assertEquals(BuildingType.PAVILION,c.getBoard()[2][4].getType());
 
-        c.placeBuilding(p, new Location(-1,0));
+        assertThrows(AlhambraGameRuleException.class, () -> c.placeBuilding(p, new Location(-1,0)));
         assertNull(c.getBoard()[2][3]);
 
         assertTrue(c.hasNeighbours(3,5));

@@ -6,7 +6,6 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.City;
 import be.howest.ti.alhambra.logic.game.Location;
 import com.fasterxml.jackson.annotation.*;
-
 import java.util.*;
 
 public class Player {
@@ -66,6 +65,10 @@ public class Player {
         return score;
     }
 
+    public Map<BuildingType, Integer> getBuildingTypesInCity() {
+        return buildingTypesInCity;
+    }
+
     public String getName() {
         return name;
     }
@@ -82,18 +85,18 @@ public class Player {
         this.virtualScore = virtualScore;
     }
 
-    public void putBuildingInHand(Building b){
-            buildingsInHand.add(b);
-    }
-
-    public void placeBuildingInReserve(Building building) { reserve.add(building); }
-
     public void setReady(boolean readyState) {
         isReady = readyState;
     }
 
-    public void removeBuildingInHand(Building b){
-        buildingsInHand.remove(b);
+    public void putBuildingInHand(Building building){
+            buildingsInHand.add(building);
+    }
+
+    public void placeBuildingInReserve(Building building) { reserve.add(building); }
+
+    public void removeBuildingInHand(Building building){
+        buildingsInHand.remove(building);
     }
 
     public void removeBuildingFromReserve(Building building) {
@@ -119,14 +122,6 @@ public class Player {
         }else throw new AlhambraGameRuleException("It is against the rules to remove the fountain from the board.");
     }
 
-    public void setCityBuildingTypes(Map<BuildingType, Integer> buildingTypesInCity) {
-        this.buildingTypesInCity = buildingTypesInCity;
-    }
-
-    public Map<BuildingType, Integer> getBuildingTypesInCity() {
-        return buildingTypesInCity;
-    }
-
     @Override
     public String toString() {
         return "Player{" +
@@ -146,6 +141,4 @@ public class Player {
     public int hashCode() {
         return Objects.hash(name);
     }
-
-
 }

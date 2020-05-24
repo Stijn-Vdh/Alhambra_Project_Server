@@ -16,7 +16,6 @@ public class Location {
         this.col = col;
     }
 
-
     public int getRow() {
         return row;
     }
@@ -38,5 +37,4 @@ public class Location {
     public int hashCode() {
         return Objects.hash(row, col);
     }
-    
 }

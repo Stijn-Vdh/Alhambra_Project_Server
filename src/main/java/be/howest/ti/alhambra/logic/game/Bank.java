@@ -41,7 +41,6 @@ public class Bank {
         return coinsOnBoard;
     }
 
-
     public int getAmountOfCoins(){
         return allCoins.size();
     }
@@ -95,7 +94,6 @@ public class Bank {
     }
 
     public boolean isValidTotalValue(int totalValue) {
-
         return totalValue <= MAX_COIN_VALUE && totalValue > MIN_COIN_VALUE;
     }
 

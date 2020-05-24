@@ -67,7 +67,7 @@ public class Game {
             scoringRound1 = true;
 
             scoringRound.calcMVPRound1perType();
-            scoringRound.calcScoringRound1();
+            scoringRound.calcScoringRound1(0);
         } else if (coinsRemaining <= coinsRemainingForScoringRound2 && !scoringRound2) {
             scoringRound2 = true;
 
@@ -76,7 +76,7 @@ public class Game {
             }
 
             scoringRound.calcMVPRound1perType();
-            scoringRound.calcScoringRound1();
+            scoringRound.calcScoringRound1(7);
         }
     }
 
@@ -94,6 +94,8 @@ public class Game {
 
     private void checkEndOfGame() {
         if (market.getAmountOfBuildings() == 0){
+            scoringRound.calcMVPRound1perType();
+            scoringRound.calcScoringRound1(15);
             ended = true;
         }
     }
